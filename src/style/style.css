@@ -1,0 +1,207 @@
+*,
+*::after,
+*::before {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Inter", sans-serif;
+    font-size: 16px;
+}
+
+.text-balance {
+    text-wrap: balance;
+}
+
+.fs-base {
+    font-size: 1rem;
+}
+
+.font-inter {
+    font-family: "Inter", sans-serif;
+}
+
+.font-inter-tight {
+    font-family: "Inter Tight", "Inter", sans-serif;
+}
+
+.font-radio-canada {
+    font-family: "Radio Canada Big", "Inter", sans-serif;
+}
+
+.line-clamp-1 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+
+.line-clamp-2 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.text-small {
+    font-size: 13px;
+}
+
+img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+}
+
+img[alt="programming img"] {
+    border-radius: 50%;
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    margin-top: 1em;
+}
+
+.tier-list {
+    display: flex;
+}
+
+.tier-list span {
+    padding: 0.5em;
+    background: #111;
+    width: 70px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-weight: bold;
+    font-size: 1.5rem;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.tier-list.s {
+    background: darkred;
+}
+
+.tier-list.s span {
+    background: red;
+}
+
+.tier-list.a {
+    background: #d38600;
+}
+
+.tier-list.a span {
+    background: orange;
+}
+
+.tier-list.b {
+    background: #d7db02;
+}
+
+.tier-list.b span {
+    background: yellow;
+}
+
+.tier-list.c {
+    background: darkgreen;
+}
+
+.tier-list.c span {
+    background: green;
+}
+
+.tier-list.d {
+    background: darkcyan;
+}
+
+.tier-list.d span {
+    background: cyan;
+}
+
+.tier-list.e {
+    background: darkviolet;
+}
+
+.tier-list.e span {
+    background: violet;
+}
+
+.tier-list.f {
+    background: darkmagenta;
+}
+
+.tier-list.f span {
+    background: magenta;
+}
+
+.draggable-element {
+    width: 100px;
+    height: 100px;
+    display: block;
+}
+
+.html,
+.js,
+.css,
+.python,
+.php,
+.scratch,
+.cpp,
+.java,
+.ruby {
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center center;
+}
+
+.html {
+    background-image: url('https://blog.soat.fr/wp-content/uploads/2015/01/HTML5.png');
+}
+
+.js {
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Unofficial_JavaScript_logo_2.svg/1200px-Unofficial_JavaScript_logo_2.svg.png');
+}
+
+.css {
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/CSS3_logo_and_wordmark.svg/1200px-CSS3_logo_and_wordmark.svg.png');
+}
+
+.ruby {
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/7/73/Ruby_logo.svg');
+}
+
+.php {
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/2/27/PHP-logo.svg');
+}
+
+.python {
+    background-image: url('https://blog.basyskom.com/wp-content/uploads/2019/01/2000px-Python-logo-notext.svg-1024x1024.png');
+}
+
+.cpp {
+    background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/ISO_C%2B%2B_Logo.svg/1200px-ISO_C%2B%2B_Logo.svg.png');
+}
+
+.java {
+    background-image: url('https://upload.wikimedia.org/wikipedia/fr/thumb/2/2e/Java_Logo.svg/1200px-Java_Logo.svg.png');
+}
+
+.scratch {
+    background-image: url('https://lh3.googleusercontent.com/proxy/2kPQOGTU6Ifj1FJmCq2IsbiBXk7aFM9wJEB5A5HbmzWv5mD7pICdZNddBzezDuExe3-3qKKWCMmPuuJwGOTY7SDdexhQfpuy4KPdYPV0TWj8QcA4N-u-zzNnddxRjVU');
+}
+
+.detect {
+    opacity: 0.75;
+}
+
+#draggable-elements-container {
+    height: 200px;
+}
