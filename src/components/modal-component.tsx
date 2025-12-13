@@ -1,4 +1,4 @@
-import {DropdownItem, DropdownMenu, DropdownToggle, Modal, ModalBody, ModalHeader, ModalTitle, OverlayTrigger, Tooltip} from "react-bootstrap";
+import {Button, DropdownItem, DropdownMenu, DropdownToggle, Modal, ModalBody, ModalHeader, ModalTitle, OverlayTrigger, Tooltip} from "react-bootstrap";
 import React, {useContext, useEffect} from "react";
 import {Theme} from "@/components/tier-list-context";
 import Image from "next/image";
@@ -42,6 +42,20 @@ export function ModalComponent() {
         </ModalHeader>
         <ModalBody className={"min-vh-80 overflow-y-scroll overflow-x-scroll"}>
           <iframe src={"https://clips.twitch.tv/embed?clip=" + (showClipData?.url ?? "-1") + "&parent=" + (process.env.NEXT_PUBLIC_PARENT_SITE)} allowFullScreen={true} height="100%" width="100%" style={{minHeight: "calc(80vh - 2rem)"}}></iframe>
+          
+          <div style={{minHeight: "calc(80vh - 2rem)", background: "#0c0c0c"}} className={"d-flex justify-content-center align-items-center"}>
+            <div className={"d-flex align-items-center justify-content-center flex-wrap gap-3 text-white flex-column"}>
+              <h2 style={{maxWidth: "600px"}}>
+                <span className={"text-balance d-block mx-auto text-center"}>
+                  Iframe não suportado. Veja este clipe na KICK!
+                </span>
+              </h2>
+              <Button className={"text d-inline-flex align-items-center justify-content-center flex-wrap gap-1"}>
+                Assistir na KICK{" "}
+                <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px" fill="#1f1f1f"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h560v-280h80v280q0 33-23.5 56.5T760-120H200Zm188-212-56-56 372-372H560v-80h280v280h-80v-144L388-332Z"/></svg>
+              </Button>
+            </div>
+          </div>
           
           <Dropdown>
             <DropdownToggle variant="success" id="dropdown-classified-clip" className={"text d-none"}>
