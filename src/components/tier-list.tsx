@@ -2,6 +2,7 @@ import React from "react";
 import {UseTierList} from "@/components/use-tier-list";
 import {ThemeContext} from "@/components/tier-list-context";
 import Selection from "@/components/selection";
+import {ModalComponent} from "@/components/modal-component";
 
 export default function TierList() {
   const {
@@ -21,7 +22,11 @@ export default function TierList() {
     renderDraggableItems,
     saveToLocalStorage,
     loadFromLocalStorage,
-    resetTierList
+    resetTierList,
+    showClipData,
+    showModal,
+    setShowModal,
+    tiers
   } = UseTierList();
   
   return (
@@ -42,9 +47,14 @@ export default function TierList() {
       renderDraggableItems,
       saveToLocalStorage,
       loadFromLocalStorage,
-      resetTierList
+      resetTierList,
+      showClipData,
+      showModal,
+      setShowModal,
+      tiers
     }}>
       <Selection/>
+      <ModalComponent/>
     </ThemeContext>
   )
 }

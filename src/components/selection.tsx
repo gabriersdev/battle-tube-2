@@ -4,10 +4,7 @@ import html2canvas from "html2canvas";
 
 import FullscreenControl from "@/components/fullscreen-component";
 import {Theme} from "@/components/tier-list-context";
-import {TierLevel} from "@/components/use-tier-list";
 import Lib from "@/utils/lib";
-
-const tiers: TierLevel[] = ['S', 'A', 'B', 'C', 'D', 'E', 'F'];
 
 export default function Selection() {
   const tierListContainer = useRef<HTMLDivElement>(null);
@@ -50,6 +47,7 @@ export default function Selection() {
   const {
     items,
     setItems,
+    tiers,
     sectionRef,
     activeDropZone,
     handleDragOver,
@@ -143,7 +141,7 @@ export default function Selection() {
 
       <div className="tier-list-container rounded-1 border" ref={tierListContainer}>
         {/* Renderiza as linhas da Tier List dinamicamente */}
-        {tiers.map((tier) => (
+        {tiers?.map((tier) => (
           <div
             key={tier}
             className={`tier-list ${tier.toLowerCase()} box ${

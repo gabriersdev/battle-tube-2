@@ -16,10 +16,14 @@ interface InitialContextValueProps {
   handleDragOver: (e: React.DragEvent<HTMLDivElement>, zoneId: string) => void;
   handleDragLeave: () => void;
   handleDrop: (e: React.DragEvent<HTMLDivElement>, targetTier: TierLevel | 'pool') => void;
-  renderDraggableItems: (currentTier: TierLevel | 'pool') => React.ReactNode;
+  renderDraggableItems: (currentTier: TierLevel | "pool") => React.ReactNode;
   saveToLocalStorage: (items: TierItem[]) => void;
   loadFromLocalStorage: () => TierItem[];
   resetTierList: () => void;
+  showClipData: TierItem | null;
+  showModal: boolean;
+  setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
+  tiers: TierLevel[] | null;
 }
 
 const InitialContextValue: InitialContextValueProps = {
@@ -40,6 +44,10 @@ const InitialContextValue: InitialContextValueProps = {
   saveToLocalStorage: () => {},
   loadFromLocalStorage: () => [],
   resetTierList: () => {},
+  showClipData: null,
+  showModal: false,
+  setShowModal: () => {},
+  tiers: []
 }
 
 const Theme = createContext(InitialContextValue);

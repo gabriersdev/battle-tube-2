@@ -5,15 +5,15 @@ type TierLevel = 'S' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F';
 
 interface TierItem {
   id: string;
+  tier: TierLevel | 'pool';
+  
   title?: string;
   originalTitle?: string;
   author?: string;
   platform?: string;
   publishDatetime?: string;
-  
   url?: string;
   className?: string;
-  tier: TierLevel | 'pool';
 }
 
 const initialItems: TierItem[] = [
@@ -51,8 +51,10 @@ export function UseTierList() {
   const [activeDropZone, setActiveDropZone] = useState<string | null>(null);
   
   const [show, setShow] = useState(false);
+  const [showClipData, setShowClipData] = useState<TierItem | null>(null);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+  const [showModal, setShowModal] = useState(false);
 
   // Funções de localStorage
   const saveToLocalStorage = (itemsToSave: TierItem[]) => {
@@ -116,6 +118,12 @@ export function UseTierList() {
     );
   };
   
+  const showClip = (data: TierItem) => {
+    console.log(data);
+    setShowClipData(data);
+    setShowModal(true);
+  }
+  
   // Função auxiliar para renderizar os itens numa zona
   const renderDraggableItems = (currentTier: TierLevel | 'pool') => {
     return items
@@ -130,9 +138,10 @@ export function UseTierList() {
         }>
           <div
             id={`draggable-element${item.id}`}
-            className={`draggable-element ${item.className}`}
+            className={`draggable-element border-0 p-1 rounded-2 m-0 ${item.className}`}
             draggable={true}
             onDragStart={(e) => handleDragStart(e, item.id)}
+            onClick={() => showClip(item)}
           />
         </OverlayTrigger>
       ));
@@ -156,7 +165,14 @@ export function UseTierList() {
     tiers,
     saveToLocalStorage,
     loadFromLocalStorage,
-    resetTierList
+    resetTierList,
+    
+    // Modal e suas informações
+    showClip,
+    showClipData,
+    setShowClipData,
+    showModal,
+    setShowModal
   }
 }
 

@@ -25,4 +25,13 @@ export default class Lib {
     // Fallback: se for booleano, comportamento igual ao ternário
     return compare ? value : replaced;
   }
+  
+  static getClipPlatform(url: string) {
+    if (url.includes("twitch.tv")) return "twitch"
+    else if (url.includes("kick.com")) return "kick"
+  }
+  
+  static fsCapitalize(str: string) {
+    return str?.at(0)?.toUpperCase() + str?.substring(1)?.toLowerCase();
+  }
 }
