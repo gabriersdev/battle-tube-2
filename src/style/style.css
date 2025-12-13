@@ -103,11 +103,11 @@ img[alt="programming img"] {
 }
 
 .tier-list.b {
-    background: #d7db02;
+    background: #b6b900;
 }
 
 .tier-list.b span {
-    background: yellow;
+    background: #d7db02;
 }
 
 .tier-list.c {
@@ -146,6 +146,7 @@ img[alt="programming img"] {
     width: 100px;
     height: 100px;
     display: block;
+    cursor: pointer;
 }
 
 .html,
@@ -204,4 +205,12 @@ img[alt="programming img"] {
 
 #draggable-elements-container {
     height: 200px;
+}
+
+.min-vh-80 {
+    min-height: 80vh;
+}
+
+.text {
+    font-size: 1rem;
 }

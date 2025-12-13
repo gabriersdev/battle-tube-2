@@ -1,14 +1,17 @@
 {
-  "name": "battle-tuble-2",
+  "name": "battle-tuble",
   "version": "2.0.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "update": "npm update"
   },
   "dependencies": {
+    "@types/html2canvas": "^0.5.35",
+    "html2canvas": "^1.4.1",
     "next": "16.0.7",
     "react": "19.2.0",
     "react-bootstrap": "^2.10.10",
