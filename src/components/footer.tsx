@@ -1,12 +1,20 @@
 import {Button} from "react-bootstrap";
 import Link from "next/link";
-import React from "react";
+import React, {useEffect, useState} from "react";
 
 export default function Footer() {
+  const [ls, setLS] = useState<boolean>(false);
+  
+  useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    if (window.localStorage) setLS(!!window.localStorage);
+    else setLS(false);
+  }, []);
+  
   return (
     <footer className={"d-flex flex-column gap-5"}>
       <p className={"m-0 text-center text-body-secondary text-balance"}>
-        {window.localStorage && "Não se preocupe, conforme você interage com a Tier List o progresso é salvo no navegador. "}
+        {ls && "Não se preocupe, conforme você interage com a Tier List o progresso é salvo no navegador. "}
         Ao usar a Tier List, você concorda com o armazenamento de alguns dados no navegador para aprimorar sua experiência, realizar análises de performance, corrigir erros e identificar bugs.
       </p>
       
