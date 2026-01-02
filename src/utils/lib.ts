@@ -1,3 +1,5 @@
+import {ClipData, TierItem} from "@/components/use-tier-list";
+
 export default class Lib {
   static greaterThan(value: number, compare: string | number | object, replaced: string) {
     // Se o segundo argumento for uma função, ela será usada como condição
@@ -33,5 +35,18 @@ export default class Lib {
   
   static fsCapitalize(str: string) {
     return str?.at(0)?.toUpperCase() + str?.substring(1)?.toLowerCase();
+  }
+  
+  static getClipOrigin(data: ClipData | TierItem) {
+    if (data.url.includes("twitch.tv")) return "twitch"
+    else if (data.url.includes("kick.com")) return "kick"
+    return ""
+  }
+  
+  static getClipID(data: ClipData | TierItem) {
+    // https://www.twitch.tv/eskimozin/clip/PrettiestLazyPeanutPoooound-PenLtEv4ihW7dnAD
+    const id = data.url.match(/https:\/\/www.twitch.tv\/\w*\/clip\/([\w-]*)/);
+    if (id?.[1]) return id?.[1];
+    return null;
   }
 }

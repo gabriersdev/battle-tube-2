@@ -1,5 +1,8 @@
 import React, {DragEvent, useRef, useState, useEffect} from "react";
 import {OverlayTrigger, Tooltip} from "react-bootstrap";
+import clipsData from "@/resources/data.json";
+import Lib from "@/utils/lib";
+import {it} from "node:test";
 
 type TierLevel = 'S' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F';
 
@@ -12,23 +15,31 @@ interface TierItem {
   author?: string;
   platform?: string;
   publishDatetime?: string;
-  url?: string;
+  url: string;
   className?: string;
 }
 
-const initialItems: TierItem[] = [
-  {id: '1', className: 'js', tier: 'pool'},
-  {id: '3', className: 'css', tier: 'pool'},
-  {id: '4', className: 'python', tier: 'pool'},
-  {id: '5', className: 'php', tier: 'pool'},
-  {id: '7', className: 'cpp', tier: 'pool'},
-  {id: '8', className: 'java', tier: 'pool'},
-  {id: '9', className: 'ruby', tier: 'pool'},
-];
+interface ClipData {
+  views: number;
+  clipper: string | null;
+  date: string;
+  title: string;
+  url: string;
+}
+
+const initialItems: TierItem[] = (clipsData as ClipData[]).map((item, index) => ({
+  id: index.toString(),
+  tier: 'pool',
+  title: item.title,
+  author: item.clipper || undefined,
+  publishDatetime: item.date,
+  url: item.url,
+  className: ''
+}));
 
 const tiers: TierLevel[] = ['S', 'A', 'B', 'C', 'D', 'E', 'F'];
 
-const STORAGE_KEY = 'battle-tube-tier-list';
+const STORAGE_KEY = 'battle-tube-tier-list-v2';
 
 export function UseTierList() {
   // Estado que guarda onde cada item está
@@ -55,7 +66,7 @@ export function UseTierList() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [showModal, setShowModal] = useState(false);
-
+  
   // Funções de localStorage
   const saveToLocalStorage = (itemsToSave: TierItem[]) => {
     try {
@@ -64,7 +75,7 @@ export function UseTierList() {
       console.error('Erro ao salvar tier list no localStorage:', error);
     }
   };
-
+  
   const loadFromLocalStorage = (): TierItem[] => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
@@ -74,7 +85,7 @@ export function UseTierList() {
       return initialItems;
     }
   };
-
+  
   const resetTierList = () => {
     setItems(initialItems);
     try {
@@ -83,7 +94,7 @@ export function UseTierList() {
       console.error('Erro ao remover tier list do localStorage:', error);
     }
   };
-
+  
   // Salva automaticamente no localStorage quando items mudam
   useEffect(() => {
     saveToLocalStorage(items);
@@ -126,25 +137,33 @@ export function UseTierList() {
   
   // Função auxiliar para renderizar os itens numa zona
   const renderDraggableItems = (currentTier: TierLevel | 'pool') => {
+    
+    
     return items
       .filter((item) => item.tier === currentTier)
-      .map((item, index) => (
-        <OverlayTrigger key={index} overlay={
-          <Tooltip>
+      .map((item: TierItem, index) => {
+        console.log(Lib.getClipID(item));
+        
+        return (
+          <OverlayTrigger key={index} overlay={
+            <Tooltip>
             <span className={"m-0 p-0 d-block text-small font-inter line-clamp-2 text-balance"}>
-              Arraste para a lista ou clique para abrir o clipe.
+              {item.title || "Arraste para a lista ou clique para abrir o clipe."}
             </span>
-          </Tooltip>
-        }>
-          <div
-            id={`draggable-element${item.id}`}
-            className={`draggable-element border-0 p-1 rounded-2 m-0 ${item.className}`}
-            draggable={true}
-            onDragStart={(e) => handleDragStart(e, item.id)}
-            onClick={() => showClip(item)}
-          />
-        </OverlayTrigger>
-      ));
+            </Tooltip>
+          }>
+            <div
+              id={`draggable-element${item.id}`}
+              className={`draggable-element border-0 p-1 rounded-2 m-0 ${item.className}`}
+              draggable={true}
+              onDragStart={(e) => handleDragStart(e, item.id)}
+              onClick={() => showClip(item)}
+            >
+              {item.title}
+            </div>
+          </OverlayTrigger>
+        )
+      });
   };
   
   return {
@@ -183,5 +202,6 @@ export {
 
 export type {
   TierLevel,
-  TierItem
+  TierItem,
+  ClipData
 };

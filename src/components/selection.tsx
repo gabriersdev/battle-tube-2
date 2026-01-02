@@ -9,10 +9,10 @@ import Lib from "@/utils/lib";
 export default function Selection() {
   const tierListContainer = useRef<HTMLDivElement>(null);
   const [isDownloading, setIsDownloading] = useState(false);
-
+  
   const downloadTierImg = useCallback(async () => {
     if (!tierListContainer.current) return;
-
+    
     setIsDownloading(true);
     try {
       const canvas = await html2canvas(tierListContainer.current, {
@@ -22,7 +22,7 @@ export default function Selection() {
         // scale: 2, // Maior resolução
         logging: false,
       });
-
+      
       // Converte canvas para blob
       canvas.toBlob((blob) => {
         if (blob) {
@@ -77,7 +77,7 @@ export default function Selection() {
               </span>
             <span className={"text-body-secondary"}>
               {Lib.greaterThan(items.filter(i => i.tier === "pool").length, 0, "nenhum clipe")}
-              </span>
+            </span>
           </p>
         </div>
         <div className={"d-flex gap-2 flex-wrap align-items-center"}>
@@ -137,8 +137,8 @@ export default function Selection() {
           </Button>
         </div>
       </div>
-
-
+      
+      
       <div className="tier-list-container rounded-1 border" ref={tierListContainer}>
         {/* Renderiza as linhas da Tier List dinamicamente */}
         {tiers?.map((tier) => (
