@@ -28,9 +28,12 @@ export default class Lib {
     return compare ? value : replaced;
   }
   
-  static getClipPlatform(url: string) {
-    if (url.includes("twitch.tv")) return "twitch"
-    else if (url.includes("kick.com")) return "kick"
+  static getClipPlatform({url}: { url: string | undefined }) {
+    if (url) {
+      if (url.includes("twitch.tv")) return "twitch"
+      else if (url.includes("kick.com")) return "kick"
+    }
+    return "";
   }
   
   static fsCapitalize(str: string) {
@@ -38,15 +41,28 @@ export default class Lib {
   }
   
   static getClipOrigin(data: ClipData | TierItem) {
-    if (data.url.includes("twitch.tv")) return "twitch"
-    else if (data.url.includes("kick.com")) return "kick"
+    if (data.url?.includes("twitch.tv")) return "twitch"
+    else if (data.url?.includes("kick.com")) return "kick"
     return ""
   }
   
   static getClipID(data: ClipData | TierItem) {
     // https://www.twitch.tv/eskimozin/clip/PrettiestLazyPeanutPoooound-PenLtEv4ihW7dnAD
-    const id = data.url.match(/https:\/\/www.twitch.tv\/\w*\/clip\/([\w-]*)/);
+    const id = data.url?.match(/https:\/\/www.twitch.tv\/\w*\/clip\/([\w-]*)/);
     if (id?.[1]) return id?.[1];
     return null;
+  }
+  
+  static getBSColor(index: number) {
+    const colors = [
+      'primary-subtle',
+      'secondary-subtle',
+      'success-subtle',
+      'danger-subtle',
+      'warning-subtle',
+      'secondary',
+      'info-subtle',
+    ];
+    return colors[index % colors.length];
   }
 }

@@ -2,7 +2,10 @@ import React, {DragEvent, useRef, useState, useEffect} from "react";
 import {OverlayTrigger, Tooltip} from "react-bootstrap";
 import clipsData from "@/resources/data.json";
 import Lib from "@/utils/lib";
-import {it} from "node:test";
+import Image from "next/image";
+
+import TwitchLogo from "@/public/twitch.jpg";
+import KickLogo from "@/public/kick.svg";
 
 type TierLevel = 'S' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F';
 
@@ -10,7 +13,7 @@ interface TierItem {
   id: string;
   tier: TierLevel | 'pool';
   
-  title?: string;
+  title: string;
   originalTitle?: string;
   author?: string;
   platform?: string;
@@ -43,19 +46,22 @@ const STORAGE_KEY = 'battle-tube-tier-list-v2';
 
 export function UseTierList() {
   // Estado que guarda onde cada item está
-  const [items, setItems] = useState<TierItem[]>(() => {
-    // Tenta carregar do localStorage na inicialização
-    if (typeof window !== 'undefined') {
-      try {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        return saved ? JSON.parse(saved) : initialItems;
-      } catch (error) {
-        console.warn('Erro ao carregar tier list do localStorage:', error);
-        return initialItems;
+  const [items, setItems] = useState<TierItem[]>(initialItems);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        setItems(JSON.parse(saved));
       }
+    } catch (error) {
+      console.warn('Erro ao carregar tier list do localStorage:', error);
+    } finally {
+      setIsLoaded(true);
     }
-    return initialItems;
-  });
+  }, []);
+
   const sectionRef = useRef<HTMLDivElement>(null);
   
   // Estado para controle visual de onde estamos arrastando (highlight)
@@ -66,6 +72,35 @@ export function UseTierList() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [showModal, setShowModal] = useState(false);
+  
+  // Confirmation/Alert Modal State
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [confirmMessage, setConfirmMessage] = useState("");
+  const [confirmAction, setConfirmAction] = useState<() => void>(() => {});
+  const [dialogType, setDialogType] = useState<'confirm' | 'alert'>('confirm');
+
+  const requestConfirm = (message: string, action: () => void) => {
+    setConfirmMessage(message);
+    setConfirmAction(() => action);
+    setDialogType('confirm');
+    setShowConfirmModal(true);
+  };
+
+  const requestAlert = (message: string) => {
+    setConfirmMessage(message);
+    setConfirmAction(() => {});
+    setDialogType('alert');
+    setShowConfirmModal(true);
+  };
+
+  const handleConfirm = () => {
+    if (dialogType === 'confirm') {
+      confirmAction();
+    }
+    setShowConfirmModal(false);
+  };
+  
+  const handleCloseConfirm = () => setShowConfirmModal(false);
   
   // Funções de localStorage
   const saveToLocalStorage = (itemsToSave: TierItem[]) => {
@@ -97,8 +132,10 @@ export function UseTierList() {
   
   // Salva automaticamente no localStorage quando items mudam
   useEffect(() => {
-    saveToLocalStorage(items);
-  }, [items]);
+    if (isLoaded) {
+      saveToLocalStorage(items);
+    }
+  }, [items, isLoaded]);
   
   // Handlers de Drag and Drop
   const handleDragStart = (e: DragEvent<HTMLDivElement>, itemId: string) => {
@@ -137,13 +174,11 @@ export function UseTierList() {
   
   // Função auxiliar para renderizar os itens numa zona
   const renderDraggableItems = (currentTier: TierLevel | 'pool') => {
-    
-    
     return items
       .filter((item) => item.tier === currentTier)
-      .map((item: TierItem, index) => {
-        console.log(Lib.getClipID(item));
-        
+      .toSorted((a, b) => a.title.localeCompare(b.title))
+      .map((item: TierItem, index: number) => {
+        const clipPlatform = Lib.getClipPlatform(item);
         return (
           <OverlayTrigger key={index} overlay={
             <Tooltip>
@@ -154,12 +189,57 @@ export function UseTierList() {
           }>
             <div
               id={`draggable-element${item.id}`}
-              className={`draggable-element border-0 p-1 rounded-2 m-0 ${item.className}`}
+              className={`draggable-element p-2 rounded-0 m-1 overflow-x-scroll bg-${Lib.getBSColor(index)} ${item.className}`}
+              style={{border: "1px solid #00000025"}}
               draggable={true}
               onDragStart={(e) => handleDragStart(e, item.id)}
               onClick={() => showClip(item)}
             >
-              {item.title}
+              <div className={"pointer-events-none disabled d-flex flex-column justify-content-between h-100"}>
+                <h3 className={"fw-medium fs-base text-balance lh-sm mb-1 p-0 line-clamp-2"}>
+                  {item.title}
+                </h3>
+                <div>
+                  <span
+                    className={"text-small text-body-tertiary text-lowercase bg-transparent p-0 m-0 fw-normal w-auto d-block"}
+                    style={{textAlign: "left"}}
+                  >
+                    clipado por
+                  </span>
+                  <p className={"m-0 p-0 d-flex gap-1 flex-wrap align-items-center"}>
+                    <span className={"text-small text-body-secondary text-lowercase bg-transparent p-0 m-0 fw-normal w-auto"}>
+                      {item.author ?? (
+                        <OverlayTrigger
+                          overlay={
+                            <Tooltip>
+                            <span className={"text-small"}>
+                              Não foi possível obter o username do criador do clipe
+                            </span>
+                            </Tooltip>
+                          }>
+                          <span
+                            className={"bg-transparent text-lowercase p-0 m-0 text-body-secondary fw-normal"}
+                            style={{fontSize: "inherit", width: "auto"}}
+                          >
+                            void user
+                          </span>
+                        </OverlayTrigger>
+                      )}
+                    </span>
+                    <span className={"text-small text-body-tertiary text-lowercase bg-transparent p-0 m-0 fw-normal w-auto"}>
+                      from
+                    </span>
+                    <span className={"text-small text-body-secondary text-capitalize bg-transparent p-0 m-0 fw-normal w-auto"}>
+                      <Image
+                        src={clipPlatform === "twitch" ? TwitchLogo : KickLogo}
+                        alt={"Logo da " + clipPlatform}
+                        width={clipPlatform === "twitch" ? 20 : 50}
+                        height={clipPlatform === "twitch" ? 20 : 25}
+                      />
+                    </span>
+                  </p>
+                </div>
+              </div>
             </div>
           </OverlayTrigger>
         )
@@ -191,7 +271,16 @@ export function UseTierList() {
     showClipData,
     setShowClipData,
     showModal,
-    setShowModal
+    setShowModal,
+    
+    // Confirmation/Alert Modal
+    showConfirmModal,
+    confirmMessage,
+    requestConfirm,
+    requestAlert,
+    handleConfirm,
+    handleCloseConfirm,
+    dialogType
   }
 }
 

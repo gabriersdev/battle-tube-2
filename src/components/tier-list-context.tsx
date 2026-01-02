@@ -24,6 +24,15 @@ interface InitialContextValueProps {
   showModal: boolean;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
   tiers: TierLevel[] | null;
+  
+  // Confirmation/Alert Modal
+  showConfirmModal: boolean;
+  confirmMessage: string;
+  requestConfirm: (message: string, action: () => void) => void;
+  requestAlert: (message: string) => void;
+  handleConfirm: () => void;
+  handleCloseConfirm: () => void;
+  dialogType: 'confirm' | 'alert';
 }
 
 const InitialContextValue: InitialContextValueProps = {
@@ -47,7 +56,15 @@ const InitialContextValue: InitialContextValueProps = {
   showClipData: null,
   showModal: false,
   setShowModal: () => {},
-  tiers: []
+  tiers: [],
+  
+  showConfirmModal: false,
+  confirmMessage: "",
+  requestConfirm: () => {},
+  requestAlert: () => {},
+  handleConfirm: () => {},
+  handleCloseConfirm: () => {},
+  dialogType: 'confirm'
 }
 
 const Theme = createContext(InitialContextValue);

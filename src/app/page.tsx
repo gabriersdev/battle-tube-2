@@ -1,7 +1,6 @@
 "use client";
 
 import React from 'react';
-import Footer from "@/components/footer";
 import TierList from "@/components/tier-list";
 import StatisticsDialog from "@/components/new-adapter-code/statistics-dialog";
 export default function Home() {
@@ -15,7 +14,6 @@ export default function Home() {
 
       <TierList/>
       <StatisticsDialog/>
-      <Footer/>
     </main>
   );
 }

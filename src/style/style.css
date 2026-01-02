@@ -51,7 +51,7 @@ body {
 }
 
 .text-small {
-    font-size: 13px;
+    font-size: 13px !important;
 }
 
 img {
@@ -70,6 +70,10 @@ img[alt="programming img"] {
 
 .tier-list {
     display: flex;
+}
+
+.tier-list-container {
+    max-height: 600px;
 }
 
 .tier-list span {
@@ -143,68 +147,19 @@ img[alt="programming img"] {
 }
 
 .draggable-element {
-    width: 100px;
-    height: 100px;
+    width: 200px;
+    height: 125px;
     display: block;
     cursor: pointer;
+    
+    @media screen and (max-width: 768px) {
+        width: 165px;
+    }
 }
 
-.html,
-.js,
-.css,
-.python,
-.php,
-.scratch,
-.cpp,
-.java,
-.ruby {
-    background-repeat: no-repeat;
-    background-size: contain;
-    background-position: center center;
-}
-
-.html {
-    background-image: url('https://blog.soat.fr/wp-content/uploads/2015/01/HTML5.png');
-}
-
-.js {
-    background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/9/99/Unofficial_JavaScript_logo_2.svg/1200px-Unofficial_JavaScript_logo_2.svg.png');
-}
-
-.css {
-    background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/d/d5/CSS3_logo_and_wordmark.svg/1200px-CSS3_logo_and_wordmark.svg.png');
-}
-
-.ruby {
-    background-image: url('https://upload.wikimedia.org/wikipedia/commons/7/73/Ruby_logo.svg');
-}
-
-.php {
-    background-image: url('https://upload.wikimedia.org/wikipedia/commons/2/27/PHP-logo.svg');
-}
-
-.python {
-    background-image: url('https://blog.basyskom.com/wp-content/uploads/2019/01/2000px-Python-logo-notext.svg-1024x1024.png');
-}
-
-.cpp {
-    background-image: url('https://upload.wikimedia.org/wikipedia/commons/thumb/1/18/ISO_C%2B%2B_Logo.svg/1200px-ISO_C%2B%2B_Logo.svg.png');
-}
-
-.java {
-    background-image: url('https://upload.wikimedia.org/wikipedia/fr/thumb/2/2e/Java_Logo.svg/1200px-Java_Logo.svg.png');
-}
-
-.scratch {
-    background-image: url('https://lh3.googleusercontent.com/proxy/2kPQOGTU6Ifj1FJmCq2IsbiBXk7aFM9wJEB5A5HbmzWv5mD7pICdZNddBzezDuExe3-3qKKWCMmPuuJwGOTY7SDdexhQfpuy4KPdYPV0TWj8QcA4N-u-zzNnddxRjVU');
-}
-
-.detect {
-    opacity: 0.75;
-}
-
-#draggable-elements-container {
-    height: 200px;
+#draggable-elements-container,
+.max-h-350 {
+    height: 350px;
 }
 
 .min-vh-80 {
@@ -213,4 +168,9 @@ img[alt="programming img"] {
 
 .text {
     font-size: 1rem;
+}
+
+.btn-close {
+    border: none !important;
+    box-shadow: none !important;
 }

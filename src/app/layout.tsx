@@ -39,7 +39,7 @@ export default function RootLayout({
     <html lang="pt-BR" data-bs-theme={"normal"}>
     <body
       className={`${inter.variable} ${mono.variable} ${interTight.variable} ${radioCanadaBig.variable}`}
-      style={{userSelect: "text"}}
+      style={{userSelect: "text", background: "#F6F6F6"}}
     >
     {children}
     </body>

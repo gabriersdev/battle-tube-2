@@ -3,6 +3,8 @@ import {UseTierList} from "@/components/use-tier-list";
 import {ThemeContext} from "@/components/tier-list-context";
 import Selection from "@/components/selection";
 import {ModalComponent} from "@/components/modal-component";
+import {ConfirmModal} from "@/components/confirm-modal";
+import Footer from "@/components/footer";
 
 export default function TierList() {
   const {
@@ -26,7 +28,14 @@ export default function TierList() {
     showClipData,
     showModal,
     setShowModal,
-    tiers
+    tiers,
+    showConfirmModal,
+    confirmMessage,
+    requestConfirm,
+    requestAlert,
+    handleConfirm,
+    handleCloseConfirm,
+    dialogType
   } = UseTierList();
   
   return (
@@ -51,10 +60,19 @@ export default function TierList() {
       showClipData,
       showModal,
       setShowModal,
-      tiers
+      tiers,
+      showConfirmModal,
+      confirmMessage,
+      requestConfirm,
+      requestAlert,
+      handleConfirm,
+      handleCloseConfirm,
+      dialogType
     }}>
       <Selection/>
+      <Footer/>
       <ModalComponent/>
+      <ConfirmModal/>
     </ThemeContext>
   )
 }
