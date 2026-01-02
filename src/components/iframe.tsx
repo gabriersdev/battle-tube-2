@@ -1,25 +1,34 @@
 import {Ref} from "react";
 
-const IframeClip = (
+const Iframe = (
   {
     ref,
     className,
+    style,
     id,
-    allowFullScreen
+    allowFullScreen,
+    width,
+    height,
   }: {
     ref?: Ref<HTMLIFrameElement>,
     className?: string,
-    id?: number,
-    allowFullScreen?: boolean
+    style?: object,
+    id: number | string,
+    allowFullScreen?: boolean,
+    width?: number | string,
+    height?: number | string
   }) => {
   return (
     <iframe
       ref={ref}
       className={className}
-      src={`https://clips.twitch.tv/embed?clip=${id}&parent=${window.location.hostname || 'localhost'}`}
+      src={`https://clips.twitch.tv/embed?clip=${id}&parent=${typeof window !== 'undefined' ? window.location.hostname : 'localhost'}`}
+      width={width}
+      height={height}
+      style={style}
       allowFullScreen={allowFullScreen}>
     </iframe>
   )
 }
 
-export default IframeClip;
+export default Iframe;

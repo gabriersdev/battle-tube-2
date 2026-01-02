@@ -1,8 +1,12 @@
-import React, {DragEvent, useRef, useState, useEffect} from "react";
+import React, {DragEvent, useRef, useState, useEffect, TouchEvent} from "react";
 import {OverlayTrigger, Tooltip} from "react-bootstrap";
 import clipsData from "@/resources/data.json";
 import Lib from "@/utils/lib";
-import {it} from "node:test";
+import Image from "next/image";
+
+import TwitchLogo from "@/public/twitch.jpg";
+import KickLogo from "@/public/kick.svg";
+import VoidUser from "@/components/void-user";
 
 type TierLevel = 'S' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F';
 
@@ -10,7 +14,7 @@ interface TierItem {
   id: string;
   tier: TierLevel | 'pool';
   
-  title?: string;
+  title: string;
   originalTitle?: string;
   author?: string;
   platform?: string;
@@ -43,19 +47,22 @@ const STORAGE_KEY = 'battle-tube-tier-list-v2';
 
 export function UseTierList() {
   // Estado que guarda onde cada item está
-  const [items, setItems] = useState<TierItem[]>(() => {
-    // Tenta carregar do localStorage na inicialização
-    if (typeof window !== 'undefined') {
-      try {
-        const saved = localStorage.getItem(STORAGE_KEY);
-        return saved ? JSON.parse(saved) : initialItems;
-      } catch (error) {
-        console.warn('Erro ao carregar tier list do localStorage:', error);
-        return initialItems;
+  const [items, setItems] = useState<TierItem[]>(initialItems);
+  const [isLoaded, setIsLoaded] = useState(false);
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem(STORAGE_KEY);
+      if (saved) {
+        setItems(JSON.parse(saved));
       }
+    } catch (error) {
+      console.warn('Erro ao carregar tier list do localStorage:', error);
+    } finally {
+      setIsLoaded(true);
     }
-    return initialItems;
-  });
+  }, []);
+
   const sectionRef = useRef<HTMLDivElement>(null);
   
   // Estado para controle visual de onde estamos arrastando (highlight)
@@ -66,6 +73,35 @@ export function UseTierList() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
   const [showModal, setShowModal] = useState(false);
+  
+  // Confirmation/Alert Modal State
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+  const [confirmMessage, setConfirmMessage] = useState("");
+  const [confirmAction, setConfirmAction] = useState<() => void>(() => {});
+  const [dialogType, setDialogType] = useState<'confirm' | 'alert'>('confirm');
+
+  const requestConfirm = (message: string, action: () => void) => {
+    setConfirmMessage(message);
+    setConfirmAction(() => action);
+    setDialogType('confirm');
+    setShowConfirmModal(true);
+  };
+
+  const requestAlert = (message: string) => {
+    setConfirmMessage(message);
+    setConfirmAction(() => {});
+    setDialogType('alert');
+    setShowConfirmModal(true);
+  };
+
+  const handleConfirm = () => {
+    if (dialogType === 'confirm') {
+      confirmAction();
+    }
+    setShowConfirmModal(false);
+  };
+  
+  const handleCloseConfirm = () => setShowConfirmModal(false);
   
   // Funções de localStorage
   const saveToLocalStorage = (itemsToSave: TierItem[]) => {
@@ -97,8 +133,10 @@ export function UseTierList() {
   
   // Salva automaticamente no localStorage quando items mudam
   useEffect(() => {
-    saveToLocalStorage(items);
-  }, [items]);
+    if (isLoaded) {
+      saveToLocalStorage(items);
+    }
+  }, [items, isLoaded]);
   
   // Handlers de Drag and Drop
   const handleDragStart = (e: DragEvent<HTMLDivElement>, itemId: string) => {
@@ -129,6 +167,105 @@ export function UseTierList() {
     );
   };
   
+  // Mobile Touch Handlers
+  const [draggedItem, setDraggedItem] = useState<string | null>(null);
+  const [touchPosition, setTouchPosition] = useState<{x: number, y: number} | null>(null);
+
+  const handleTouchStart = (e: TouchEvent<HTMLDivElement>, itemId: string) => {
+    // Prevent scrolling while dragging
+    // e.preventDefault(); // This might block scrolling entirely, be careful
+    setDraggedItem(itemId);
+    const touch = e.touches[0];
+    setTouchPosition({x: touch.clientX, y: touch.clientY});
+  };
+
+  const handleTouchMove = (e: TouchEvent<HTMLDivElement>) => {
+    if (!draggedItem) return;
+    
+    const touch = e.touches[0];
+    setTouchPosition({x: touch.clientX, y: touch.clientY});
+    
+    // Find element under touch
+    const element = document.elementFromPoint(touch.clientX, touch.clientY);
+    if (!element) return;
+    
+    // Find closest drop zone
+    const dropZone = element.closest('.box') as HTMLElement;
+    if (dropZone) {
+      // Extract tier from class or id or data attribute
+      // In your current implementation, drop zones have classes like 'S', 'A', etc.
+      // We need a way to identify the tier.
+      // Let's assume we can get it from the class list or we can add a data attribute to the drop zones.
+      
+      // Checking classes for tier match
+      let foundTier: string | null = null;
+      if (dropZone.id === 'draggable-elements-container') foundTier = 'pool';
+      else {
+        for (const tier of tiers) {
+          if (dropZone.classList.contains(tier.toLowerCase())) {
+            foundTier = tier;
+            break;
+          }
+        }
+      }
+      
+      if (foundTier) {
+        setActiveDropZone(foundTier);
+      } else {
+        setActiveDropZone(null);
+      }
+    } else {
+      setActiveDropZone(null);
+    }
+  };
+
+  const handleTouchEnd = (e: TouchEvent<HTMLDivElement>) => {
+    if (!draggedItem) return;
+    
+    const touch = e.changedTouches[0];
+    const element = document.elementFromPoint(touch.clientX, touch.clientY);
+    
+    if (element) {
+      const dropZone = element.closest('.box') as HTMLElement;
+      if (dropZone) {
+        let targetTier: TierLevel | 'pool' | null = null;
+        
+        // Identify tier
+        // Note: The 'pool' container has id="draggable-elements-container" and likely class 'pool' isn't explicitly set as a class name for identification in the same way tiers are, 
+        // but let's check how it's rendered in Selection.tsx
+        
+        // In Selection.tsx:
+        // Tiers: className={`tier-list d-flex ${tier.toLowerCase()} box ...`}
+        // Pool: className={`box ...`} (doesn't seem to have 'pool' class explicitly for identification logic above, but let's check)
+        
+        // We might need to rely on the fact that we know the tiers.
+        
+        if (dropZone.id === 'draggable-elements-container') {
+          targetTier = 'pool';
+        } else {
+          for (const tier of tiers) {
+            if (dropZone.classList.contains(tier.toLowerCase())) {
+              targetTier = tier;
+              break;
+            }
+          }
+        }
+        
+        if (targetTier) {
+          setItems((prevItems) =>
+            prevItems.map((item) =>
+              item.id === draggedItem ? {...item, tier: targetTier!} : item
+            )
+          );
+        }
+      }
+    }
+    
+    setDraggedItem(null);
+    setTouchPosition(null);
+    setActiveDropZone(null);
+  };
+  
   const showClip = (data: TierItem) => {
     console.log(data);
     setShowClipData(data);
@@ -137,12 +274,12 @@ export function UseTierList() {
   
   // Função auxiliar para renderizar os itens numa zona
   const renderDraggableItems = (currentTier: TierLevel | 'pool') => {
-    
-    
     return items
       .filter((item) => item.tier === currentTier)
-      .map((item: TierItem, index) => {
-        console.log(Lib.getClipID(item));
+      .toSorted((a, b) => a.title.localeCompare(b.title))
+      .map((item: TierItem, index: number) => {
+        const clipPlatform = Lib.getClipPlatform(item);
+        const isDragging = draggedItem === item.id;
         
         return (
           <OverlayTrigger key={index} overlay={
@@ -153,13 +290,55 @@ export function UseTierList() {
             </Tooltip>
           }>
             <div
-              id={`draggable-element${item.id}`}
-              className={`draggable-element border-0 p-1 rounded-2 m-0 ${item.className}`}
+              id={`draggable-element-${item.id}`}
+              className={`draggable-element p-2 rounded-0 m-1 overflow-x-scroll bg-${Lib.getBSColor(index)} ${item.className}`}
+              style={{
+                border: "1px solid #00000025",
+                opacity: isDragging ? 0.5 : 1,
+                position: isDragging && touchPosition ? 'fixed' : 'relative',
+                left: isDragging && touchPosition ? touchPosition.x - 50 : 'auto', // Center roughly
+                top: isDragging && touchPosition ? touchPosition.y - 50 : 'auto',
+                zIndex: isDragging ? 1000 : 'auto',
+                pointerEvents: isDragging ? 'none' : 'auto', // Important for elementFromPoint to work on underlying elements
+                width: isDragging ? '150px' : 'auto', // Fixed width while dragging
+                touchAction: 'none' // Prevent browser handling of gestures
+              }}
               draggable={true}
               onDragStart={(e) => handleDragStart(e, item.id)}
-              onClick={() => showClip(item)}
+              onTouchStart={(e) => handleTouchStart(e, item.id)}
+              onTouchMove={handleTouchMove}
+              onTouchEnd={handleTouchEnd}
+              onClick={() => !isDragging && showClip(item)}
             >
-              {item.title}
+              <div className={"pointer-events-none disabled d-flex flex-column justify-content-between h-100"}>
+                <h3 className={"fw-medium fs-base text-balance lh-sm mb-1 p-0 line-clamp-2"}>
+                  {item.title}
+                </h3>
+                <div>
+                  <span
+                    className={"text-small text-body-tertiary text-lowercase bg-transparent p-0 m-0 fw-normal w-auto d-block"}
+                    style={{textAlign: "left"}}
+                  >
+                    clipado por
+                  </span>
+                  <p className={"m-0 p-0 d-flex gap-1 flex-wrap align-items-center"}>
+                    <span className={"text-small text-body-secondary text-lowercase bg-transparent p-0 m-0 fw-normal w-auto"}>
+                      {item.author ?? <VoidUser/>}
+                    </span>
+                    <span className={"text-small text-body-tertiary text-lowercase bg-transparent p-0 m-0 fw-normal w-auto"}>
+                      from
+                    </span>
+                    <span className={"text-small text-body-secondary text-capitalize bg-transparent p-0 m-0 fw-normal w-auto"}>
+                      <Image
+                        src={clipPlatform === "twitch" ? TwitchLogo : KickLogo}
+                        alt={"Logo da " + clipPlatform}
+                        width={clipPlatform === "twitch" ? 20 : 50}
+                        height={clipPlatform === "twitch" ? 20 : 25}
+                      />
+                    </span>
+                  </p>
+                </div>
+              </div>
             </div>
           </OverlayTrigger>
         )
@@ -191,7 +370,16 @@ export function UseTierList() {
     showClipData,
     setShowClipData,
     showModal,
-    setShowModal
+    setShowModal,
+    
+    // Confirmation/Alert Modal
+    showConfirmModal,
+    confirmMessage,
+    requestConfirm,
+    requestAlert,
+    handleConfirm,
+    handleCloseConfirm,
+    dialogType
   }
 }
 

@@ -1,9 +1,11 @@
 import {Button} from "react-bootstrap";
 import Link from "next/link";
-import React, {useEffect, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
+import {Theme} from "@/components/tier-list-context";
 
 export default function Footer() {
   const [ls, setLS] = useState<boolean>(false);
+  const { requestConfirm } = useContext(Theme);
   
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -20,11 +22,11 @@ export default function Footer() {
       
       <div className={"d-flex gap-2 flex-wrap align-items-center justify-content-center"}>
         <Button variant={"primary"} className={"fs-base"} onClick={() => {
-          if (confirm('Tem certeza? Tudo será perdido.')) {
+          requestConfirm('Tem certeza? Tudo será perdido.', () => {
             if (localStorage) localStorage.clear();
             if (sessionStorage) sessionStorage.clear();
             window.location.reload();
-          }
+          });
         }}>
           Limpar dados salvos no navegador
         </Button>
