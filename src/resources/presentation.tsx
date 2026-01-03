@@ -1,11 +1,12 @@
 import React from "react";
+import {ScreenItem} from "@/app/start/components/ScreenItem";
 
 export type AnimationType = 'fade' | 'slide-up' | 'slide-down' | 'slide-left' | 'slide-right' | 'scale';
 
-export interface ScreenItem {
+export interface ScreenItemData {
   id: string;
-  type: 'title' | 'text' | 'image' | 'iframe';
-  content: string;
+  type: 'title' | 'text' | 'image' | 'iframe' | 'component';
+  content: string | React.ReactNode;
   animation: AnimationType;
   delay: number; // Delay in seconds relative to screen start
   className?: string; // Bootstrap classes
@@ -15,7 +16,7 @@ export interface ScreenItem {
 export interface ScreenData {
   id: string;
   duration: number; // Duration in seconds
-  items: ScreenItem[];
+  items: ScreenItemData[];
 }
 
 export const presentationData: ScreenData[] = [
@@ -24,21 +25,21 @@ export const presentationData: ScreenData[] = [
     duration: 10,
     items: [
       {
-        id: 'S1-I1',
+        id: 's1-i1',
         type: 'title',
         content: 'Esta é a tier-list dos melhores clipes da live em 2025',
         animation: 'slide-up',
         delay: 0,
       },
       {
-        id: 'S1-I2',
+        id: 's1-i2',
         type: 'text',
         content: 'Aqui, analisamos e compilamos dados dos clipes com mais visualizações, os mais melhores e engraçados que encontramos',
         animation: 'fade',
         delay: 0.5,
       },
       {
-        id: 'S1-I3',
+        id: 's1-i3',
         type: 'text',
         content: 'Vamos começar...',
         animation: 'fade',
@@ -51,42 +52,42 @@ export const presentationData: ScreenData[] = [
     duration: 10,
     items: [
       {
-        id: 'S2-I1',
+        id: 's2-i1',
         type: 'text',
         content: '2025 foi um ano com 365 dias...',
         animation: 'fade',
         delay: 0,
       },
       {
-        id: 'S2-I2',
+        id: 's2-i2',
         type: 'title',
         content: 'Em que foram feitos 807 clipes',
         animation: 'slide-up',
         delay: 0.5,
       },
       {
-        id: 'S2-I3',
+        id: 's2-i3',
         type: 'text',
         content: 'Proporção 2.21 clipes por dia',
         animation: 'fade',
         delay: 1.0,
       },
       {
-        id: 'S2-I4',
+        id: 's2-i4',
         type: 'text',
         content: 'Sendo 760 na Twitch - em comparação aos 3.373 clipes de 2024',
         animation: 'fade',
         delay: 1.5,
       },
       {
-        id: 'S2-I5',
+        id: 's2-i5',
         type: 'text',
         content: 'E 47 na Kick + em comparação à zero em 2024',
         animation: 'fade',
         delay: 2.0,
       },
       {
-        id: 'S2-I6',
+        id: 's2-i6',
         type: 'text',
         content: 'Os dados compilados ignoram todos os clipes feitos pelo eskimozin.',
         animation: 'fade',
@@ -99,35 +100,35 @@ export const presentationData: ScreenData[] = [
     duration: 10,
     items: [
       {
-        id: 'S3-I1',
+        id: 's3-i1',
         type: 'text',
         content: 'O dia em que mais clipes foram feitos foi',
         animation: 'fade',
         delay: 0,
       },
       {
-        id: 'S3-I2',
+        id: 's3-i2',
         type: 'title',
         content: '12 de junho',
         animation: 'slide-up',
         delay: 0.5,
       },
       {
-        id: 'S3-I3',
+        id: 's3-i3',
         type: 'text',
         content: 'Esse foi o 2º dia da Subathon',
         animation: 'fade',
         delay: 1.0,
       },
       {
-        id: 'S3-I4',
+        id: 's3-i4',
         type: 'text',
         content: 'E 22 clipes foram clipados neste dia',
         animation: 'fade',
         delay: 1.5,
       },
       {
-        id: 'S3-I5',
+        id: 's3-i5',
         type: 'text',
         content: 'Referente apenas à clipes feitos na Twitch e ignorando todos os clipes feitos pelo eskimozin.',
         animation: 'fade',
@@ -140,49 +141,49 @@ export const presentationData: ScreenData[] = [
     duration: 10,
     items: [
       {
-        id: 'S4-I1',
+        id: 's4-i1',
         type: 'title',
         content: 'Os meses em que mais clipes foram feitos foi...',
         animation: 'slide-up',
         delay: 0,
       },
       {
-        id: 'S4-I2',
+        id: 's4-i2',
         type: 'text',
         content: 'Julho Subathon, com 190 clipes',
         animation: 'fade',
         delay: 0.5,
       },
       {
-        id: 'S4-I3',
+        id: 's4-i3',
         type: 'text',
         content: 'Janeiro, com 182 clipes',
         animation: 'fade',
         delay: 1.0,
       },
       {
-        id: 'S4-I4',
+        id: 's4-i4',
         type: 'text',
         content: 'Fevereiro, com 90 clipes',
         animation: 'fade',
         delay: 1.5,
       },
       {
-        id: 'S4-I5',
+        id: 's4-i5',
         type: 'text',
         content: 'Março, com 52',
         animation: 'fade',
         delay: 2.0,
       },
       {
-        id: 'S4-I6',
+        id: 's4-i6',
         type: 'text',
         content: 'E Maio com 46 clipes',
         animation: 'fade',
         delay: 2.5,
       },
       {
-        id: 'S4-I7',
+        id: 's4-i7',
         type: 'text',
         content: 'Referente apenas à clipes feitos na Twitch e ignorando todos os clipes feitos pelo eskimozin.',
         animation: 'fade',
@@ -195,70 +196,70 @@ export const presentationData: ScreenData[] = [
     duration: 10,
     items: [
       {
-        id: 'S5-I1',
+        id: 's5-i1',
         type: 'title',
         content: 'Os maiores clippers de 2025 foram...',
         animation: 'slide-up',
         delay: 0,
       },
       {
-        id: 'S5-I2',
+        id: 's5-i2',
         type: 'text',
         content: '(Rufem os tambores)',
         animation: 'fade',
         delay: 0.5,
       },
       {
-        id: 'S5-I3',
+        id: 's5-i3',
         type: 'text',
         content: '(Tã tã tã tã)',
         animation: 'fade',
         delay: 1.0,
       },
       {
-        id: 'S5-I4',
+        id: 's5-i4',
         type: 'text',
         content: '(Tã tã tã tã)',
         animation: 'fade',
         delay: 1.5,
       },
       {
-        id: 'S5-I5',
+        id: 's5-i5',
         type: 'text',
         content: 'rafuxo_2ne1, com 69 clipes',
         animation: 'fade',
         delay: 2.0,
       },
       {
-        id: 'S5-I6',
+        id: 's5-i6',
         type: 'text',
         content: 'odraudinho, com 44 clipes',
         animation: 'fade',
         delay: 2.5,
       },
       {
-        id: 'S5-I7',
+        id: 's5-i7',
         type: 'text',
         content: 'pantaloreza__,com 23 clipes',
         animation: 'fade',
         delay: 3.0,
       },
       {
-        id: 'S5-I8',
+        id: 's5-i8',
         type: 'text',
         content: 'kkkkkinho, com 21 clipes',
         animation: 'fade',
         delay: 3.5,
       },
       {
-        id: 'S5-I9',
+        id: 's5-i9',
         type: 'text',
         content: 'tinhaqueserotomtom, com 15 clipes',
         animation: 'fade',
         delay: 4.0,
       },
       {
-        id: 'S5-I10',
+        id: 's5-i10',
         type: 'text',
         content: 'Referente apenas à clipes feitos na Twitch e ignorando todos os clipes feitos pelo eskimozin.',
         animation: 'fade',
@@ -271,42 +272,42 @@ export const presentationData: ScreenData[] = [
     duration: 10,
     items: [
       {
-        id: 'S6-I1',
+        id: 's6-i1',
         type: 'title',
         content: 'O clipe mas visto foi...',
         animation: 'slide-up',
         delay: 0,
       },
       {
-        id: 'S6-I2',
+        id: 's6-i2',
         type: 'text',
         content: 'vamo fazer uma sacanagem com esse sapo',
         animation: 'fade',
         delay: 0.5,
       },
       {
-        id: 'S6-I3',
+        id: 's6-i3',
         type: 'text',
         content: 'clipado por odraudinho em 26 de janeiro',
         animation: 'fade',
         delay: 1.0,
       },
       {
-        id: 'S6-I4',
+        id: 's6-i4',
         type: 'text',
         content: 'com 1.278 visualizações + em comparação as 911 visualizações que o clipe mais visto em 2024 tinha em 31 dez. 2024',
         animation: 'fade',
         delay: 1.5,
       },
       {
-        id: 'S6-I5',
+        id: 's6-i5',
         type: 'text',
         content: 'https://www.twitch.tv/eskimozin/clip/BravePunchySpiderRuleFive-vfrwOYGy1fsIqhCv',
         animation: 'fade',
         delay: 2.0,
       },
       {
-        id: 'S6-I6',
+        id: 's6-i6',
         type: 'text',
         content: 'Os dados compilados ignoram todos os clipes feitos pelo eskimozin.',
         animation: 'fade',
@@ -319,28 +320,28 @@ export const presentationData: ScreenData[] = [
     duration: 10,
     items: [
       {
-        id: 'S7-I1',
+        id: 's7-i1',
         type: 'title',
         content: 'Todos os clipes da Twitch somaram juntos',
         animation: 'slide-up',
         delay: 0,
       },
       {
-        id: 'S7-I2',
+        id: 's7-i2',
         type: 'title',
         content: '13.184 visualizações',
         animation: 'fade',
         delay: 0.5,
       },
       {
-        id: 'S7-I3',
+        id: 's7-i3',
         type: 'text',
         content: '- em comparação as 37.729 visualizações que os clipes feitos em 2024 tinham em 31 dez. 2024',
         animation: 'fade',
         delay: 1.0,
       },
       {
-        id: 'S7-I4',
+        id: 's7-i4',
         type: 'text',
         content: 'Referente apenas à clipes feitos na Twitch e ignorando todos os clipes feitos pelo eskimozin.',
         animation: 'fade',
@@ -353,14 +354,14 @@ export const presentationData: ScreenData[] = [
     duration: 10,
     items: [
       {
-        id: 'S8-I1',
+        id: 's8-i1',
         type: 'title',
         content: 'Uma cor representou as lives em 2025...',
         animation: 'slide-up',
         delay: 0,
       },
       {
-        id: 'S8-I2',
+        id: 's8-i2',
         type: 'text',
         content: 'E ela não foi roxo...',
         animation: 'fade',
@@ -373,14 +374,14 @@ export const presentationData: ScreenData[] = [
     duration: 10,
     items: [
       {
-        id: 'S9-I1',
+        id: 's9-i1',
         type: 'title',
         content: 'Verde',
         animation: 'slide-up',
         delay: 0,
       },
       {
-        id: 'S9-I2',
+        id: 's9-i2',
         type: 'text',
         content: 'Segundo o ChatGPT, a cor verde representa renovação, crescimento, novos ciclos, transformação positiva forte em contextos de sustentabilidade e melhoria.',
         animation: 'fade',
@@ -393,35 +394,35 @@ export const presentationData: ScreenData[] = [
     duration: 10,
     items: [
       {
-        id: 'S10-I1',
+        id: 's10-i1',
         type: 'title',
         content: 'Viramos o ano na casa do Camponez',
         animation: 'slide-up',
         delay: 0,
       },
       {
-        id: 'S10-I2',
+        id: 's10-i2',
         type: 'title',
         content: 'Voltamos para o albergue',
         animation: 'fade',
         delay: 0.5,
       },
       {
-        id: 'S10-I3',
+        id: 's10-i3',
         type: 'title',
         content: 'E de repente...',
         animation: 'fade',
         delay: 1.0,
       },
       {
-        id: 'S10-I4',
+        id: 's10-i4',
         type: 'title',
         content: 'Aparecemos em São Paulo...',
         animation: 'fade',
         delay: 1.5,
       },
       {
-        id: 'S10-I5',
+        id: 's10-i5',
         type: 'title',
         content: 'Na Incidente House.',
         animation: 'fade',

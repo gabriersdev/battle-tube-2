@@ -2,11 +2,11 @@
 
 import React from 'react';
 import {motion, Variants} from 'framer-motion';
-import {ScreenItem as ScreenItemType} from '@/resources/presentation';
+import {ScreenItemData} from '@/resources/presentation';
 import {Image} from 'react-bootstrap';
 
 interface ScreenItemProps {
-  item: ScreenItemType;
+  item: ScreenItemData;
 }
 
 interface CustomProps {
@@ -58,17 +58,19 @@ export const ScreenItem: React.FC<ScreenItemProps> = ({item}) => {
   const renderContent = () => {
     switch (type) {
       case 'title':
-        return <h1 className={className || "display-4 fw-bold text-center mb-3"} style={responsiveStyle}>{content}</h1>;
+        return <h1 className={className || "display-4 fw-bold text-center mb-3"} style={responsiveStyle}>{content as string}</h1>;
       case 'text':
-        return <p className={className || "lead text-center mb-3"} style={responsiveStyle}>{content}</p>;
+        return <p className={className || "lead text-center mb-3"} style={responsiveStyle}>{content as string}</p>;
       case 'image':
-        return <Image src={content} alt="Presentation content" fluid className={className || "rounded shadow-lg my-3"} style={responsiveStyle}/>;
+        return <Image src={content as string} alt="Presentation content" fluid className={className || "rounded shadow-lg my-3"} style={responsiveStyle}/>;
       case 'iframe':
         return (
           <div className={`ratio ratio-16x9 w-100 my-3 overflow-hidden ${className || "rounded shadow-lg"}`} style={{maxWidth: '800px'}}>
-            <iframe src={content} title="Embedded content" allowFullScreen style={{border: 0}}/>
+            <iframe src={content as string} title="Embedded content" allowFullScreen style={{border: 0}}/>
           </div>
         );
+      case 'component':
+        return <div className={className} style={responsiveStyle}>{content}</div>;
       default:
         return null;
     }
