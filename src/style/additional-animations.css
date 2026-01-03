@@ -1,0 +1,56 @@
+:root {
+    --gradient-1: linear-gradient(
+            90deg,
+            #754be6 0,
+            #754be6 50%,
+            #754be6 100%
+    );
+}
+
+.gradient-area {
+    background-color: #FFF;
+    background-image: var(--gradient-1);
+    background-size: 400% 100%;
+    background-position: 0 50%;
+    background-blend-mode: screen;
+
+    animation: gradientMove 10s linear infinite,
+    gradientFade 10s ease-in-out infinite;
+}
+
+@keyframes gradientMove {
+    0% {
+        background-position: 0 50%;
+    }
+    50% {
+        background-position: 100% 50%;
+    }
+    100% {
+        background-position: 0 50%;
+    }
+}
+
+@keyframes gradientFade {
+    /* Branco */
+    0%,
+    15% {
+        background-color: #FFF;
+    }
+
+    /* Transição para gradiente */
+    30% {
+        background-color: #000;
+    }
+
+    /* Gradiente pulsando */
+    50%,
+    70% {
+        background-color: #000;
+    }
+
+    /* Transição de volta para branco */
+    85%,
+    100% {
+        background-color: #FFF;
+    }
+}

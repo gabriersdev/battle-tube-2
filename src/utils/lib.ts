@@ -46,11 +46,11 @@ export default class Lib {
     return ""
   }
   
-  static getClipID(data: ClipData | TierItem) {
+  static getClipID(data: ClipData | TierItem | {url: string}): string {
     // https://www.twitch.tv/eskimozin/clip/PrettiestLazyPeanutPoooound-PenLtEv4ihW7dnAD
     const id = data.url?.match(/https:\/\/www.twitch.tv\/\w*\/clip\/([\w-]*)/);
     if (id?.[1]) return id?.[1];
-    return null;
+    return "";
   }
   
   static getBSColor(index: number) {

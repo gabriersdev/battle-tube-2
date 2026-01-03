@@ -48,6 +48,12 @@ export default function Footer() {
             Repositório no Github
           </Button>
         </Link>
+        
+        <Link href={"/wrapped"}>
+          <Button variant={"secondary"} className={"fs-base"}>
+            Ver wrapped
+          </Button>
+        </Link>
       </div>
     </footer>
   )

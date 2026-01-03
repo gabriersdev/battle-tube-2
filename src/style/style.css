@@ -1,4 +1,5 @@
 @import url("./additional-colors.css");
+@import url("./additional-animations.css");
 
 *,
 *::after,
@@ -209,4 +210,12 @@ img[alt="programming img"] {
     @media (min-width: 992px) {
         font-size: 48px;
     }
+}
+
+.max-w-600 {
+    max-width: 700px !important;
+}
+
+.max-w-800 {
+    max-width: 800px !important;
 }
