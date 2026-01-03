@@ -2,9 +2,10 @@
   "name": "battle-tuble",
   "version": "2.0.0",
   "private": true,
+  "type": "module",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "node src/public/register.build.js && vite build",
     "start": "next start",
     "lint": "eslint",
     "update": "npm update"
@@ -13,6 +14,7 @@
     "@types/html2canvas": "^0.5.35",
     "framer-motion": "^12.23.26",
     "html2canvas": "^1.4.1",
+    "moment": "^2.30.1",
     "next": "^16.1.1",
     "react": "19.2.0",
     "react-bootstrap": "^2.10.10",

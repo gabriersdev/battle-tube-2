@@ -489,7 +489,7 @@ export const presentationData: ScreenData[] = [
       {
         id: 'S8-I2',
         type: 'text',
-        content: 'E ela não foi roxo...',
+        content: 'E não foi roxo...',
         animation: 'slide-up',
         delay: 4.5,
         className: `${defaultClassNames.text}`,
