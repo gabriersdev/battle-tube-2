@@ -1,0 +1,11 @@
+.text-purple-emphasis {
+    color: var(--purple-emphasis) !important;
+}
+
+.bg-purple-subtle {
+    background-color: var(--purple-subtle) !important;
+}
+
+.border-purple-subtle {
+    border-color: var(--purple-emphasis) !important;
+}

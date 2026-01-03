@@ -1,0 +1,11 @@
+.text-blue-emphasis {
+    color: var(--blue-emphasis) !important;
+}
+
+.bg-blue-subtle {
+    background-color: var(--blue-subtle) !important;
+}
+
+.border-blue-subtle {
+    border-color: var(--blue-emphasis) !important;
+}

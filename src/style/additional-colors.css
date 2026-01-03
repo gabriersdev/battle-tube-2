@@ -1,0 +1,18 @@
+@import "./colors/color-blue.css";
+@import "./colors/color-lilac.css";
+@import "./colors/color-orange.css";
+@import "./colors/color-purple.css";
+
+:root {
+    --purple-emphasis: #8146e2;
+    --purple-subtle: #b49cc7;
+
+    --orange-emphasis: #e07f06;
+    --orange-subtle: #e49c3b;
+
+    --lilac-emphasis: #7b7ce9;
+    --lilac-subtle: #c1badd;
+
+    --blue-emphasis: #0c59c6;
+    --blue-subtle: #aac0e4;
+}

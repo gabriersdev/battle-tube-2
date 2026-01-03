@@ -1,0 +1,11 @@
+.text-lilac-emphasis {
+    color: var(--lilac-emphasis) !important;
+}
+
+.bg-lilac-subtle {
+    background-color: var(--lilac-subtle) !important;
+}
+
+.border-lilac-subtle {
+    border-color: var(--lilac-emphasis) !important;
+}

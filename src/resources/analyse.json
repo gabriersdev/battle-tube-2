@@ -1,0 +1,748 @@
+{
+  "totalClipsTwitch": 760,
+  "totalClipsKick": 47,
+  "totalViews": 13184,
+  "monthsWithMostClipsTwitch": [
+    {
+      "month": "Julho",
+      "count": 190
+    },
+    {
+      "month": "Janeiro",
+      "count": 182
+    },
+    {
+      "month": "Fevereiro",
+      "count": 90
+    },
+    {
+      "month": "Março",
+      "count": 52
+    },
+    {
+      "month": "Maio",
+      "count": 46
+    },
+    {
+      "month": "Junho",
+      "count": 46
+    },
+    {
+      "month": "Agosto",
+      "count": 45
+    },
+    {
+      "month": "Abril",
+      "count": 43
+    },
+    {
+      "month": "Dezembro",
+      "count": 28
+    },
+    {
+      "month": "Outubro",
+      "count": 17
+    },
+    {
+      "month": "Novembro",
+      "count": 13
+    },
+    {
+      "month": "Setembro",
+      "count": 8
+    }
+  ],
+  "topCreatorsTwitch": [
+    {
+      "creator": "rafuxo_2ne1",
+      "count": 69
+    },
+    {
+      "creator": "odraudinho",
+      "count": 44
+    },
+    {
+      "creator": "pantaloreza__",
+      "count": 23
+    },
+    {
+      "creator": "kkkkkinho",
+      "count": 21
+    },
+    {
+      "creator": "tinhaqueserotomtom",
+      "count": 15
+    },
+    {
+      "creator": "pestei",
+      "count": 15
+    },
+    {
+      "creator": "Benja_Lenja",
+      "count": 14
+    },
+    {
+      "creator": "ratoacucar",
+      "count": 12
+    },
+    {
+      "creator": "gabriersdawolf",
+      "count": 11
+    },
+    {
+      "creator": "littlemots",
+      "count": 11
+    },
+    {
+      "creator": "kkjkNick",
+      "count": 11
+    },
+    {
+      "creator": "nickolasxdd",
+      "count": 10
+    },
+    {
+      "creator": "marcusrsrs",
+      "count": 10
+    },
+    {
+      "creator": "alic3_the_c4t",
+      "count": 10
+    },
+    {
+      "creator": "wiillcu",
+      "count": 9
+    },
+    {
+      "creator": "chrvrdbs",
+      "count": 9
+    },
+    {
+      "creator": "pedro_luizzzz",
+      "count": 8
+    },
+    {
+      "creator": "chief_manda_muito",
+      "count": 8
+    },
+    {
+      "creator": "red_omago",
+      "count": 7
+    },
+    {
+      "creator": "yum11s",
+      "count": 7
+    },
+    {
+      "creator": "kkass0__0",
+      "count": 7
+    },
+    {
+      "creator": "engordabucho",
+      "count": 7
+    },
+    {
+      "creator": "ratinhopogger",
+      "count": 7
+    },
+    {
+      "creator": "lunukuzinho",
+      "count": 7
+    },
+    {
+      "creator": "pedrohcf3",
+      "count": 6
+    },
+    {
+      "creator": "yNettoFPS",
+      "count": 6
+    },
+    {
+      "creator": "yannn9778",
+      "count": 6
+    },
+    {
+      "creator": "powerguido6996a",
+      "count": 5
+    },
+    {
+      "creator": "Eo_Chara",
+      "count": 5
+    },
+    {
+      "creator": "bianca_call",
+      "count": 5
+    },
+    {
+      "creator": "roapenasrj",
+      "count": 5
+    },
+    {
+      "creator": "lahstrelita",
+      "count": 5
+    },
+    {
+      "creator": "cinamorou",
+      "count": 5
+    },
+    {
+      "creator": "bananaapenas",
+      "count": 5
+    },
+    {
+      "creator": "poullllllll",
+      "count": 5
+    },
+    {
+      "creator": "mihjos",
+      "count": 5
+    },
+    {
+      "creator": "jhonatasantana__",
+      "count": 5
+    },
+    {
+      "creator": "chaetilly",
+      "count": 4
+    },
+    {
+      "creator": "milytancia",
+      "count": 4
+    },
+    {
+      "creator": "GabsMOV",
+      "count": 4
+    },
+    {
+      "creator": "AdrianBorges652",
+      "count": 4
+    },
+    {
+      "creator": "srfr4n",
+      "count": 4
+    },
+    {
+      "creator": "KyleHunterTTv",
+      "count": 4
+    },
+    {
+      "creator": "Sttatic_",
+      "count": 3
+    },
+    {
+      "creator": "enkrafa",
+      "count": 3
+    },
+    {
+      "creator": "Dude7762",
+      "count": 3
+    },
+    {
+      "creator": "monte907",
+      "count": 3
+    },
+    {
+      "creator": "daviidlegal",
+      "count": 3
+    },
+    {
+      "creator": "vanpmill",
+      "count": 3
+    },
+    {
+      "creator": "EuSouAbismo",
+      "count": 3
+    },
+    {
+      "creator": "UmBrinquedo",
+      "count": 3
+    },
+    {
+      "creator": "joaofelipeoi",
+      "count": 3
+    },
+    {
+      "creator": "viiituus",
+      "count": 3
+    },
+    {
+      "creator": "gabriersbot",
+      "count": 3
+    },
+    {
+      "creator": "jotapee667",
+      "count": 3
+    },
+    {
+      "creator": "SadNooo_",
+      "count": 2
+    },
+    {
+      "creator": "causticakk",
+      "count": 2
+    },
+    {
+      "creator": "tavv2_",
+      "count": 2
+    },
+    {
+      "creator": "tainara_s2_",
+      "count": 2
+    },
+    {
+      "creator": "Artyyyyyyy_",
+      "count": 2
+    },
+    {
+      "creator": "LizAbroba",
+      "count": 2
+    },
+    {
+      "creator": "joninho69420",
+      "count": 2
+    },
+    {
+      "creator": "iPohann",
+      "count": 2
+    },
+    {
+      "creator": "an4gel_",
+      "count": 2
+    },
+    {
+      "creator": "RKzinn_10",
+      "count": 2
+    },
+    {
+      "creator": "Mah_DoRock",
+      "count": 2
+    },
+    {
+      "creator": "Nattsoproprio",
+      "count": 2
+    },
+    {
+      "creator": "strangestparticle",
+      "count": 2
+    },
+    {
+      "creator": "horuskkkjkk",
+      "count": 2
+    },
+    {
+      "creator": "carloslyraa",
+      "count": 2
+    },
+    {
+      "creator": "sasaimolegalfornai",
+      "count": 2
+    },
+    {
+      "creator": "kaotich_kaos",
+      "count": 2
+    },
+    {
+      "creator": "prismakkj",
+      "count": 2
+    },
+    {
+      "creator": "nerdysz",
+      "count": 2
+    },
+    {
+      "creator": "jlucaszkkk",
+      "count": 2
+    },
+    {
+      "creator": "leo_sccortt",
+      "count": 2
+    },
+    {
+      "creator": "Nanachansz",
+      "count": 2
+    },
+    {
+      "creator": "Draconotorio",
+      "count": 2
+    },
+    {
+      "creator": "ianHein9",
+      "count": 2
+    },
+    {
+      "creator": "samuca07801",
+      "count": 2
+    },
+    {
+      "creator": "karrue_",
+      "count": 2
+    },
+    {
+      "creator": "theomxsz",
+      "count": 2
+    },
+    {
+      "creator": "Pherzzos",
+      "count": 2
+    },
+    {
+      "creator": "shigaWAV",
+      "count": 2
+    },
+    {
+      "creator": "mortumezin",
+      "count": 2
+    },
+    {
+      "creator": "lobotomisto",
+      "count": 2
+    },
+    {
+      "creator": "MehLancia",
+      "count": 2
+    },
+    {
+      "creator": "nini8xu",
+      "count": 2
+    },
+    {
+      "creator": "qzxlahh",
+      "count": 2
+    },
+    {
+      "creator": "cedrosz",
+      "count": 1
+    },
+    {
+      "creator": "amysky6",
+      "count": 1
+    },
+    {
+      "creator": "steph",
+      "count": 1
+    },
+    {
+      "creator": "GoldBRs2",
+      "count": 1
+    },
+    {
+      "creator": "TEMIDOEDUARDO",
+      "count": 1
+    },
+    {
+      "creator": "shadowhyperbr",
+      "count": 1
+    },
+    {
+      "creator": "um_cara_ai1",
+      "count": 1
+    },
+    {
+      "creator": "PasocaL9Femboy",
+      "count": 1
+    },
+    {
+      "creator": "pandovisk7",
+      "count": 1
+    },
+    {
+      "creator": "thetuulip",
+      "count": 1
+    },
+    {
+      "creator": "ho7sd30",
+      "count": 1
+    }
+  ],
+  "mostViewedClipsTwitch": [
+    {
+      "views": 1278,
+      "clipper": "odraudinho",
+      "date": "2025-01-26",
+      "title": "vamo fazer uma sacanagem com esse sapo",
+      "url": "https://www.twitch.tv/eskimozin/clip/BravePunchySpiderRuleFive-vfrwOYGy1fsIqhCv"
+    },
+    {
+      "views": 832,
+      "clipper": "Nanachansz",
+      "date": "2025-06-14",
+      "title": "nathan descobre as regras",
+      "url": "https://www.twitch.tv/eskimozin/clip/AbnegateSuaveCodItsBoshyTime-770t14YC_j3SsBWj"
+    },
+    {
+      "views": 546,
+      "clipper": "bianca_call",
+      "date": "2025-01-22",
+      "title": "caiu",
+      "url": "https://www.twitch.tv/eskimozin/clip/YawningDelightfulGaurJebaited-FtqnEWsiD-HmiJdo"
+    },
+    {
+      "views": 316,
+      "clipper": "ratoacucar",
+      "date": "2025-05-09",
+      "title": "cereaw: BOO!!",
+      "url": "https://www.twitch.tv/eskimozin/clip/SpeedyHyperPorpoiseBuddhaBar-Rg0QBZllF7qCChAh"
+    },
+    {
+      "views": 279,
+      "clipper": "odraudinho",
+      "date": "2025-01-20",
+      "title": "me prove",
+      "url": "https://www.twitch.tv/eskimozin/clip/HardRoughBeeLitty-ylept3PlQ7IJ4RnJ"
+    },
+    {
+      "views": 205,
+      "clipper": "odraudinho",
+      "date": "2025-07-20",
+      "title": "W queda",
+      "url": "https://www.twitch.tv/eskimozin/clip/InspiringPlacidKittenNinjaGrumpy-gHl8Xz41Y_XjPRdk"
+    },
+    {
+      "views": 132,
+      "clipper": "lahstrelita",
+      "date": "2025-07-24",
+      "title": "comemorou antes do tempo",
+      "url": "https://www.twitch.tv/eskimozin/clip/UglyDreamyNarwhalSuperVinlin-i_Kj4lAzQvwCCgLc"
+    },
+    {
+      "views": 111,
+      "clipper": "littlemots",
+      "date": "2025-02-15",
+      "title": "nathan cantando",
+      "url": "https://www.twitch.tv/eskimozin/clip/PrettiestLazyPeanutPoooound-PenLtEv4ihW7dnAD"
+    },
+    {
+      "views": 88,
+      "clipper": "odraudinho",
+      "date": "2025-07-12",
+      "title": "kkkkkkkkkkkkkkkkkk",
+      "url": "https://www.twitch.tv/eskimozin/clip/FineThoughtfulPangolinPeteZarollTie-NEkH6UIi2XzgMqCK"
+    },
+    {
+      "views": 87,
+      "clipper": "wiillcu",
+      "date": "2025-04-02",
+      "title": "QUANDO MEU PC PEGA VIRUS SLA KK",
+      "url": "https://www.twitch.tv/eskimozin/clip/UnusualMoistHorseradishUncleNox-ziHi-oy7BdpVyahX"
+    },
+    {
+      "views": 87,
+      "clipper": "DuxxXP",
+      "date": "2025-07-19",
+      "title": "eskimo fazendo pose",
+      "url": "https://www.twitch.tv/eskimozin/clip/KnottyApatheticMochaMcaT-B6KhNuP9f8OBz-s9"
+    },
+    {
+      "views": 83,
+      "clipper": "kkkkkinho",
+      "date": "2025-02-03",
+      "title": "eye of ra jumpscare",
+      "url": "https://www.twitch.tv/eskimozin/clip/RepleteSmellyBorkDoubleRainbow-QcJo_52_K3aLvEsk"
+    },
+    {
+      "views": 74,
+      "clipper": "bianca_call",
+      "date": "2025-01-22",
+      "title": "calma calabreso calma calma",
+      "url": "https://www.twitch.tv/eskimozin/clip/InexpensiveAdventurousBorkSpicyBoy-pu-yhdwhvO5x7kO-"
+    },
+    {
+      "views": 71,
+      "clipper": "Bolinhaaaa_",
+      "date": "2025-02-04",
+      "title": "GRITA NATHAN",
+      "url": "https://www.twitch.tv/eskimozin/clip/SpunkyFamousCookieJonCarnage-P-yPaEFXpRrIXr9W"
+    },
+    {
+      "views": 71,
+      "clipper": "rafuxo_2ne1",
+      "date": "2025-05-28",
+      "title": "eskimo e eskima",
+      "url": "https://www.twitch.tv/eskimozin/clip/UglyTrappedHamburgerJonCarnage-KzGqvypvixP2qIuc"
+    },
+    {
+      "views": 69,
+      "clipper": "sayod__",
+      "date": "2025-11-25",
+      "title": "oi twitch",
+      "url": "https://www.twitch.tv/eskimozin/clip/HealthyWittySashimiFeelsBadMan-oHn-su0GHHdlav75"
+    },
+    {
+      "views": 66,
+      "clipper": "pestei",
+      "date": "2025-07-12",
+      "title": "soneca",
+      "url": "https://www.twitch.tv/eskimozin/clip/TriumphantDarkLasagnaYee-x9eWd7qncEkRt1Qi"
+    },
+    {
+      "views": 62,
+      "clipper": "samuca07801",
+      "date": "2025-10-29",
+      "title": "o brilho sumindo",
+      "url": "https://www.twitch.tv/eskimozin/clip/SavoryGrossSnail4Head-Lu8GqgLI2lviKeB5"
+    },
+    {
+      "views": 61,
+      "clipper": "rafuxo_2ne1",
+      "date": "2025-07-04",
+      "title": "eu sou o eskimozin",
+      "url": "https://www.twitch.tv/eskimozin/clip/HungryHomelyJayRickroll-Wj7jT2cAfRiYXpRx"
+    },
+    {
+      "views": 60,
+      "clipper": "marcusrsrs",
+      "date": "2025-01-24",
+      "title": "discurso que nao deu muito certo...",
+      "url": "https://www.twitch.tv/eskimozin/clip/BlueEphemeralTrollWoofer-_6p68St9aHArBI1c"
+    },
+    {
+      "views": 55,
+      "clipper": "littlemots",
+      "date": "2025-07-27",
+      "title": "ome20",
+      "url": "https://www.twitch.tv/eskimozin/clip/EnthusiasticWonderfulBisonOptimizePrime-TwE_X-HziUDMvBKQ"
+    },
+    {
+      "views": 54,
+      "clipper": "Pherzzos",
+      "date": "2025-07-20",
+      "title": "Kallus eduardo",
+      "url": "https://www.twitch.tv/eskimozin/clip/TenuousSparklyPoultryDoggo-gZK2T8_2sto3FfY1"
+    },
+    {
+      "views": 54,
+      "clipper": "littlemots",
+      "date": "2025-11-30",
+      "title": "fala baixo",
+      "url": "https://www.twitch.tv/eskimozin/clip/PoliteBoredAntAliens-J-IkKgjbc8Vjawej"
+    },
+    {
+      "views": 52,
+      "clipper": "bianca_call",
+      "date": "2025-02-28",
+      "title": "no meu bolo dnv cara",
+      "url": "https://www.twitch.tv/eskimozin/clip/BitterAwkwardPineappleLitFam-yCHBhTKDazKsWLno"
+    },
+    {
+      "views": 52,
+      "clipper": "duran_duran10",
+      "date": "2025-06-02",
+      "title": "mf desviou na vida real vsfddd",
+      "url": "https://www.twitch.tv/eskimozin/clip/VibrantEagerNeanderthalJKanStyle-p8q3U__FT71OITuR"
+    },
+    {
+      "views": 49,
+      "clipper": "bogalivre",
+      "date": "2025-07-28",
+      "title": "e tem, sexo nesse jogo 🙂",
+      "url": "https://www.twitch.tv/eskimozin/clip/UglyBlushingPistachioBibleThump-FxH5uAksC6ubgZEM"
+    },
+    {
+      "views": 48,
+      "clipper": "Grikee_",
+      "date": "2025-03-30",
+      "title": "WOAH",
+      "url": "https://www.twitch.tv/eskimozin/clip/LightAnnoyingBorkLeeroyJenkins-yJGnO9GaejFKQ5By"
+    },
+    {
+      "views": 46,
+      "clipper": "enkrafa",
+      "date": "2025-02-26",
+      "title": "FOI PEGO",
+      "url": "https://www.twitch.tv/eskimozin/clip/WittyPunchyBasenjiChocolateRain-Fuk34dNoaF64Pez6"
+    },
+    {
+      "views": 46,
+      "clipper": "odraudinho",
+      "date": "2025-03-07",
+      "title": "ghile ta solteiro?",
+      "url": "https://www.twitch.tv/eskimozin/clip/PrettiestClearBottleTTours-AxKc2w9brPy5ak8o"
+    },
+    {
+      "views": 46,
+      "clipper": "lahstrelita",
+      "date": "2025-07-20",
+      "title": "rayssa leal homem",
+      "url": "https://www.twitch.tv/eskimozin/clip/VainObesePuppyPRChase-GFlOUfX3g3DT6QLB"
+    },
+    {
+      "views": 45,
+      "clipper": "lobotomisto",
+      "date": "2025-07-24",
+      "title": "viscoito",
+      "url": "https://www.twitch.tv/eskimozin/clip/MistyFriendlyDadANELE-8RPV8uLx5U5QSfeN"
+    },
+    {
+      "views": 43,
+      "clipper": "rafuxo_2ne1",
+      "date": "2025-01-03",
+      "title": "mordida",
+      "url": "https://www.twitch.tv/eskimozin/clip/BashfulStupidCamelNononoCat-QGXzzD-Ty3yKAuyk"
+    },
+    {
+      "views": 43,
+      "clipper": "pestei",
+      "date": "2025-06-24",
+      "title": "festa",
+      "url": "https://www.twitch.tv/eskimozin/clip/PeppyTalentedLionBrokeBack-QLRchUj_w0kCQu6T"
+    },
+    {
+      "views": 40,
+      "clipper": "marcusrsrs",
+      "date": "2025-02-17",
+      "title": "feliz aniversário lazule 🥳",
+      "url": "https://www.twitch.tv/eskimozin/clip/SpookyCrypticConsoleFloof-SfEqg3H2yR_2yDWw"
+    },
+    {
+      "views": 28,
+      "clipper": "srfr4n",
+      "date": "2025-07-12",
+      "title": "eskimo debaixo da cama",
+      "url": "https://www.twitch.tv/eskimozin/clip/ObliviousSuspiciousOysterNotATK-aHhBdcRsxQZsXoSK"
+    },
+    {
+      "views": 27,
+      "clipper": "horuskkkjkk",
+      "date": "2025-09-08",
+      "title": "VOLTAAAAA",
+      "url": "https://www.twitch.tv/eskimozin/clip/TameMotionlessAubergineJKanStyle-cjNRUTuCwjNvLwCL"
+    },
+    {
+      "views": 25,
+      "clipper": "rafuxo_2ne1",
+      "date": "2025-01-17",
+      "title": "o7",
+      "url": "https://www.twitch.tv/eskimozin/clip/OnerousSmoggySpiderHeyGirl--RITM1iBIPRr3MEv"
+    },
+    {
+      "views": 24,
+      "clipper": "rafuxo_2ne1",
+      "date": "2025-02-17",
+      "title": "comendo macarrão",
+      "url": "https://www.twitch.tv/eskimozin/clip/VenomousStrangeSoymilkPogChamp-sfcCNFfRp9ZkChTH"
+    },
+    {
+      "views": 29,
+      "clipper": "Peshie",
+      "date": "2025-01-26",
+      "title": "jovem",
+      "url": "https://www.twitch.tv/eskimozin/clip/SpineyBetterCurlewNinjaGrumpy-YcNT4i-vUgpdvx8f"
+    },
+    {
+      "views": 22,
+      "clipper": "kkkkkinho",
+      "date": "2025-02-16",
+      "title": "tigrinho",
+      "url": "https://www.twitch.tv/eskimozin/clip/AltruisticOnerousYakYee-Wk9Iwwsj11UzHnSp"
+    }
+  ],
+  "promises": [
+    {
+      "views": 39,
+      "clipper": "",
+      "date": "2025-05-09",
+      "title": "é oq man...",
+      "url": "https://www.twitch.tv/eskimozin/clip/DepressedAverageLouseRuleFive-9VHbedJmAH2oGAGT"
+    }
+  ]
+}

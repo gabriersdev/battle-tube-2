@@ -1,0 +1,11 @@
+.text-orange-emphasis {
+    color: var(--orange-emphasis) !important;
+}
+
+.bg-orange-subtle {
+    background-color: var(--orange-subtle) !important;
+}
+
+.border-orange-subtle {
+    border-color: var(--orange-emphasis) !important;
+}

@@ -1,3 +1,5 @@
+@import url("./additional-colors.css");
+
 *,
 *::after,
 *::before {
@@ -152,7 +154,7 @@ img[alt="programming img"] {
     height: 125px;
     display: block;
     cursor: pointer;
-    
+
     @media screen and (max-width: 768px) {
         min-width: 165px;
         max-width: 100%;
@@ -175,4 +177,36 @@ img[alt="programming img"] {
 .btn-close {
     border: none !important;
     box-shadow: none !important;
+}
+
+.fs-42 {
+    font-size: 28px;
+
+    @media (min-width: 576px) {
+        font-size: 32px;
+    }
+
+    @media (min-width: 768px) {
+        font-size: 36px;
+    }
+
+    @media (min-width: 992px) {
+        font-size: 42px;
+    }
+}
+
+.fs-48 {
+    font-size: 32px; /* mobile first */
+
+    @media (min-width: 576px) {
+        font-size: 36px;
+    }
+
+    @media (min-width: 768px) {
+        font-size: 42px;
+    }
+
+    @media (min-width: 992px) {
+        font-size: 48px;
+    }
 }

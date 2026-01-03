@@ -39,6 +39,7 @@ export default function Selection() {
         background: "transparent", // Fundo transparente
         // scale: 2, // Maior resolução
         logging: false,
+        // @ts-ignore
         onclone: (clonedDoc: { querySelector: (arg0: string) => HTMLElement; }) => {
           const element = clonedDoc.querySelector('.tier-list-container') as HTMLElement;
           if (element) {
