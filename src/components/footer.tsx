@@ -3,9 +3,9 @@ import Link from "next/link";
 import React, {useContext, useEffect, useState} from "react";
 import {Theme} from "@/components/tier-list-context";
 
-export default function Footer() {
+export default function Footer({variant}: { variant: "wrapped" | "tier-list" }) {
   const [ls, setLS] = useState<boolean>(false);
-  const { requestConfirm } = useContext(Theme);
+  const {requestConfirm} = useContext(Theme);
   
   useEffect(() => {
     // eslint-disable-next-line react-hooks/set-state-in-effect
@@ -15,10 +15,14 @@ export default function Footer() {
   
   return (
     <footer className={"d-flex flex-column gap-5"}>
-      <p className={"m-0 text-center text-body-secondary text-balance"}>
-        {ls && "Não se preocupe, conforme você interage com a Tier List o progresso é salvo no navegador. "}
-        Ao usar a Tier List, você concorda com o armazenamento de alguns dados no navegador para aprimorar sua experiência, realizar análises de performance, corrigir erros e identificar bugs.
-      </p>
+      {
+        variant === "tier-list" && (
+          <p className={"m-0 text-center text-body-secondary text-balance"}>
+            {ls && "Não se preocupe, conforme você interage com a Tier List o progresso é salvo no navegador. "}
+            Ao usar a Tier List, você concorda com o armazenamento de alguns dados no navegador para aprimorar sua experiência, realizar análises de performance, corrigir erros e identificar bugs.
+          </p>
+        )
+      }
       
       <div className={"d-flex gap-2 flex-wrap align-items-center justify-content-center"}>
         <Button variant={"primary"} className={"fs-base"} onClick={() => {
@@ -39,7 +43,7 @@ export default function Footer() {
         
         <Link href={process.env.NEXT_PUBLIC_GITHUB_CLONE_URL ?? "#0"}>
           <Button variant={"secondary"} className={"fs-base"}>
-            Fazer minha própria Tier List
+            Fazer minha própria tier list
           </Button>
         </Link>
         
@@ -49,12 +53,31 @@ export default function Footer() {
           </Button>
         </Link>
         
-        <Link href={"/wrapped"}>
-          <Button variant={"secondary"} className={"fs-base"}>
-            Ver wrapped
-          </Button>
-        </Link>
+        {
+          variant === "wrapped" ? (
+            <Link href={"/tier-list"}>
+              <Button variant={"secondary"} className={"fs-base"}>
+                Ir para a tier list
+              </Button>
+            </Link>
+          ) : (
+            <Link href={"/wrapped"}>
+              <Button variant={"secondary"} className={"fs-base"}>
+                Ver wrapped
+              </Button>
+            </Link>
+          )
+        }
       </div>
+      
+      {
+        variant === "wrapped" && (
+          <div style={{borderTop: "2.5px solid #000"}} className={"d-flex align-items-center justify-content-center p-3 gap-2 flex-column"}>
+            <p className={"fs-base mb-0"}>Feito com 💖 pelo Gabriel</p>
+            <span className={"text-small"}>Versão de build: XXX GMT-03:00</span>
+          </div>
+        )
+      }
     </footer>
   )
 }

@@ -70,7 +70,7 @@ export default function TierList() {
       dialogType
     }}>
       <Selection/>
-      <Footer/>
+      <Footer variant={"tier-list"}/>
       <ModalComponent/>
       <ConfirmModal/>
     </ThemeContext>
