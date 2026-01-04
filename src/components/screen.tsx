@@ -12,8 +12,12 @@ interface ScreenProps {
 
 // Variantes para o container da tela (entrada/saída global)
 const screenVariants: Variants = {
-  initial: {opacity: 0},
-  animate: (custom: {backgroundColor?: string}) => ({
+  initial: {
+    opacity: 0,
+    y: 16,
+  },
+  animate: (custom: { backgroundColor?: string }) => ({
+    y: 0,
     opacity: 1,
     backgroundColor: custom.backgroundColor || 'transparent', // Anima a cor de fundo se fornecida
     transition: {
@@ -23,7 +27,11 @@ const screenVariants: Variants = {
   }),
   exit: {
     opacity: 0,
-    transition: {duration: 0.5}
+    y: -12,
+    transition: {
+      duration: 0.25,
+      ease: "easeIn",
+    },
   }
 };
 
@@ -59,10 +67,14 @@ export const Screen: React.FC<ScreenProps> = ({data}) => {
           className="w-100"
         >
           <Row className="w-100">
-            <Col xs={12} md={10} lg={8} className="d-flex flex-column w-100">
-              {data.items.map((item) => (
-                <ScreenItem key={item.id} item={item}/>
-              ))}
+            <Col
+              xs={12}
+              md={10}
+              lg={8}
+              className={`d-flex flex-column w-100 ${data.id === "screen-1" ? "position-absolute" : ""}`}
+              style={data.id === "screen-1" ? {top: '50%', left: '50%', transform: 'translate(-50%, -50%)', maxWidth: '1500px', zIndex: 10000} : {}}
+            >
+              {data.items.map(item => <ScreenItem key={item.id} item={item}/>)}
             </Col>
           </Row>
         </motion.div>

@@ -8,6 +8,7 @@ import {ProgressBar} from './progress-bar';
 import {Controls} from './controls';
 import Footer from "@/components/footer";
 import Player from "@/components/player";
+import Marquee from "@/components/marquee";
 
 export const PresentationStage: React.FC = () => {
   const {currentScreen} = usePresentation();
@@ -20,6 +21,7 @@ export const PresentationStage: React.FC = () => {
         
         <AnimatePresence mode="wait">
           <Screen key={currentScreen.id} data={currentScreen}/>
+          {currentScreen.id === "screen-1" && <Marquee/>}
         </AnimatePresence>
         
         <Controls/>

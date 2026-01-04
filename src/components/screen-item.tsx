@@ -18,7 +18,7 @@ const itemVariants: Variants = {
   initial: ({animation}: CustomProps) => {
     switch (animation) {
       case 'slide-up':
-        return {opacity: 0, y: 50};
+        return {opacity: 0, y: 15};
       case 'slide-down':
         return {opacity: 0, y: -50};
       case 'slide-left':

@@ -1,19 +1,19 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import {Badge, Button} from "react-bootstrap";
+import {Alert, Badge, Button} from "react-bootstrap";
 
 import Lib from "@/utils/lib";
 import Iframe from "@/components/iframe";
 import DiffInfo from "@/components/diff-info";
 
-import ModIcon from "@/public/mod.png";
-import VipIcon from "@/public/vip.png";
-import SubIcon from "@/public/pou.png";
-import KickLogo from "@/public/kick.svg";
-import TwitchLogo from "@/public/twitch.jpg";
-import E7TVAga from "@/public/7TV-aga.gif";
-import E7TVAdmita from "@/public/7TV-admita.png";
+import ModIcon from "../../public/mod.png";
+import VipIcon from "../../public/vip.png";
+import SubIcon from "../../public/pou.png";
+import KickLogo from "../../public/kick.svg";
+import TwitchLogo from "../../public/twitch.jpg";
+import E7TVAga from "../../public/7TV-aga.gif";
+import E7TVAdmita from "../../public/7TV-admita.png";
 
 export type AnimationType = 'fade' | 'slide-up' | 'slide-down' | 'slide-left' | 'slide-right' | 'scale';
 
@@ -33,7 +33,16 @@ export interface ScreenData {
   items: ScreenItemData[];
   backgroundColor?: string; // Cor de fundo opcional para a tela
   backgroundClassName?: string; // Classe CSS para o fundo da tela
-  audioSrc?: string; // Caminho do arquivo de áudio opcional para a tela
+  audio?: {
+    src: string,
+    name: string,
+    author: string,
+    link: string
+    initTime?: number,
+    img: {
+      src: string
+    }
+  }; // Caminho do arquivo de áudio opcional para a tela
 }
 
 const defaultClassNames: {
@@ -41,7 +50,7 @@ const defaultClassNames: {
   text: string,
   textSM: string
 } = {
-  title: 'text-balance text-purple-emphasis fw-semibold font-inter-tight mb-3 display-4 max-w-600',
+  title: 'text-balance text-purple-emphasis fw-bold font-inter-tight mb-3 display-4 max-w-600',
   text: 'text-balance text-body-secondary fw-medium font-inter-tight mb-3 fs-2 lh-sm',
   textSM: 'text-balance text-small text-body-tertiary'
 };
@@ -69,11 +78,16 @@ export const presentationData: ScreenData[] = [
       },
       {
         id: 'S1-I3',
-        type: 'text',
-        content: 'Cada slide tem um tempo de exibição em tela mas você pode usar os controles na parte inferior da página para definir o que é exibido.',
+        type: 'component',
+        content: (
+          <div className={`${defaultClassNames.text}`}>
+            <Alert variant={"secondary"} style={{maxWidth: "875px"}}>
+              Cada slide tem um tempo de exibição em tela mas você pode usar os controles na parte inferior da página para definir o que é exibido.
+            </Alert>
+          </div>
+        ),
         animation: 'slide-up',
         delay: 7,
-        className: `${defaultClassNames.text}`,
       },
       {
         id: 'S1-I4',
@@ -85,11 +99,19 @@ export const presentationData: ScreenData[] = [
       },
     ],
     backgroundClassName: "bg-danger-subtle",
-    audioSrc: "/audios/estereo.mp3"
+    audio: {
+      src: "/audios/music-2.mp3",
+      link: "https://www.youtube.com/watch?v=fOoQh7ejd9g",
+      name: "Huracan",
+      author: "Ohayomatsu + Vários participantes",
+      img: {
+        src: "/thumbs/ohayomatsu-album.jpg"
+      }
+    },
   },
   {
     id: 'screen-2',
-    duration: 10,
+    duration: 12,
     items: [
       {
         id: 'S2-I1',
@@ -154,11 +176,20 @@ export const presentationData: ScreenData[] = [
         className: `${defaultClassNames.textSM}`,
       },
     ],
-    backgroundClassName: "bg-primary-subtle"
+    backgroundClassName: "bg-primary-subtle",
+    audio: {
+      src: "/audios/music-2.mp3",
+      link: "https://www.youtube.com/watch?v=fOoQh7ejd9g",
+      name: "Huracan",
+      author: "Ohayomatsu + Vários participantes",
+      img: {
+        src: "/thumbs/ohayomatsu-album.jpg"
+      }
+    },
   },
   {
     id: 'screen-3',
-    duration: 10,
+    duration: 20,
     items: [
       {
         id: 'S3-I1',
@@ -206,7 +237,17 @@ export const presentationData: ScreenData[] = [
         className: `${defaultClassNames.textSM}`,
       },
     ],
-    backgroundClassName: "bg-warning-subtle"
+    backgroundClassName: "bg-warning-subtle",
+    audio: {
+      src: "/audios/music-3.mp3",
+      link: "https://www.youtube.com/watch?v=dxt2QMT8jqc",
+      name: "Quero te ver 2",
+      author: "Ohayomatsu + Vários participantes",
+      initTime: 89,
+      img: {
+        src: "/thumbs/ohayomatsu-album.jpg"
+      }
+    },
   },
   {
     id: 'screen-4',
@@ -215,7 +256,7 @@ export const presentationData: ScreenData[] = [
       {
         id: 'S4-I1',
         type: 'title',
-        content: 'Os meses em que mais clipes foram feitos foi...',
+        content: 'Os meses em que mais clipes foram feitos...',
         animation: 'slide-up',
         delay: 0,
         className: `${defaultClassNames.title.replace(/mb-3/, "mb-5")}`,
@@ -274,7 +315,16 @@ export const presentationData: ScreenData[] = [
         className: `${defaultClassNames.textSM}`,
       },
     ],
-    backgroundClassName: "bg-body-secondary"
+    backgroundClassName: "bg-body-secondary",
+    audio: {
+      src: "/audios/music-3.mp3",
+      link: "https://www.youtube.com/watch?v=dxt2QMT8jqc",
+      name: "Quero te ver 2",
+      author: "Ohayomatsu + Vários participantes",
+      img: {
+        src: "/thumbs/ohayomatsu-album.jpg"
+      }
+    },
   },
   {
     id: 'screen-5',
@@ -367,7 +417,17 @@ export const presentationData: ScreenData[] = [
         className: `${defaultClassNames.textSM}`,
       },
     ],
-    backgroundClassName: "bg-info-secondary"
+    backgroundClassName: "bg-info-subtle",
+    audio: {
+      src: "/audios/music-x.mp3",
+      link: "https://soundcloud.com/kozmo8k/vai-tomando-de-sequencia-kozmo?in=kozmo8k/sets/ritmada-flip-vol-1",
+      name: "Vai tomando de sequência",
+      author: "KOZMO' + Ohayomatsu",
+      initTime: 17.4,
+      img: {
+        src: "/thumbs/ritmada.jpg"
+      }
+    },
   },
   {
     id: 'screen-6',
@@ -385,9 +445,9 @@ export const presentationData: ScreenData[] = [
         id: 'S6-I2',
         type: 'component',
         content: (
-          <div className={`${defaultClassNames.text}`}>
-            <span>{'"'}vamo fazer uma sacanagem com esse sapo{'"'}</span>
-            <div className={"d-flex align-items-center flex-wrap gap-1 fs-base font-inter fw-normal mt-1"}>
+          <Link href={"https://www.twitch.tv/eskimozin/clip/BravePunchySpiderRuleFive-vfrwOYGy1fsIqhCv"} target={"_blank"} className={`${defaultClassNames.text} text-decoration-none`}>
+            <span className={"text-body"}>{'"'}vamo fazer uma sacanagem com esse sapo{'"'}</span>
+            <div className={"d-flex align-items-center flex-wrap gap-1 fs-base font-inter fw-normal mt-1 text-body"}>
               <span>clipado por</span>
               <div className={"d-inline-flex gap-1 align-items-center flex-wrap"}>
                 <Image src={ModIcon} alt={"Ícone de moderador na Twitch"} width={13} height={13} style={{borderRadius: "1.5px"}}/>
@@ -395,7 +455,7 @@ export const presentationData: ScreenData[] = [
               </div>
               <span>em 26 de janeiro</span>
             </div>
-          </div>),
+          </Link>),
         animation: 'slide-up',
         delay: 1.5,
       },
@@ -412,7 +472,7 @@ export const presentationData: ScreenData[] = [
       },
       {
         id: 'S6-I4',
-        type: 'text',
+        type: 'component',
         content: (
           <div className={`mb-3 d-flex gap-1 mt-2 flex-column ${defaultClassNames.text}`}>
             <span>com 1.278 visualizações</span>
@@ -432,11 +492,20 @@ export const presentationData: ScreenData[] = [
         className: `${defaultClassNames.textSM}`,
       },
     ],
-    backgroundClassName: "bg-danger-subtle"
+    backgroundClassName: "bg-danger-subtle",
+    audio: {
+      src: "/audios/music-x.mp3",
+      link: "https://soundcloud.com/kozmo8k/vai-tomando-de-sequencia-kozmo?in=kozmo8k/sets/ritmada-flip-vol-1",
+      name: "Vai tomando de sequência",
+      author: "KOZMO' + Ohayomatsu",
+      img: {
+        src: "/thumbs/ritmada.jpg"
+      }
+    },
   },
   {
     id: 'screen-7',
-    duration: 15,
+    duration: 20,
     items: [
       {
         id: 'S7-I1',
@@ -474,7 +543,16 @@ export const presentationData: ScreenData[] = [
         className: `${defaultClassNames.textSM}`,
       },
     ],
-    backgroundClassName: "bg-primary-subtle"
+    backgroundClassName: "bg-primary-subtle",
+    audio: {
+      src: "/audios/music-x.mp3",
+      link: "https://soundcloud.com/kozmo8k/vai-tomando-de-sequencia-kozmo?in=kozmo8k/sets/ritmada-flip-vol-1",
+      name: "Vai tomando de sequência",
+      author: "KOZMO' + Ohayomatsu",
+      img: {
+        src: "/thumbs/ritmada.jpg"
+      }
+    },
   },
   {
     id: 'screen-8',
@@ -486,7 +564,7 @@ export const presentationData: ScreenData[] = [
         content: 'Uma cor representou as lives em 2025...',
         animation: 'slide-up',
         delay: 0,
-        className: `${defaultClassNames.title.replace(/text-purple-emphasis/g, "text-primary-emphasis")}`,
+        className: `${defaultClassNames.title.replace(/text-purple-emphasis/g, "text-info")}`,
       },
       {
         id: 'S8-I2',
@@ -494,10 +572,20 @@ export const presentationData: ScreenData[] = [
         content: 'E não foi roxo...',
         animation: 'slide-up',
         delay: 4.5,
-        className: `${defaultClassNames.text}`,
+        className: `${defaultClassNames.text} text-black`,
       },
     ],
-    backgroundClassName: 'gradient-area'
+    backgroundClassName: 'gradient-area',
+    audio: {
+      src: "/audios/music-7.mp3",
+      link: "https://www.youtube.com/watch?v=6MMqXx6KBTw",
+      name: "Purple Rain",
+      author: "Duquesa + Yunk vino",
+      initTime: 127,
+      img: {
+        src: "/thumbs/duquesa-album.jpg"
+      }
+    },
   },
   {
     id: 'screen-9',
@@ -521,10 +609,19 @@ export const presentationData: ScreenData[] = [
       },
     ],
     backgroundClassName: 'bg-success-subtle',
+    audio: {
+      src: "/audios/music-7.mp3",
+      link: "https://www.youtube.com/watch?v=6MMqXx6KBTw",
+      name: "Purple Rain",
+      author: "Duquesa + Yunk vino",
+      img: {
+        src: "/thumbs/duquesa-album.jpg"
+      }
+    },
   },
   {
     id: 'screen-10',
-    duration: 10,
+    duration: 15,
     items: [
       {
         id: 'S10-I1',
@@ -559,11 +656,21 @@ export const presentationData: ScreenData[] = [
         className: `${defaultClassNames.text}`,
       },
     ],
-    backgroundClassName: "bg-warning-subtle"
+    backgroundClassName: "bg-warning-subtle",
+    audio: {
+      src: "/audios/music-9.mp3",
+      link: "https://www.youtube.com/watch?v=PTCRAHzK2ic",
+      name: "Casa no campo",
+      author: "Elis Regina",
+      initTime: 20,
+      img: {
+        src: "/thumbs/elis-album.jpg"
+      }
+    },
   },
   {
     id: 'screen-11',
-    duration: 7.5,
+    duration: 15,
     items: [
       {
         id: 'S11-I1',
@@ -598,7 +705,17 @@ export const presentationData: ScreenData[] = [
         className: `${defaultClassNames.text}`,
       },
     ],
-    backgroundClassName: "bg-body-secondary"
+    backgroundClassName: "bg-body-secondary",
+    audio: {
+      src: "/audios/music-10.mp3",
+      link: "https://www.youtube.com/watch?v=xrB5AhtFiIw",
+      name: "Mudança de plano",
+      author: "Casllu",
+      initTime: 51.8,
+      img: {
+        src: "/thumbs/casllu-album.jpg"
+      }
+    },
   },
   {
     id: 'screen-12',
@@ -648,6 +765,16 @@ export const presentationData: ScreenData[] = [
         delay: 4.5,
       },
     ],
-    backgroundClassName: "bg-info-secondary"
+    backgroundClassName: "bg-info-secondary",
+    audio: {
+      src: "/audios/music-11.mp3",
+      link: "https://www.youtube.com/watch?v=uslXAQmyAKY",
+      name: "Adulto ideal (novos hábitos)",
+      author: "Ryu, the runner + Tchelo",
+      initTime: 94,
+      img: {
+        src: "/thumbs/ryu-album.jpg"
+      }
+    },
   },
 ];

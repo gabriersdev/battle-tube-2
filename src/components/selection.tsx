@@ -178,7 +178,7 @@ export default function Selection() {
       </div>
       
       <div
-        className="tier-list-container rounded-1 border overflow-y-scroll overflow-x-scroll bg-body"
+        className="tier-list-container rounded-1 border overflow-y-auto overflow-x-auto bg-body"
         ref={tierListContainer}
       >
         {/* Renderiza as linhas da Tier List dinamicamente */}

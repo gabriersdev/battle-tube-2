@@ -3,9 +3,9 @@ import React, {useContext, useEffect} from "react";
 import {Theme} from "@/components/tier-list-context";
 import Image from "next/image";
 
-import KickLogo from "@/public/kick.svg";
-import TwitchLogo from "@/public/twitch.jpg";
-import {Dropdown} from "@restart/ui";
+import KickLogo from "../../public/kick.svg";
+import TwitchLogo from "../../public/twitch.jpg";
+import {Dropdown} from "react-bootstrap";
 import {tiers} from "@/components/use-tier-list";
 import Lib from "@/utils/lib";
 import Iframe from "@/components/iframe";
@@ -36,13 +36,13 @@ export function ModalComponent() {
       if (item.id === showClipData.id) {
         return {
           ...item,
-          tier: tier as any
+          tier: tier as never
         }
       }
       return item;
     }));
   };
-
+  
   const currentItem = showClipData ? items.find(i => i.id === showClipData.id) : null;
   const currentTier = currentItem?.tier;
   
@@ -99,7 +99,7 @@ export function ModalComponent() {
           </ModalTitle>
         </ModalHeader>
         
-        <ModalBody className={"min-vh-80 overflow-y-scroll overflow-x-scroll"}>
+        <ModalBody className={"min-vh-80 overflow-y-scroll overflow-x-auto"}>
           {platform === "twitch" && clipId ? (
             <Iframe id={clipId} allowFullScreen={true} width="100%" height="100%" style={{minHeight: "calc(80vh - 2rem)"}}/>
           ) : (

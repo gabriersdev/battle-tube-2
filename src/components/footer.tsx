@@ -2,7 +2,7 @@ import {Button} from "react-bootstrap";
 import Link from "next/link";
 import React, {useContext, useEffect, useState} from "react";
 import {Theme} from "@/components/tier-list-context";
-import buildData from "@/public/register.build.json";
+import buildData from "../../public/register.build.json";
 import moment from "moment";
 
 moment.locale("pt-BR");

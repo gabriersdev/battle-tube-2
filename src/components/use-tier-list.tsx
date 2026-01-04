@@ -4,8 +4,8 @@ import clipsData from "@/resources/data.json";
 import Lib from "@/utils/lib";
 import Image from "next/image";
 
-import TwitchLogo from "@/public/twitch.jpg";
-import KickLogo from "@/public/kick.svg";
+import TwitchLogo from "../..//public/twitch.jpg";
+import KickLogo from "../../public/kick.svg";
 import VoidUser from "@/components/void-user";
 
 type TierLevel = 'S' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F';
@@ -291,7 +291,7 @@ export function UseTierList() {
           }>
             <div
               id={`draggable-element-${item.id}`}
-              className={`draggable-element p-2 rounded-0 m-1 overflow-x-scroll bg-${Lib.getBSColor(index)} ${item.className}`}
+              className={`draggable-element p-2 rounded-0 m-1 overflow-x-auto bg-${Lib.getBSColor(index)} ${item.className}`}
               style={{
                 border: "1px solid #00000025",
                 opacity: isDragging ? 0.5 : 1,
