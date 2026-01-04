@@ -33,6 +33,7 @@ export interface ScreenData {
   items: ScreenItemData[];
   backgroundColor?: string; // Cor de fundo opcional para a tela
   backgroundClassName?: string; // Classe CSS para o fundo da tela
+  audioSrc?: string; // Caminho do arquivo de áudio opcional para a tela
 }
 
 const defaultClassNames: {
@@ -83,7 +84,8 @@ export const presentationData: ScreenData[] = [
         className: `${defaultClassNames.text}`,
       },
     ],
-    backgroundClassName: "bg-danger-subtle"
+    backgroundClassName: "bg-danger-subtle",
+    audioSrc: "/audios/estereo.mp3"
   },
   {
     id: 'screen-2',

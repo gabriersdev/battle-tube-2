@@ -25,7 +25,7 @@ export const Controls: React.FC = () => {
         </Button>
         <Button variant="outline-light" onClick={togglePlay}>
           <span className={"text-small"}>
-            {isPlaying ? 'Pause' : 'Play'}
+            {isPlaying ? 'Pausar' : 'Play'}
           </span>
         </Button>
         <Button variant="outline-light" onClick={nextScreen}>
