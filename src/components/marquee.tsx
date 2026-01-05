@@ -9,18 +9,19 @@ interface MarqueeProps {
 
 const DEFAULT_ITEMS: MarqueeItemType[] = [
   "/clips-gif/1.gif",
-  '"Esse telefone é do maico?" - NILO, Algum',
+  '"Tinha? Eu não li não. Ah então eu tenho 18 anos." - NATHAN, Pherzzos',
   "/clips-gif/3.gif",
   '"Eu tinha três camisas social" - GROBOTH, Thiago',
   "/clips-gif/2.gif",
-  '"Quem não macetaria o gabriers?"',
+  '"Quem não macetaria o Gabriers?"',
   "/clips-gif/5.gif",
-  '"NÃO EDU!" - ESKIMOZIN, João',
+  '"NÃO, NÃO EDU!!" - ESKIMOZIN, João',
   "/clips-gif/3.gif",
   '"Pepetino namoral..." - JONES, David',
-  '"Fale por você" - DESCONHECIDO, Autor',
   "/clips-gif/2.gif",
-  '"A terceira hoje" - ESKIMOZIN, João',
+  '"Fale por você!" - DESCONHECIDO, Autor',
+  "/clips-gif/1.gif",
+  '"A terceira hoje?" - ESKIMOZIN, João',
   "/clips-gif/4.gif",
   '"Eu prefiro um suco" - DESCONHECIDO, Autor',
 ];
@@ -38,14 +39,19 @@ export default function Marquee({items = DEFAULT_ITEMS}: MarqueeProps) {
             src={item}
             alt="Item do marquee"
             style={{
-              maxWidth: '100%',
-              maxHeight: '100%',
+              // maxWidth: '100%',
+              // maxHeight: '100%',
               objectFit: 'cover',
               display: 'block',
-              borderRadius: 'inherit'
+              borderRadius: 'inherit',
+              top: '0',
+              left: '0',
+              width: '100%',
+              height: '100%'
             }}
-            width={1500}
-            height={1500}
+            width={500}
+            height={500}
+            className={'position-absolute opacity-50'}
           />
         );
       }
@@ -70,7 +76,7 @@ export default function Marquee({items = DEFAULT_ITEMS}: MarqueeProps) {
           </div>
           
           <div aria-hidden="true" className="marquee-group">
-            {items.map((item, index) => (
+            {[...items].map((item, index) => (
               <div key={`g1-clone-${index}`} className="marquee-item position-relative">
                 {renderContent(item)}
               </div>
@@ -81,16 +87,16 @@ export default function Marquee({items = DEFAULT_ITEMS}: MarqueeProps) {
         {/* Coluna 2 - Scroll Reverso */}
         <div className="marquee marquee-vertical marquee-reverse">
           <div className="marquee-group">
-            {items.map((item, index) => (
-              <div key={`g2-${index}`} className="marquee-item">
+            {[...items].map((item, index) => (
+              <div key={`g2-${index}`} className="marquee-item rounded-end-0">
                 {renderContent(item)}
               </div>
             ))}
           </div>
           
           <div aria-hidden="true" className="marquee-group">
-            {items.map((item, index) => (
-              <div key={`g2-clone-${index}`} className="marquee-item">
+            {[...items].map((item, index) => (
+              <div key={`g2-clone-${index}`} className="marquee-item rounded-end-0">
                 {renderContent(item)}
               </div>
             ))}

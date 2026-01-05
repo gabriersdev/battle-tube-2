@@ -1,9 +1,9 @@
 'use client';
 
 import React from 'react';
-import {AnimatePresence} from 'framer-motion';
+import {AnimatePresence, motion} from 'framer-motion';
 import {usePresentation} from './presentation-provider';
-import {Screen} from './screen';
+import {Screen, screenVariants} from './screen';
 import {ProgressBar} from './progress-bar';
 import {Controls} from './controls';
 import Footer from "@/components/footer";
@@ -21,7 +21,16 @@ export const PresentationStage: React.FC = () => {
         
         <AnimatePresence mode="wait">
           <Screen key={currentScreen.id} data={currentScreen}/>
-          {currentScreen.id === "screen-1" && <Marquee/>}
+          {currentScreen.id === "screen-1" && (
+            <motion.div
+              custom={{backgroundColor: 'bg-danger-subtle'}}
+              variants={screenVariants}
+              initial="initial"
+              animate="animate"
+              exit="exit">
+              <Marquee/>
+            </motion.div>
+          )}
         </AnimatePresence>
         
         <Controls/>

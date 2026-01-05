@@ -11,7 +11,7 @@ interface ScreenProps {
 }
 
 // Variantes para o container da tela (entrada/saída global)
-const screenVariants: Variants = {
+export const screenVariants: Variants = {
   initial: {
     opacity: 0,
     y: 16,
@@ -36,7 +36,7 @@ const screenVariants: Variants = {
 };
 
 // Variantes para o container interno dos itens (controle de stagger)
-const contentVariants: Variants = {
+export const contentVariants: Variants = {
   initial: {},
   animate: {
     transition: {
@@ -46,6 +46,8 @@ const contentVariants: Variants = {
 };
 
 export const Screen: React.FC<ScreenProps> = ({data}) => {
+  const isScreen1 = data.id === "screen-1";
+
   return (
     <motion.div
       key={data.id}
@@ -61,18 +63,20 @@ export const Screen: React.FC<ScreenProps> = ({data}) => {
         backgroundColor: data.backgroundColor || 'transparent'
       }}
     >
-      <Container fluid="md" className="h-100 d-flex flex-column justify-content-center">
+      <Container fluid={isScreen1 ? true : "md"} className="h-100 d-flex flex-column justify-content-center">
         <motion.div
           variants={contentVariants}
           className="w-100"
         >
-          <Row className="w-100">
+          <Row className="w-100 justify-content-center">
             <Col
               xs={12}
-              md={10}
-              lg={8}
-              className={`d-flex flex-column w-100 ${data.id === "screen-1" ? "position-absolute" : ""}`}
-              style={data.id === "screen-1" ? {top: '50%', left: '50%', transform: 'translate(-50%, -50%)', maxWidth: '1500px', zIndex: 10000} : {}}
+              md={isScreen1 ? 12 : 10}
+              lg={isScreen1 ? 12 : 8}
+              // Removido position-absolute que causava conflito com animações do Framer Motion
+              // Usamos layout flexbox e grid fluido para centralizar e dimensionar corretamente
+              className={`d-flex flex-column w-100 ${isScreen1 ? "mx-auto ms-xl-5 ps-xl-5" : ""}`}
+              style={isScreen1 ? {maxWidth: '1500px'} : {}}
             >
               {data.items.map(item => <ScreenItem key={item.id} item={item}/>)}
             </Col>

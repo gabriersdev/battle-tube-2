@@ -58,12 +58,12 @@ const defaultClassNames: {
 export const presentationData: ScreenData[] = [
   {
     id: 'screen-1',
-    duration: 15,
+    duration: 20,
     items: [
       {
         id: 'S1-I1',
         type: 'title',
-        content: 'Este é o wrapped dos melhores clipes da live do eskimo em 2025',
+        content: 'Este é o wrapped dos clipes da live do eskimozin em 2025',
         animation: 'slide-up',
         delay: 0,
         className: `${defaultClassNames.title.replace(/(max-w-600)/g, "")} mb-5`,
@@ -71,7 +71,7 @@ export const presentationData: ScreenData[] = [
       {
         id: 'S1-I2',
         type: 'text',
-        content: 'Aqui, analisamos e compilamos dados dos clipes com mais visualizações, os mais melhores e engraçados (alguns não) que encontramos.',
+        content: 'Aqui, analisamos e compilamos dados dos clipes, depois organizamos os com mais visualizações, mais melhores e engraçados que encontramos para fazer uma tier list.',
         animation: 'slide-up',
         delay: 2,
         className: `${defaultClassNames.text}`,
@@ -90,11 +90,24 @@ export const presentationData: ScreenData[] = [
         delay: 7,
       },
       {
+        id: 'S1-I3.2',
+        type: 'component',
+        content: (
+          <div className={`${defaultClassNames.text}`}>
+            <Alert variant={"secondary"} style={{maxWidth: "950px"}}>
+              Cada slide também tem uma música. As vezes pode ser a mesma do anterior. No canto inferior direito você controla o volume e o play-pause.
+            </Alert>
+          </div>
+        ),
+        animation: 'slide-up',
+        delay: 12,
+      },
+      {
         id: 'S1-I4',
         type: 'text',
         content: 'Vamos começar!',
         animation: 'slide-up',
-        delay: 12,
+        delay: 17,
         className: `${defaultClassNames.text}`,
       },
     ],
@@ -463,7 +476,7 @@ export const presentationData: ScreenData[] = [
         id: 'S6-I5',
         type: 'component',
         content: (
-          <div>
+          <div className={'mt-3'}>
             <Iframe id={Lib.getClipID({url: "https://www.twitch.tv/eskimozin/clip/BravePunchySpiderRuleFive-vfrwOYGy1fsIqhCv"})} style={{width: "max(100%, 700px)", height: "max(400px, 500px)"}}/>
           </div>
         ),

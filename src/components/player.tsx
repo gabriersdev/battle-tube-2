@@ -1,4 +1,4 @@
-import {Badge, Button, DropdownItem, DropdownMenu, DropdownToggle} from "react-bootstrap";
+import {Button, DropdownItem, DropdownMenu, DropdownToggle} from "react-bootstrap";
 import {Dropdown} from "react-bootstrap";
 import React, {useEffect, useRef, useState} from "react";
 import {usePresentation} from "@/components/presentation-provider";
@@ -13,15 +13,12 @@ export default function Player() {
   
   const initTime: number | undefined = currentScreen.audio?.initTime;
   const hasAudio: boolean = !!currentScreen.audio;
-  const imgSrcMusic: string = currentScreen.audio?.img.src;
+  const imgSrcMusic: string | undefined = currentScreen.audio?.img.src;
   
   // Reset playing state when screen changes
   useEffect(() => {
-    if (hasAudio) {
-      setIsPlaying(true);
-    } else {
-      setIsPlaying(false);
-    }
+    if (hasAudio) setIsPlaying(true);
+    else setIsPlaying(false);
   }, [currentScreen.id, hasAudio]);
   
   // Control audio element
@@ -37,7 +34,7 @@ export default function Player() {
       if (isPlaying && hasAudio) {
         // Pequeno delay ou verificação de readyState poderia ajudar, mas o principal
         // é lidar com a promise do play corretamente e garantir que o load() seja chamado se necessário.
-        // No entanto, mudar o src no React geralmente dispara o load automaticamente.
+        // No entanto, mudar o src no React dispara geralmente o load automaticamente.
         
         const playAudio = async () => {
           try {
@@ -53,7 +50,7 @@ export default function Player() {
           }
         };
         
-        playAudio();
+        playAudio().then();
         
       } else {
         audioElement.pause();
@@ -62,7 +59,18 @@ export default function Player() {
       
       if (initTime) audioElement.currentTime = initTime;
     }
-  }, [isPlaying, volume, hasAudio, currentScreen.audio]); // currentScreen.audioSrc dependency is important
+  }, [isPlaying, volume, hasAudio, currentScreen.audio, initTime]);
+  
+  useEffect(() => {
+    if (isPlaying) {
+      setTimeout(() => {
+        window.scrollTo({
+          behavior: 'smooth',
+          top: 0
+        });
+      }, 100);
+    }
+  }, [currentScreen.id, isPlaying]);
   
   if (!hasAudio) {
     return null;
