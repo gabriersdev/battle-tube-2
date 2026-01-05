@@ -1,36 +1,64 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Battle Tube 2
 
-## Getting Started
+![Banner do projeto](/public/banner.png)
 
-First, run the development server:
+Projeto rodando em: <https://2025.battle.lts.app.br> 
+
+## Descrição
+
+Este projeto é uma aplicação web desenvolvida para apresentar uma "tier list" dos melhores clipes de transmissões ao vivo de 2025. A aplicação permite aos usuários visualizar estatísticas detalhadas (Wrapped) e interagir com a classificação dos clipes.
+
+## Funcionalidades
+
+- Wrapped: Visualização de dados e estatísticas consolidadas dos clipes do ano, com animações, player de música e interação.
+- Tier List: Interface para classificação e ranking dos clipes.
+
+## Tecnologias Utilizadas
+
+O projeto foi desenvolvido utilizando as seguintes tecnologias principais:
+
+- Framework: Next.js 16
+- Biblioteca UI: React 19
+- Linguagem: TypeScript
+- Estilização: Tailwind CSS e React Bootstrap
+- Animações: Framer Motion
+- Utilitários: html2canvas, moment
+
+## Como Executar
+
+### Pré-requisitos
+
+- Node.js
+- pnpm
+
+### Instalação
+
+Instale as dependências do projeto:
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+pnpm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+### Desenvolvimento
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+Para iniciar o servidor de desenvolvimento:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```bash
+pnpm dev
+```
 
-## Learn More
+A aplicação estará disponível em `http://localhost:3000`.
 
-To learn more about Next.js, take a look at the following resources:
+### Build
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Para gerar a versão de produção:
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+pnpm build
+```
 
-## Deploy on Vercel
+Para iniciar a versão de produção:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+pnpm start
+```
