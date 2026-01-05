@@ -116,6 +116,7 @@ export default function Player() {
             loop={true}
             // onEnded={() => setIsPlaying(false)}
             preload="auto"
+            suppressHydrationWarning
           />
           
           <Dropdown>
@@ -127,6 +128,7 @@ export default function Player() {
                   ["10", 10]
                 ].map((item, index) => (
                   <DropdownItem key={index} onClick={() => {
+                    // TODO - BUG: validação de tipagem
                     setVolume(item[1]);
                   }}>
                     {item[0]}

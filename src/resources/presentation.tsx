@@ -14,6 +14,7 @@ import KickLogo from "../../public/kick.svg";
 import TwitchLogo from "../../public/twitch.jpg";
 import E7TVAga from "../../public/7TV-aga.gif";
 import E7TVAdmita from "../../public/7TV-admita.png";
+import {targetExternalLink} from "@/resources/config";
 
 export type AnimationType = 'fade' | 'slide-up' | 'slide-down' | 'slide-left' | 'slide-right' | 'scale';
 
@@ -458,7 +459,11 @@ export const presentationData: ScreenData[] = [
         id: 'S6-I2',
         type: 'component',
         content: (
-          <Link href={"https://www.twitch.tv/eskimozin/clip/BravePunchySpiderRuleFive-vfrwOYGy1fsIqhCv"} target={"_blank"} className={`${defaultClassNames.text} text-decoration-none`}>
+          <Link
+            href={"https://www.twitch.tv/eskimozin/clip/BravePunchySpiderRuleFive-vfrwOYGy1fsIqhCv"}
+            target={targetExternalLink}
+            className={`${defaultClassNames.text} text-decoration-none`}
+          >
             <span className={"text-body"}>{'"'}vamo fazer uma sacanagem com esse sapo{'"'}</span>
             <div className={"d-flex align-items-center flex-wrap gap-1 fs-base font-inter fw-normal mt-1 text-body"}>
               <span>clipado por</span>

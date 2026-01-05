@@ -80,10 +80,6 @@ img[alt="programming img"] {
     display: flex;
 }
 
-.tier-list-container {
-    max-height: 600px;
-}
-
 .tier-list span {
     padding: 0.5em;
     background: #111;
@@ -167,7 +163,6 @@ img[alt="programming img"] {
     }
 }
 
-#draggable-elements-container,
 .max-h-350 {
     height: 350px;
 }

@@ -5,6 +5,7 @@ import Util from "./util";
 import data from "./scrapping";
 import Dialog from "./dialog";
 import AnimationPresence from "./animation-presence";
+import {targetExternalLink} from "@/resources/config";
 
 const StatisticDialog = () => {
   // Corrigindo a ordenação - deve ser descendente (maior para menor)
@@ -91,7 +92,7 @@ const StatisticDialog = () => {
             <ListGroup.Item key={i} as="li">
               <a
                 href={clip.url || '#'}
-                target="_blank"
+                target={targetExternalLink}
                 rel="noopener noreferrer"
                 className="text-decoration-none "
                 title={Util.capitalizeText(clip.title || "Título não retornado")}

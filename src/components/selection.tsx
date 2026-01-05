@@ -1,15 +1,16 @@
-import {Button, DropdownMenu, DropdownToggle, Spinner} from "react-bootstrap";
+import {Button, DropdownMenu, DropdownToggle, Spinner, Dropdown} from "react-bootstrap";
 import React, {useCallback, useContext, useRef, useState} from "react";
 import html2canvas from "html2canvas";
 
 import FullscreenControl from "@/components/fullscreen-component";
 import {Theme} from "@/components/tier-list-context";
 import Lib from "@/utils/lib";
-import {Dropdown} from "@restart/ui";
 
 export default function Selection() {
   const tierListContainer = useRef<HTMLDivElement>(null);
   const [isDownloading, setIsDownloading] = useState(false);
+  const [heightLimitedTL, setHeightLimitedTL] = useState(true);
+  const [heightLimitedSlc, setHeightLimitedSlc] = useState(true);
   
   const {
     items,
@@ -114,7 +115,7 @@ export default function Selection() {
           </DropdownToggle>
           
           <DropdownMenu>
-            <div className={"d-flex gap-2 px-2 flex-wrap align-items-center"}>
+            <div className={"d-flex gap-1 px-2 flex-column align-items-start"}>
               <Button
                 variant={"primary"}
                 className={"fs-base text-small align-items-center d-inline-flex gap-1"}
@@ -159,7 +160,6 @@ export default function Selection() {
                 Carregar
               </Button>
               
-              
               <Button
                 variant={"primary"}
                 size={"sm"}
@@ -171,19 +171,38 @@ export default function Selection() {
               >
                 Salvar
               </Button>
-            
+              
+              <Button
+                variant={"info"}
+                className={"fs-base text-small align-items-center d-inline-flex gap-1 text-balance"}
+                size={"sm"}
+                onClick={() => setHeightLimitedTL(!heightLimitedTL)}
+                // disabled={isDownloading}
+              >
+                {heightLimitedTL ? 'Liberar' : 'Limitar'} altura da TL
+              </Button>
+              
+              <Button
+                variant={"info"}
+                className={"fs-base text-small align-items-center d-inline-flex gap-1 text-balance"}
+                size={"sm"}
+                onClick={() => setHeightLimitedSlc(!heightLimitedSlc)}
+                // disabled={isDownloading}
+              >
+                {heightLimitedSlc ? 'Liberar' : 'Limitar'} altura da seleção
+              </Button>
             </div>
           </DropdownMenu>
         </Dropdown>
       </div>
       
       <div
-        className="tier-list-container rounded-1 border overflow-y-auto overflow-x-auto bg-body"
+        className="rounded-1 border overflow-y-auto overflow-x-auto bg-body"
         ref={tierListContainer}
+        style={heightLimitedTL ? {maxHeight: '600px'} : {}}
       >
         {/* Renderiza as linhas da Tier List dinamicamente */}
         {tiers?.map((tier) => (
-          // TODO - corrigir identificação da linha da tier list - não aparece corretamente
           <div
             key={tier}
             className={`tier-list d-flex ${tier.toLowerCase()} box ${
@@ -204,7 +223,7 @@ export default function Selection() {
       {/* Container de Itens (Pool Inicial) */}
       <div
         id="draggable-elements-container"
-        className={`box d-flex flex-wrap rounded-1 border  overflow-y-scroll bg-body-secondary ${activeDropZone === 'pool' ? 'detect' : ''}`}
+        className={`box d-flex flex-wrap rounded-1 border  overflow-y-scroll bg-body-secondary ${activeDropZone === 'pool' ? 'detect' : ''} ${heightLimitedSlc ? 'max-h-350' : ''}`}
         onDragOver={(e) => handleDragOver(e, 'pool')}
         onDragLeave={handleDragLeave}
         onDrop={(e) => handleDrop(e, 'pool')}

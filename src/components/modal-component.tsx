@@ -11,6 +11,7 @@ import Lib from "@/utils/lib";
 import Iframe from "@/components/iframe";
 import Link from "next/link";
 import VoidUser from "@/components/void-user";
+import {targetExternalLink} from "@/resources/config";
 
 export function ModalComponent() {
   const {
@@ -54,7 +55,7 @@ export function ModalComponent() {
       <Modal show={showModal} onHide={handleClose} size={"xl"}>
         <ModalHeader closeButton className={"align-items-start"}>
           <ModalTitle className={"d-flex align-items-center justify-content-between flex-wrap gap-3 pe-2 w-100"}>
-            <Link href={showClipData?.url ?? ""} target={"_blank"} className={"text-decoration-none"}>
+            <Link href={showClipData?.url ?? ""} target={targetExternalLink} className={"text-decoration-none"}>
               <div className={"d-flex align-items-center gap-0"}>
                 <span className={"fs-3 line-clamp-1"}>
                   {showClipData?.title ?? "Nome do clipe"}
@@ -110,7 +111,7 @@ export function ModalComponent() {
                     Iframe não suportado. Veja este clipe na KICK!
                   </span>
                 </h2>
-                <Button className={"text d-inline-flex align-items-center justify-content-center flex-wrap gap-1"} href={showClipData?.url} target="_blank">
+                <Button className={"text d-inline-flex align-items-center justify-content-center flex-wrap gap-1"} href={showClipData?.url} target={targetExternalLink}>
                   Assistir na KICK{" "}
                   <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px" fill="#1f1f1f">
                     <path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h560v-280h80v280q0 33-23.5 56.5T760-120H200Zm188-212-56-56 372-372H560v-80h280v280h-80v-144L388-332Z"/>

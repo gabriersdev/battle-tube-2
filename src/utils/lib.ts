@@ -46,7 +46,7 @@ export default class Lib {
     return ""
   }
   
-  static getClipID(data: ClipData | TierItem | {url: string}): string {
+  static getClipID(data: ClipData | TierItem | { url: string }): string {
     // https://www.twitch.tv/eskimozin/clip/PrettiestLazyPeanutPoooound-PenLtEv4ihW7dnAD
     const id = data.url?.match(/https:\/\/www.twitch.tv\/\w*\/clip\/([\w-]*)/);
     if (id?.[1]) return id?.[1];
@@ -64,5 +64,12 @@ export default class Lib {
       'info-subtle',
     ];
     return colors[index % colors.length];
+  }
+  
+  static shuffled(unshuffled: TierItem[]) {
+    return unshuffled
+      .map((value: TierItem) => ({value, sort: Math.random()}))
+      .sort((a, b) => a.sort - b.sort)
+      .map(({value}: {value: TierItem}) => value)
   }
 }

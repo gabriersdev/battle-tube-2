@@ -41,5 +41,6 @@
   ],
   "rules": {
     "@typescript-eslint/ban-ts-comment": "false",
+    "@typescript-eslint/no-explicit-any": "false"
   }
 }

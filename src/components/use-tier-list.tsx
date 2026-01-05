@@ -10,7 +10,7 @@ import VoidUser from "@/components/void-user";
 
 type TierLevel = 'S' | 'A' | 'B' | 'C' | 'D' | 'E' | 'F';
 
-interface TierItem {
+export interface TierItem {
   id: string;
   tier: TierLevel | 'pool';
   
@@ -274,7 +274,7 @@ export function UseTierList() {
   
   // Função auxiliar para renderizar os itens numa zona
   const renderDraggableItems = (currentTier: TierLevel | 'pool') => {
-    return items
+    return Lib.shuffled(items)
       .filter((item) => item.tier === currentTier)
       .toSorted((a, b) => a.title.localeCompare(b.title))
       .map((item: TierItem, index: number) => {
@@ -390,6 +390,7 @@ export {
 
 export type {
   TierLevel,
+  // TODO - BUG: erro
   TierItem,
   ClipData
 };
