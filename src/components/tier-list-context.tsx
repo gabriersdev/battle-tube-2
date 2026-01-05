@@ -21,6 +21,7 @@ interface InitialContextValueProps {
   loadFromLocalStorage: () => TierItem[];
   resetTierList: () => void;
   showClipData: TierItem | null;
+  setShowClipData: React.Dispatch<React.SetStateAction<TierItem | null>>;
   showModal: boolean;
   setShowModal: React.Dispatch<React.SetStateAction<boolean>>;
   tiers: TierLevel[] | null;
@@ -54,6 +55,7 @@ const InitialContextValue: InitialContextValueProps = {
   loadFromLocalStorage: () => [],
   resetTierList: () => {},
   showClipData: null,
+  setShowClipData: () => {},
   showModal: false,
   setShowModal: () => {},
   tiers: [],

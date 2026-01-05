@@ -2,7 +2,6 @@
 
 import React from 'react';
 import TierList from "@/components/tier-list";
-import StatisticsDialog from "@/components/new-adapter-code/statistics-dialog";
 
 export default function TierListPage() {
   return (
@@ -14,7 +13,6 @@ export default function TierListPage() {
       </hgroup>
 
       <TierList/>
-      <StatisticsDialog/>
     </main>
   );
 }

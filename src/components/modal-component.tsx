@@ -16,6 +16,7 @@ import {targetExternalLink} from "@/resources/config";
 export function ModalComponent() {
   const {
     showClipData,
+    setShowClipData,
     showModal,
     setShowModal,
     items,
@@ -50,6 +51,26 @@ export function ModalComponent() {
   const platform = showClipData ? Lib.getClipOrigin(showClipData) : "";
   const clipId = showClipData ? Lib.getClipID(showClipData) : "";
   
+  const handlePrevious = () => {
+    if (!showClipData) return;
+    const currentIndex = items.findIndex(i => i.id === showClipData.id);
+    if (currentIndex > 0) {
+      setShowClipData(items[currentIndex - 1]);
+    } else {
+      setShowClipData(items[items.length - 1]);
+    }
+  };
+  
+  const handleNext = () => {
+    if (!showClipData) return;
+    const currentIndex = items.findIndex(i => i.id === showClipData.id);
+    if (currentIndex < items.length - 1) {
+      setShowClipData(items[currentIndex + 1]);
+    } else {
+      setShowClipData(items[0]);
+    }
+  };
+  
   return (
     <>
       <Modal show={showModal} onHide={handleClose} size={"xl"}>
@@ -70,37 +91,39 @@ export function ModalComponent() {
               </span>
             </Link>
             
-            <Dropdown>
-              <DropdownToggle variant="success" id="dropdown-classified-clip" className={"text"} size={"sm"}>
-                <span className={"text-small"}>Classificar como</span>
-              </DropdownToggle>
-              
-              <DropdownMenu className={"text"}>
-                {
-                  tiers?.map((tier, index) => (
-                    <DropdownItem onClick={() => handleTierSelect(tier)} key={index} className={`tier-list text-white ${tier.toLowerCase()} d-flex align-items-center gap-1 flex-wrap`}>
-                      {tier}
-                      {currentTier === tier && (
-                        <OverlayTrigger overlay={
-                          <Tooltip>
-                            <span className={"font-inter text-small d-block text-balance line-clamp-2"}>O clipe está classificado como {"\""}{tier}{"\""}</span>
-                          </Tooltip>
-                        }>
-                          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-check2-square" viewBox="0 0 16 16">
-                            <path d="M3 14.5A1.5 1.5 0 0 1 1.5 13V3A1.5 1.5 0 0 1 3 1.5h8a.5.5 0 0 1 0 1H3a.5.5 0 0 0-.5.5v10a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V8a.5.5 0 0 1 1 0v5a1.5 1.5 0 0 1-1.5 1.5z"/>
-                            <path d="m8.354 10.354 7-7a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0"/>
-                          </svg>
-                        </OverlayTrigger>
-                      )}
-                    </DropdownItem>
-                  ))
-                }
-              </DropdownMenu>
-            </Dropdown>
+            <div className="d-flex gap-2 align-items-center">
+              <Dropdown>
+                <DropdownToggle variant="success" id="dropdown-classified-clip" className={"text"} size={"sm"}>
+                  <span className={"text-small"}>Classificar como</span>
+                </DropdownToggle>
+                
+                <DropdownMenu className={"text"}>
+                  {
+                    tiers?.map((tier, index) => (
+                      <DropdownItem onClick={() => handleTierSelect(tier)} key={index} className={`tier-list text-white ${tier.toLowerCase()} d-flex align-items-center gap-1 flex-wrap`}>
+                        {tier}
+                        {currentTier === tier && (
+                          <OverlayTrigger overlay={
+                            <Tooltip>
+                              <span className={"font-inter text-small d-block text-balance line-clamp-2"}>O clipe está classificado como {"\""}{tier}{"\""}</span>
+                            </Tooltip>
+                          }>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-check2-square" viewBox="0 0 16 16">
+                              <path d="M3 14.5A1.5 1.5 0 0 1 1.5 13V3A1.5 1.5 0 0 1 3 1.5h8a.5.5 0 0 1 0 1H3a.5.5 0 0 0-.5.5v10a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V8a.5.5 0 0 1 1 0v5a1.5 1.5 0 0 1-1.5 1.5z"/>
+                              <path d="m8.354 10.354 7-7a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0"/>
+                            </svg>
+                          </OverlayTrigger>
+                        )}
+                      </DropdownItem>
+                    ))
+                  }
+                </DropdownMenu>
+              </Dropdown>
+            </div>
           </ModalTitle>
         </ModalHeader>
         
-        <ModalBody className={"min-vh-80 overflow-y-scroll overflow-x-auto"}>
+        <ModalBody className={"min-vh-80 overflow-y-scroll overflow-x-auto position-relative"}>
           {platform === "twitch" && clipId ? (
             <Iframe id={clipId} allowFullScreen={true} width="100%" height="100%" style={{minHeight: "calc(80vh - 2rem)"}}/>
           ) : (
@@ -120,6 +143,24 @@ export function ModalComponent() {
               </div>
             </div>
           )}
+          
+          <div
+            className={'d-flex align-items-center flex-wrap gap-2 position-absolute'}
+            style={{bottom: '0.5rem', left: '50%', transform: 'translateX(-50%)'}}
+          >
+            <Button variant="outline-secondary" size="sm" onClick={handlePrevious}>
+              {/*<span className={'text-small'}>Clipe anterior</span>*/}
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-left" viewBox="0 0 16 16">
+                <path fillRule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
+              </svg>
+            </Button>
+            <Button variant="outline-secondary" size="sm" onClick={handleNext}>
+              {/*<span className={'text-small'}>Próximo clipe</span>*/}
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-arrow-right" viewBox="0 0 16 16">
+                <path fillRule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8"/>
+              </svg>
+            </Button>
+          </div>
         </ModalBody>
       </Modal>
     </>
