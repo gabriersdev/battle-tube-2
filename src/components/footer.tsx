@@ -5,7 +5,7 @@ import React, {useContext, useEffect, useState} from "react";
 
 import {Theme} from "@/components/tier-list-context";
 import buildData from "../../public/register.build.json";
-import {githubDev, relExternalLink} from "@/resources/config";
+import {githubDev, relExternalLink, routes} from "@/resources/config";
 
 moment.locale("pt-BR");
 
@@ -63,13 +63,17 @@ export default function Footer({variant}: { variant: "wrapped" | "tier-list" }) 
           </Link>
           
           {
-            variant === "wrapped" ? (
+            variant === "wrapped" && routes["/tier-list"] && (
               <Link href={"/tier-list"}>
                 <Button variant={"secondary"} className={"fs-base"}>
                   Ir para a tier list
                 </Button>
               </Link>
-            ) : (
+            )
+          }
+          
+          {
+            variant === "tier-list" && routes["/wrapped"] && (
               <Link href={"/wrapped"}>
                 <Button variant={"secondary"} className={"fs-base"}>
                   Ver wrapped

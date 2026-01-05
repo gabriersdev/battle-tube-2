@@ -14,7 +14,7 @@ import KickLogo from "../../public/kick.svg";
 import TwitchLogo from "../../public/twitch.jpg";
 import E7TVAga from "../../public/7TV-aga.gif";
 import E7TVAdmita from "../../public/7TV-admita.png";
-import {targetExternalLink} from "@/resources/config";
+import {routes, targetExternalLink} from "@/resources/config";
 
 export type AnimationType = 'fade' | 'slide-up' | 'slide-down' | 'slide-left' | 'slide-right' | 'scale';
 
@@ -771,7 +771,7 @@ export const presentationData: ScreenData[] = [
         id: 'S12-I4',
         type: 'component',
         content: (
-          <Link href={"/tier-list"}>
+          <Link href={"/tier-list"} className={`${!routes["/tier-list"] ? "d-none" : ""}`}>
             <Button variant={"primary"}>
               <span className={"fs-base"}>
                 Ir para a tier list
