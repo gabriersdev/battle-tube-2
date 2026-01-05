@@ -189,13 +189,13 @@ export function UseTierList() {
     const element = document.elementFromPoint(touch.clientX, touch.clientY);
     if (!element) return;
     
-    // Find closest drop zone
+    // Find the closest drop zone
     const dropZone = element.closest('.box') as HTMLElement;
     if (dropZone) {
       // Extract tier from class or id or data attribute
       // In your current implementation, drop zones have classes like 'S', 'A', etc.
       // We need a way to identify the tier.
-      // Let's assume we can get it from the class list or we can add a data attribute to the drop zones.
+      // Let's assume we can get it from the class list, or we can add a data attribute to the drop zones.
       
       // Checking classes for tier match
       let foundTier: string | null = null;
@@ -390,7 +390,5 @@ export {
 
 export type {
   TierLevel,
-  // TODO - BUG: erro
-  TierItem,
   ClipData
 };

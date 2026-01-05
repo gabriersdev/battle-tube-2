@@ -128,8 +128,7 @@ export default function Player() {
                   ["10", 10]
                 ].map((item, index) => (
                   <DropdownItem key={index} onClick={() => {
-                    // TODO - BUG: validação de tipagem
-                    setVolume(item[1]);
+                    setVolume(item[1] as 0 | 10);
                   }}>
                     {item[0]}
                     
