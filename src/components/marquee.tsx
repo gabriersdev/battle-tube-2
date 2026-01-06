@@ -52,6 +52,7 @@ export default function Marquee({items = DEFAULT_ITEMS}: MarqueeProps) {
             width={500}
             height={500}
             className={'position-absolute opacity-50'}
+            unoptimized
           />
         );
       }
