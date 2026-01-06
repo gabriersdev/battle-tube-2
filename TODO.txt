@@ -1,7 +1,8 @@
 TODO
 
 - Refatorar código repetido
-- Criar arquivos para remover conteúdo em componentes
+- Criar arquivos para remover conteúdo excessivo em componentes
 - Remover comentários thinking do AI Studio
 - Instalar e criar script básico de Cypress só para abrir o projeto e verificar o funcionamento
 - Responsividade para a primeira tela do wrapped
+- Refatorar e substituir código CSS desnecessário por código do Bootstrap

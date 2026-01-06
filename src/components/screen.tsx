@@ -56,7 +56,7 @@ export const Screen: React.FC<ScreenProps> = ({data}) => {
       initial="initial"
       animate="animate"
       exit="exit"
-      className={`w-100 h-100 d-flex align-items-center justify-content-center my-3 ${data.backgroundClassName || ''}`}
+      className={`w-100 min-vh-100 d-flex align-items-center justify-content-center py-5 ${data.backgroundClassName || ''}`}
       style={{
         // Se não houver animação de cor, podemos definir aqui também como fallback ou inicial
         // Mas a variante 'animate' cuidará da transição suave
