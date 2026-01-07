@@ -77,6 +77,7 @@ export default function Player() {
   }
   
   return (
+    // TODO - implementar uma forma de trabalhar a responsividade aqui ou deixar o elemento fixo ao bottom no mobile.
     <div className={"position-absolute px-2 py-2 rounded"} style={{bottom: "1rem", right: "1rem", border: "1px solid #00000025", backgroundColor: "rgba(255, 255, 255, 0.8)", backdropFilter: "blur(5px)"}}>
       <div className={"m-0 p-0 d-flex flex-column gap-1"}>
         <span className={"text-small text-body-tertiary"}>Tocando agora</span>

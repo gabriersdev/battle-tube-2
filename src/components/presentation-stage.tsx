@@ -25,6 +25,7 @@ export const PresentationStage: React.FC = () => {
             <motion.div
               custom={{backgroundColor: 'bg-danger-subtle'}}
               variants={screenVariants}
+              className={"d-none d-xl-block"}
               initial="initial"
               animate="animate"
               exit="exit">
