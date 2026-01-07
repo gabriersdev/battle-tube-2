@@ -450,7 +450,7 @@ export const presentationData: ScreenData[] = [
       {
         id: 'S6-I1',
         type: 'title',
-        content: 'O clipe mas visto foi...',
+        content: 'O clipe mais visto foi...',
         animation: 'slide-up',
         delay: 0,
         className: `${defaultClassNames.title}`,
@@ -481,9 +481,12 @@ export const presentationData: ScreenData[] = [
         id: 'S6-I5',
         type: 'component',
         content: (
-          <div className={'mt-3'}>
-            {/*TODO - implementar verificação de width ou corrigir esse style no responsivo mobile!*/}
-            <Iframe id={Lib.getClipID({url: "https://www.twitch.tv/eskimozin/clip/BravePunchySpiderRuleFive-vfrwOYGy1fsIqhCv"})} style={{width: "max(100%, 700px)", height: "max(400px, 500px)"}}/>
+          <div className={'mt-3 overflow-x-auto'}>
+            <Iframe
+              id={Lib.getClipID({url: "https://www.twitch.tv/eskimozin/clip/BravePunchySpiderRuleFive-vfrwOYGy1fsIqhCv"})}
+              style={{width: "750px", maxWidth: "900px", aspectRatio: "16/9"}}
+              allowFullScreen={true}
+            />
           </div>
         ),
         animation: 'slide-up',
@@ -697,7 +700,7 @@ export const presentationData: ScreenData[] = [
         content: 'Vimos o canal de cortes bater 100K no Youtube...',
         animation: 'slide-up',
         delay: 0,
-        className: `${defaultClassNames.title.replace(/(text-balance|max-w-600)/g, "")}`,
+        className: `${defaultClassNames.title.replace(/(max-w-600)/g, "")}`,
       },
       {
         id: 'S11-I2',
@@ -746,7 +749,7 @@ export const presentationData: ScreenData[] = [
         content: 'Que 2026 seja foda para os eskimoviewers, eskimolovers, eskimofãs e eskimozettes',
         animation: 'slide-up',
         delay: 0,
-        className: `${defaultClassNames.title.replace(/(text-balance|max-w-600)/g, "")}`,
+        className: `${defaultClassNames.title.replace(/(max-w-600)/g, "")}`,
       },
       {
         id: 'S12-I2',

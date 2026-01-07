@@ -67,9 +67,10 @@ export default class Lib {
   }
   
   static shuffled(unshuffled: TierItem[]) {
-    return unshuffled
-      .map((value: TierItem) => ({value, sort: Math.random()}))
-      .sort((a, b) => a.sort - b.sort)
-      .map(({value}: {value: TierItem}) => value)
+    return unshuffled;
+    // return unshuffled
+    //   .map((value: TierItem) => ({value, sort: Math.random()}))
+    //   .sort((a, b) => a.sort - b.sort)
+    //   .map(({value}: {value: TierItem}) => value)
   }
 }
