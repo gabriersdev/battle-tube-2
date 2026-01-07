@@ -4,6 +4,7 @@ import React, {useEffect, useRef, useState} from "react";
 import {usePresentation} from "@/components/presentation-provider";
 import Link from "next/link";
 import Image from "next/image";
+import {motion} from "framer-motion";
 
 export default function Player() {
   const {currentScreen} = usePresentation();
@@ -77,8 +78,19 @@ export default function Player() {
   }
   
   return (
-    // TODO - implementar uma forma de trabalhar a responsividade aqui ou deixar o elemento fixo ao bottom no mobile.
-    <div className={"position-absolute px-2 py-2 rounded"} style={{bottom: "1rem", right: "1rem", border: "1px solid #00000025", backgroundColor: "rgba(255, 255, 255, 0.8)", backdropFilter: "blur(5px)"}}>
+    <motion.div
+      drag
+      dragMomentum={false}
+      className={"position-fixed bottom-0 end-0 m-3 px-2 py-2 rounded z-3"}
+      style={{
+        border: "1px solid #00000025",
+        backgroundColor: "rgba(255, 255, 255, 0.8)",
+        backdropFilter: "blur(5px)",
+        maxWidth: "calc(100vw - 2rem)",
+        cursor: "grab"
+      }}
+      whileDrag={{ cursor: "grabbing" }}
+    >
       <div className={"m-0 p-0 d-flex flex-column gap-1"}>
         <span className={"text-small text-body-tertiary"}>Tocando agora</span>
         <div className={'d-flex align-items-center flex-wrap gap-2'}>
@@ -91,10 +103,11 @@ export default function Player() {
                 height={32}
                 className={'object-fit-cover'}
                 style={{borderRadius: '0.15rem'}}
+                draggable={false}
               />
             )
           }
-          <Link href={currentScreen.audio?.link ?? ""} className={"d-flex gap-0 flex-column text-decoration-none"}>
+          <Link href={currentScreen.audio?.link ?? ""} className={"d-flex gap-0 flex-column text-decoration-none"} draggable={false}>
             <div className={"text-small scroll-wrapper"} style={{maxWidth: "200px"}}>
               <span className={"scroll-text"}>{currentScreen.audio?.name ?? ""} - {currentScreen.audio?.author ?? ""}</span>
             </div>
@@ -172,6 +185,6 @@ export default function Player() {
           </Dropdown>
         </div>
       </div>
-    </div>
+    </motion.div>
   )
 }

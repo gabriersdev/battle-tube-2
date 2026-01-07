@@ -125,7 +125,7 @@ export function ModalComponent() {
         
         <ModalBody className={"min-vh-80 overflow-y-scroll overflow-x-auto position-relative"}>
           {platform === "twitch" && clipId ? (
-            <Iframe id={clipId} allowFullScreen={true} width="100%" height="100%" style={{minHeight: "calc(80vh - 2rem)"}}/>
+            <Iframe id={clipId} allowFullScreen={true} width="100%" height="100%" style={{minHeight: "calc(80vh - 2rem)"}} ignoreResponsiveWidth={true}/>
           ) : (
             <div style={{minHeight: "calc(80vh - 2rem)", background: "#0c0c0c"}} className={"d-flex justify-content-center align-items-center"}>
               <div className={"d-flex align-items-center justify-content-center flex-wrap gap-3 text-white flex-column"}>
