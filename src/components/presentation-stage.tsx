@@ -16,7 +16,7 @@ export const PresentationStage: React.FC = () => {
   return (
     <div className="d-flex flex-column w-100">
       {/* Container da apresentação ocupando 100% da altura da viewport */}
-      <div className="d-flex align-items-center justify-content-center w-100 vh-100 position-relative overflow-hidden">
+      <div className={`d-flex align-items-center justify-content-center w-100 min-vh-100 position-relative ${currentScreen.id === "screen-1" ? 'bg-danger-subtle' : ''}`} style={{overflowX: "hidden"}}>
         <ProgressBar/>
         
         <AnimatePresence mode="wait">
@@ -25,6 +25,7 @@ export const PresentationStage: React.FC = () => {
             <motion.div
               custom={{backgroundColor: 'bg-danger-subtle'}}
               variants={screenVariants}
+              className={"d-none d-xl-block"}
               initial="initial"
               animate="animate"
               exit="exit">

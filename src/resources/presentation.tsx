@@ -482,6 +482,7 @@ export const presentationData: ScreenData[] = [
         type: 'component',
         content: (
           <div className={'mt-3'}>
+            {/*TODO - implementar verificação de width ou corrigir esse style no responsivo mobile!*/}
             <Iframe id={Lib.getClipID({url: "https://www.twitch.tv/eskimozin/clip/BravePunchySpiderRuleFive-vfrwOYGy1fsIqhCv"})} style={{width: "max(100%, 700px)", height: "max(400px, 500px)"}}/>
           </div>
         ),
