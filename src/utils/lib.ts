@@ -36,9 +36,9 @@ export default class Lib {
     return "";
   }
   
-  static fsCapitalize(str: string) {
-    return str?.at(0)?.toUpperCase() + str?.substring(1)?.toLowerCase();
-  }
+  // static fsCapitalize(str: string) {
+  //   return (str?.at(0)?.toUpperCase() ?? "") + (str?.substring(1)?.toLowerCase() ?? "");
+  // }
   
   static getClipOrigin(data: ClipData | TierItem) {
     if (data.url?.includes("twitch.tv")) return "twitch"
