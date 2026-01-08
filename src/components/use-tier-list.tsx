@@ -31,7 +31,7 @@ interface ClipData {
   url: string;
 }
 
-const initialItems: TierItem[] = (clipsData as ClipData[]).map((item, index) => ({
+const initialItems: TierItem[] = Lib.shuffled((clipsData as ClipData[]).map((item, index) => ({
   id: index.toString(),
   tier: 'pool',
   title: item.title,
@@ -39,7 +39,7 @@ const initialItems: TierItem[] = (clipsData as ClipData[]).map((item, index) => 
   publishDatetime: item.date,
   url: item.url,
   className: ''
-}));
+})));
 
 const tiers: TierLevel[] = ['S', 'A', 'B', 'C', 'D', 'E', 'F'];
 
@@ -274,9 +274,8 @@ export function UseTierList() {
   
   // Função auxiliar para renderizar os itens numa zona
   const renderDraggableItems = (currentTier: TierLevel | 'pool') => {
-    return Lib.shuffled(items)
+    return items
       .filter((item) => item.tier === currentTier)
-      .toSorted((a, b) => a.title.localeCompare(b.title))
       .map((item: TierItem, index: number) => {
         const clipPlatform = Lib.getClipPlatform(item);
         const isDragging = draggedItem === item.id;
