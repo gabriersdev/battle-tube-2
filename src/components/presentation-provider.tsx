@@ -91,6 +91,7 @@ export const PresentationProvider: React.FC<PresentationProviderProps> = ({child
       pauseTimer();
       setIsPlaying(false);
     } else {
+      // Ao retomar, usamos o tempo restante armazenado na ref
       startTimer(remainingTimeRef.current);
       setIsPlaying(true);
     }
@@ -110,10 +111,14 @@ export const PresentationProvider: React.FC<PresentationProviderProps> = ({child
     
     if (isPlaying) {
       startTimer(durationMs);
+    } else {
+      // Se estiver pausado ao mudar de slide (ex: navegação manual),
+      // garantimos que o timer esteja limpo e o tempo restante seja o total do novo slide
+      clearPresentationTimer();
     }
     
     return () => clearPresentationTimer();
-  }, [currentScreenIndex, currentScreen.duration]);
+  }, [currentScreenIndex, currentScreen.duration]); // Removido isPlaying das dependências para evitar reset do timer ao pausar/despausar
   
   // Listener de teclado
   useEffect(() => {

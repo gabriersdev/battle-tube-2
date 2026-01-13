@@ -8,6 +8,7 @@ import {Container, Row, Col} from 'react-bootstrap';
 
 interface ScreenProps {
   data: ScreenData;
+  isPlaying?: boolean;
 }
 
 // Variantes para o container da tela (entrada/saída global)
@@ -45,7 +46,7 @@ export const contentVariants: Variants = {
   }
 };
 
-export const Screen: React.FC<ScreenProps> = ({data}) => {
+export const Screen: React.FC<ScreenProps> = ({data, isPlaying = true}) => {
   const isScreen1 = data.id === "screen-1";
 
   return (
@@ -78,7 +79,7 @@ export const Screen: React.FC<ScreenProps> = ({data}) => {
               className={`d-flex flex-column w-100 ${isScreen1 ? "mx-auto ms-xl-5 ps-xl-5" : ""}`}
               style={isScreen1 ? {maxWidth: '1500px'} : {}}
             >
-              {data.items.map(item => <ScreenItem key={item.id} item={item}/>)}
+              {data.items.map(item => <ScreenItem key={item.id} item={item} isPlaying={isPlaying}/>)}
             </Col>
           </Row>
         </motion.div>

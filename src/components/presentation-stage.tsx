@@ -11,7 +11,7 @@ import Player from "@/components/player";
 import Marquee from "@/components/marquee";
 
 export const PresentationStage: React.FC = () => {
-  const {currentScreen} = usePresentation();
+  const {currentScreen, isPlaying} = usePresentation();
   
   return (
     <div className="d-flex flex-column w-100">
@@ -20,7 +20,7 @@ export const PresentationStage: React.FC = () => {
         <ProgressBar/>
         
         <AnimatePresence mode="wait">
-          <Screen key={currentScreen.id} data={currentScreen}/>
+          <Screen key={currentScreen.id} data={currentScreen} isPlaying={isPlaying}/>
           {currentScreen.id === "screen-1" && (
             <motion.div
               custom={{backgroundColor: 'bg-danger-subtle'}}
@@ -29,7 +29,7 @@ export const PresentationStage: React.FC = () => {
               initial="initial"
               animate="animate"
               exit="exit">
-              <Marquee/>
+              <Marquee paused={!isPlaying}/>
             </motion.div>
           )}
         </AnimatePresence>
