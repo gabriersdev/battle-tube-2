@@ -89,7 +89,7 @@ export default function Player() {
         maxWidth: "calc(100vw - 2rem)",
         cursor: "grab"
       }}
-      whileDrag={{ cursor: "grabbing" }}
+      whileDrag={{cursor: "grabbing"}}
     >
       <div className={"m-0 p-0 d-flex flex-column gap-1"}>
         <span className={"text-small text-body-tertiary"}>Tocando agora</span>
@@ -107,11 +107,17 @@ export default function Player() {
               />
             )
           }
-          <Link href={currentScreen.audio?.link ?? ""} className={"d-flex gap-0 flex-column text-decoration-none"} draggable={false}>
-            <div className={"text-small scroll-wrapper"} style={{maxWidth: "200px"}}>
-              <span className={"scroll-text"}>{currentScreen.audio?.name ?? ""} - {currentScreen.audio?.author ?? ""}</span>
-            </div>
-            <span className={'opacity-50 border-0 fw-normal text-small text-body-tertiary'}>Explict</span>
+          <Link
+            href={currentScreen.audio?.link ?? ""}
+            className={"d-flex gap-0 flex-column text-decoration-none"}
+            draggable={false}
+          >
+            <>
+              <div className={"text-small scroll-wrapper"} style={{maxWidth: "200px"}}>
+                <span className={"scroll-text"}>{currentScreen.audio?.name ?? ""} - {currentScreen.audio?.author ?? ""}</span>
+              </div>
+              <span className={'opacity-50 border-0 fw-normal text-small text-body-tertiary'}>Explict</span>
+            </>
           </Link>
         </div>
         <div className={"d-flex flex-wrap gap-1 mt-2"}>

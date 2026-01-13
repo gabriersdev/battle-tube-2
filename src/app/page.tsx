@@ -4,6 +4,7 @@ import React from 'react';
 import {Button} from "react-bootstrap";
 import Link from "next/link";
 import Footer from "@/components/footer";
+import LinkButton from "@/components/link-button";
 
 export default function Home() {
   return (
@@ -18,20 +19,17 @@ export default function Home() {
               Você pode começar vendo os dados e estatísticas dos clipes no ano ou ir direto para a tier list.
             </p>
             <div className={"d-flex flex-wrap gap-3 w-full align-items-center justify-content-center"}>
-              <Link href={"/wrapped"}>
-                <Button>
+              <LinkButton href={"/wrapped"} btnVariant={"primary"}>
                 <span className={"fs-base"}>
                   Conferir o wrapped
                 </span>
-                </Button>
-              </Link>
-              <Link href={"/tier-list"}>
-                <Button variant={"warning"}>
+              </LinkButton>
+              
+              <LinkButton href={"/tier-list"} btnVariant={"warning"}>
                 <span className={"fs-base"}>
                   Ir direto para a tier list
                 </span>
-                </Button>
-              </Link>
+              </LinkButton>
             </div>
           </div>
         </hgroup>

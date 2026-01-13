@@ -1,10 +1,10 @@
-import {Button, DropdownMenu, DropdownToggle, Spinner, Dropdown} from "react-bootstrap";
-import React, {useCallback, useContext, useRef, useState} from "react";
-import html2canvas from "html2canvas";
-
-import FullscreenControl from "@/components/fullscreen-component";
-import {Theme} from "@/components/tier-list-context";
 import Lib from "@/utils/lib";
+import html2canvas from "html2canvas";
+import React, {useCallback, useContext, useRef, useState} from "react";
+import {Button, DropdownMenu, DropdownToggle, Spinner, Dropdown, OverlayTrigger, Tooltip} from "react-bootstrap";
+
+import {Theme} from "@/components/tier-list-context";
+import FullscreenControl from "@/components/fullscreen-component";
 
 export default function Selection() {
   const tierListContainer = useRef<HTMLDivElement>(null);
@@ -118,13 +118,13 @@ export default function Selection() {
             <div className={"d-flex gap-1 px-2 flex-column align-items-start"}>
               <Button
                 variant={"primary"}
-                className={"fs-base text-small align-items-center d-inline-flex gap-1"}
+                className={`fs-base text-small align-items-center d-inline-flex gap-1 ${isDownloading ? "disabled opacity-50 pointer-events-none cursor-not-allowed" : ""}`}
                 size={"sm"}
                 onClick={downloadTierImg}
                 disabled={isDownloading}
               >
                 Baixar
-                <Spinner animation="border" size={"sm"} className={isDownloading ? "" : "d-none"}/>
+                <Spinner animation="grow" size={"sm"} className={isDownloading ? "" : "d-none"}/>
               </Button>
               
               <FullscreenControl resultSection={sectionRef}/>
@@ -172,25 +172,41 @@ export default function Selection() {
                 Salvar
               </Button>
               
-              <Button
-                variant={"info"}
-                className={"fs-base text-small align-items-center d-inline-flex gap-1 text-balance"}
-                size={"sm"}
-                onClick={() => setHeightLimitedTL(!heightLimitedTL)}
-                // disabled={isDownloading}
-              >
-                {heightLimitedTL ? 'Liberar' : 'Limitar'} altura da TL
-              </Button>
+              <OverlayTrigger overlay={
+                <Tooltip>
+                  <span className={"text-small text-balance font-inter d-block"}>
+                    Limita ou libera a altura da tier list
+                  </span>
+                </Tooltip>
+              }>
+                <Button
+                  variant={"info"}
+                  className={"fs-base text-small align-items-center d-inline-flex gap-1 text-balance"}
+                  size={"sm"}
+                  onClick={() => setHeightLimitedTL(!heightLimitedTL)}
+                  // disabled={isDownloading}
+                >
+                  {heightLimitedTL ? 'Liberar' : 'Limitar'} alt. da TL
+                </Button>
+              </OverlayTrigger>
               
-              <Button
-                variant={"info"}
-                className={"fs-base text-small align-items-center d-inline-flex gap-1 text-balance"}
-                size={"sm"}
-                onClick={() => setHeightLimitedSlc(!heightLimitedSlc)}
-                // disabled={isDownloading}
-              >
-                {heightLimitedSlc ? 'Liberar' : 'Limitar'} altura da seleção
-              </Button>
+              <OverlayTrigger overlay={
+                <Tooltip>
+                  <span className={"text-small text-balance font-inter d-block"}>
+                    Limita ou libera a altura da área de seleção de clips
+                  </span>
+                </Tooltip>
+              }>
+                <Button
+                  variant={"info"}
+                  className={"fs-base text-small align-items-center d-inline-flex gap-1 text-balance"}
+                  size={"sm"}
+                  onClick={() => setHeightLimitedSlc(!heightLimitedSlc)}
+                  // disabled={isDownloading}
+                >
+                  {heightLimitedSlc ? 'Liberar' : 'Limitar'} alt. sel.
+                </Button>
+              </OverlayTrigger>
             </div>
           </DropdownMenu>
         </Dropdown>

@@ -2,10 +2,11 @@ import moment from "moment";
 import Link from "next/link";
 import {Button} from "react-bootstrap";
 import React, {useContext, useEffect, useState} from "react";
+import {githubDev, relExternalLink, routes} from "@/resources/config";
 
+import LinkButton from "@/components/link-button";
 import {Theme} from "@/components/tier-list-context";
 import buildData from "../../public/register.build.json";
-import {githubDev, relExternalLink, routes} from "@/resources/config";
 
 moment.locale("pt-BR");
 
@@ -44,41 +45,31 @@ export default function Footer({variant}: { variant: "wrapped" | "tier-list" }) 
             Limpar dados salvos no navegador
           </Button>
           
-          <Link href={process.env.NEXT_PUBLIC_GITHUB_CREATE_ISSUE ?? "#0"}>
-            <Button variant={"secondary"} className={"fs-base"}>
-              Informar um erro
-            </Button>
-          </Link>
+          <LinkButton href={process.env.NEXT_PUBLIC_GITHUB_CREATE_ISSUE ?? "#0"} btnVariant={"secondary"} btnClassName={"fs-base"}>
+            Informar um erro
+          </LinkButton>
           
-          <Link href={process.env.NEXT_PUBLIC_GITHUB_CLONE_URL ?? "#0"}>
-            <Button variant={"secondary"} className={"fs-base"}>
-              Fazer minha própria tier list
-            </Button>
-          </Link>
+          <LinkButton href={process.env.NEXT_PUBLIC_GITHUB_CLONE_URL ?? "#0"} btnVariant={"secondary"} btnClassName={"fs-base"}>
+            Fazer minha própria tier list
+          </LinkButton>
           
-          <Link href={process.env.NEXT_PUBLIC_GITHUB_REPO_URL ?? "#0"}>
-            <Button variant={"secondary"} className={"fs-base"}>
-              Repositório no Github
-            </Button>
-          </Link>
+          <LinkButton href={process.env.NEXT_PUBLIC_GITHUB_REPO_URL ?? "#0"} btnVariant={"secondary"} btnClassName={"fs-base"}>
+            Repositório no Github
+          </LinkButton>
           
           {
             variant === "wrapped" && routes["/tier-list"] && (
-              <Link href={"/tier-list"}>
-                <Button variant={"secondary"} className={"fs-base"}>
-                  Ir para a tier list
-                </Button>
-              </Link>
+              <LinkButton href={"/tier-list"} btnVariant={"secondary"} btnClassName={"fs-base"}>
+                Ir para a tier list
+              </LinkButton>
             )
           }
           
           {
             variant === "tier-list" && routes["/wrapped"] && (
-              <Link href={"/wrapped"}>
-                <Button variant={"secondary"} className={"fs-base"}>
-                  Ver wrapped
-                </Button>
-              </Link>
+              <LinkButton href={"/wrapped"} btnVariant={"secondary"} btnClassName={"fs-base"}>
+                Ver wrapped
+              </LinkButton>
             )
           }
         </div>

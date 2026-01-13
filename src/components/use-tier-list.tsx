@@ -31,7 +31,7 @@ interface ClipData {
   url: string;
 }
 
-const initialItems: TierItem[] = Lib.shuffled((clipsData as ClipData[]).map((item, index) => ({
+const initialItems: TierItem[] = (clipsData as ClipData[]).map((item, index) => ({
   id: index.toString(),
   tier: 'pool',
   title: item.title,
@@ -39,7 +39,7 @@ const initialItems: TierItem[] = Lib.shuffled((clipsData as ClipData[]).map((ite
   publishDatetime: item.date,
   url: item.url,
   className: ''
-})));
+}));
 
 const tiers: TierLevel[] = ['S', 'A', 'B', 'C', 'D', 'E', 'F'];
 
@@ -55,9 +55,14 @@ export function UseTierList() {
       const saved = localStorage.getItem(STORAGE_KEY);
       if (saved) {
         setItems(JSON.parse(saved));
+      } else {
+        // Embaralha apenas no cliente após a montagem se não houver salvo
+        setItems(prevItems => Lib.shuffled([...prevItems]));
       }
     } catch (error) {
       console.warn('Erro ao carregar tier list do localStorage:', error);
+      // Em caso de erro, garante que embaralha
+      setItems(prevItems => Lib.shuffled([...prevItems]));
     } finally {
       setIsLoaded(true);
     }
