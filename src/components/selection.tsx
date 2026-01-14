@@ -229,7 +229,7 @@ export default function Selection() {
             onDrop={(e) => handleDrop(e, tier)}
           >
             <span className={"font-radio-canada h-full d-block"} style={{minWidth: "70px"}}>{tier}</span>
-            <div className={"d-flex flex-wrap p-1"}>
+            <div className={"d-flex flex-wrap p-1"} style={{minHeight: "85px"}}>
               {renderDraggableItems(tier)}
             </div>
           </div>

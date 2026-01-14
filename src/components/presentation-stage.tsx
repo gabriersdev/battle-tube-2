@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, {useEffect} from 'react';
 import {AnimatePresence, motion} from 'framer-motion';
 import {usePresentation} from './presentation-provider';
 import {Screen, screenVariants} from './screen';
@@ -10,9 +10,27 @@ import Footer from "@/components/footer";
 import Player from "@/components/player";
 import Marquee from "@/components/marquee";
 
+const STORAGE_KEY_PREFIX = "battle-tube-tier-list-v2-wrapped";
+
 export const PresentationStage: React.FC = () => {
-  const {currentScreen, isPlaying} = usePresentation();
+  const {currentScreen, isPlaying, goToScreen, currentScreenIndex} = usePresentation();
   
+  // Restore current screen from localStorage
+  useEffect(() => {
+    const savedScreenIndex = localStorage.getItem(`${STORAGE_KEY_PREFIX}:current-screen-index`);
+    if (savedScreenIndex !== null) {
+      const index = parseInt(savedScreenIndex, 10);
+      if (!isNaN(index)) {
+        goToScreen(index);
+      }
+    }
+  }, [goToScreen]);
+
+  // Save current screen to localStorage
+  useEffect(() => {
+    localStorage.setItem(`${STORAGE_KEY_PREFIX}:current-screen-index`, String(currentScreenIndex));
+  }, [currentScreenIndex]);
+
   return (
     <div className="d-flex flex-column w-100">
       {/* Container da apresentação ocupando 100% da altura da viewport */}

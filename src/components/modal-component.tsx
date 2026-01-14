@@ -94,29 +94,31 @@ export function ModalComponent() {
             
             <div className="d-flex gap-2 align-items-center">
               <Dropdown>
-                {
-                  currentTier !== "pool" ? (
-                    <div
-                      className={`tier-list ${currentTier.toLowerCase()} rounded-1`}
-                      style={{width: "auto", maxWidth: "100vh", display: "inline-block", padding: 0}}
-                    >
-                      <DropdownToggle
-                        variant="outline-success"
-                        style={{background: "transparent", paddingTop: "0.35rem", paddingBottom: "0.35rem"}}
-                        id="dropdown-classified-clip"
-                        className={"text d-inline-flex align-items-center gap-1 flex-wrap"}
-                        size={"sm"}
-                      >
-                        <i className={"text-small text-white fst-normal"}>Classificado como </i>
-                        <b className={"text-small text-white"}>{currentTier}</b>
-                      </DropdownToggle>
-                    </div>
-                  ) : (
-                    <DropdownToggle variant="outline-success" id="dropdown-classified-clip" className={"text"} size={"sm"}>
-                      <span className={"text-small"}>Classificar como</span>
-                    </DropdownToggle>
-                  )
-                }
+                <div
+                  className={`tier-list ${currentTier !== "pool" ? currentTier.toLowerCase() : "bg-primary text-body"} rounded-1`}
+                  style={{width: "auto", maxWidth: "100vh", display: "inline-block", padding: 0}}
+                >
+                  <DropdownToggle
+                    variant="outline-success"
+                    style={{background: "transparent", paddingTop: "0.35rem", paddingBottom: "0.35rem"}}
+                    id="dropdown-classified-clip"
+                    className={"text d-inline-flex align-items-center gap-1 flex-wrap"}
+                    size={"sm"}
+                  >
+                    {
+                      currentTier === "pool" ? (
+                        <>
+                          <i className={"text-small text-body fst-normal"}>Classificar como</i>
+                        </>
+                      ) : (
+                        <>
+                          <i className={"text-small text-white fst-normal"}>Classificado como </i>
+                          <b className={"text-small text-white"}>{currentTier}</b>
+                        </>
+                      )
+                    }
+                  </DropdownToggle>
+                </div>
                 
                 <DropdownMenu className={"text"}>
                   {

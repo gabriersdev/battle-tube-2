@@ -1,27 +1,80 @@
-import {Button, DropdownItem, DropdownMenu, DropdownToggle} from "react-bootstrap";
-import {Dropdown} from "react-bootstrap";
-import React, {useEffect, useRef, useState} from "react";
-import {usePresentation} from "@/components/presentation-provider";
 import Link from "next/link";
 import Image from "next/image";
 import {motion} from "framer-motion";
+import {Dropdown} from "react-bootstrap";
+import React, {useEffect, useRef, useState} from "react";
+import {Button, DropdownItem, DropdownMenu, DropdownToggle} from "react-bootstrap";
+
+import {usePresentation} from "@/components/presentation-provider";
+
+const STORAGE_KEY_PREFIX = "battle-tube-tier-list-v2-wrapped";
 
 export default function Player() {
   const {currentScreen} = usePresentation();
+  const hasAudio: boolean = !!currentScreen.audio;
+  
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [isPlaying, setIsPlaying] = useState<boolean>(hasAudio);
   const [volume, setVolume] = useState<0 | 10 | 25 | 50 | 75 | 100>(10);
   
+  // State to track the previous screen ID for resetting playing state
+  const [lastScreenId, setLastScreenId] = useState(currentScreen.id);
+
   const initTime: number | undefined = currentScreen.audio?.initTime;
-  const hasAudio: boolean = !!currentScreen.audio;
   const imgSrcMusic: string | undefined = currentScreen.audio?.img.src;
   
-  // Reset playing state when screen changes
+  // Load initial state from localStorage
   useEffect(() => {
-    if (hasAudio) setIsPlaying(true);
-    else setIsPlaying(false);
-  }, [currentScreen.id, hasAudio]);
+    const savedVolume = localStorage.getItem(`${STORAGE_KEY_PREFIX}:volume`);
+    if (savedVolume) {
+      setVolume(Number(savedVolume) as any);
+    }
+
+    const savedIsPlaying = localStorage.getItem(`${STORAGE_KEY_PREFIX}:audio-playing`);
+    if (savedIsPlaying !== null) {
+      setIsPlaying(savedIsPlaying === 'true');
+    }
+  }, []);
+
+  // Reset playing state when screen changes
+  if (currentScreen.id !== lastScreenId) {
+    setLastScreenId(currentScreen.id);
+    setIsPlaying(hasAudio);
+  }
   
+  // Save volume
+  useEffect(() => {
+    localStorage.setItem(`${STORAGE_KEY_PREFIX}:volume`, String(volume));
+  }, [volume]);
+
+  // Save isPlaying
+  useEffect(() => {
+    localStorage.setItem(`${STORAGE_KEY_PREFIX}:audio-playing`, String(isPlaying));
+  }, [isPlaying]);
+
+  // Save time periodically
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const saveTime = () => {
+      if (currentScreen.audio?.src) {
+        localStorage.setItem(`${STORAGE_KEY_PREFIX}:audio-time`, JSON.stringify({
+          src: currentScreen.audio.src,
+          time: audio.currentTime
+        }));
+      }
+    };
+
+    const interval = setInterval(saveTime, 1000);
+    audio.addEventListener('pause', saveTime);
+    
+    return () => {
+      clearInterval(interval);
+      audio.removeEventListener('pause', saveTime);
+    };
+  }, [currentScreen.audio]);
+
   // Control audio element
   useEffect(() => {
     const audioElement = audioRef.current;
@@ -57,10 +110,31 @@ export default function Player() {
         audioElement.pause();
         console.info("[INFO] - Audio pausado...");
       }
-      
-      if (initTime) audioElement.currentTime = initTime;
     }
-  }, [isPlaying, volume, hasAudio, currentScreen.audio, initTime]);
+  }, [isPlaying, volume, hasAudio, currentScreen.audio]);
+  
+  // Initialize time (restore or initTime)
+  useEffect(() => {
+    const audioElement = audioRef.current;
+    if (audioElement) {
+       // Try to restore from storage
+       const savedTimeJson = localStorage.getItem(`${STORAGE_KEY_PREFIX}:audio-time`);
+       let restored = false;
+       if (savedTimeJson) {
+           try {
+               const { src, time } = JSON.parse(savedTimeJson);
+               if (src === currentScreen.audio?.src) {
+                   audioElement.currentTime = time;
+                   restored = true;
+               }
+           } catch (e) {}
+       }
+       
+       if (!restored && initTime !== undefined) {
+           audioElement.currentTime = initTime;
+       }
+    }
+  }, [currentScreen.audio, initTime]);
   
   useEffect(() => {
     if (isPlaying) {

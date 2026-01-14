@@ -21,6 +21,7 @@ export interface TierItem {
   publishDatetime?: string;
   url: string;
   className?: string;
+  color?: string;
 }
 
 interface ClipData {
@@ -38,12 +39,13 @@ const initialItems: TierItem[] = (clipsData as ClipData[]).map((item, index) => 
   author: item.clipper || undefined,
   publishDatetime: item.date,
   url: item.url,
-  className: ''
+  className: '',
+  color: Lib.getBSColor(index)
 }));
 
 const tiers: TierLevel[] = ['S', 'A', 'B', 'C', 'D', 'E', 'F'];
 
-const STORAGE_KEY = 'battle-tube-tier-list-v2';
+const STORAGE_KEY_TIER_ITEMS = 'battle-tube-tier-list-v2-items';
 
 export function UseTierList() {
   // Estado que guarda onde cada item está
@@ -52,9 +54,15 @@ export function UseTierList() {
 
   useEffect(() => {
     try {
-      const saved = localStorage.getItem(STORAGE_KEY);
+      const saved = localStorage.getItem(STORAGE_KEY_TIER_ITEMS);
       if (saved) {
-        setItems(JSON.parse(saved));
+        const parsedItems = JSON.parse(saved);
+        // Ensure color exists for backward compatibility
+        const itemsWithColor = parsedItems.map((item: TierItem) => ({
+          ...item,
+          color: item.color ?? Lib.getBSColor(parseInt(item.id))
+        }));
+        setItems(itemsWithColor);
       } else {
         // Embaralha apenas no cliente após a montagem se não houver salvo
         setItems(prevItems => Lib.shuffled([...prevItems]));
@@ -111,7 +119,7 @@ export function UseTierList() {
   // Funções de localStorage
   const saveToLocalStorage = (itemsToSave: TierItem[]) => {
     try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(itemsToSave));
+      localStorage.setItem(STORAGE_KEY_TIER_ITEMS, JSON.stringify(itemsToSave));
     } catch (error) {
       console.error('Erro ao salvar tier list no localStorage:', error);
     }
@@ -119,7 +127,7 @@ export function UseTierList() {
   
   const loadFromLocalStorage = (): TierItem[] => {
     try {
-      const saved = localStorage.getItem(STORAGE_KEY);
+      const saved = localStorage.getItem(STORAGE_KEY_TIER_ITEMS);
       return saved ? JSON.parse(saved) : initialItems;
     } catch (error) {
       console.warn('Erro ao carregar tier list do localStorage:', error);
@@ -130,7 +138,7 @@ export function UseTierList() {
   const resetTierList = () => {
     setItems(initialItems);
     try {
-      localStorage.removeItem(STORAGE_KEY);
+      localStorage.removeItem(STORAGE_KEY_TIER_ITEMS);
     } catch (error) {
       console.error('Erro ao remover tier list do localStorage:', error);
     }
@@ -164,12 +172,17 @@ export function UseTierList() {
     
     const draggedItemId = e.dataTransfer.getData('text/plain');
     
-    // Atualiza o estado movendo o item para a nova tier
-    setItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === draggedItemId ? {...item, tier: targetTier} : item
-      )
-    );
+    // Move o item para o final da lista para garantir que ele seja renderizado por último (append)
+    setItems((prevItems) => {
+      const itemIndex = prevItems.findIndex(i => i.id === draggedItemId);
+      if (itemIndex === -1) return prevItems;
+      
+      const item = {...prevItems[itemIndex], tier: targetTier};
+      const newItems = [...prevItems];
+      newItems.splice(itemIndex, 1);
+      newItems.push(item);
+      return newItems;
+    });
   };
   
   // Mobile Touch Handlers
@@ -257,11 +270,16 @@ export function UseTierList() {
         }
         
         if (targetTier) {
-          setItems((prevItems) =>
-            prevItems.map((item) =>
-              item.id === draggedItem ? {...item, tier: targetTier!} : item
-            )
-          );
+          setItems((prevItems) => {
+            const itemIndex = prevItems.findIndex(i => i.id === draggedItem);
+            if (itemIndex === -1) return prevItems;
+            
+            const item = {...prevItems[itemIndex], tier: targetTier!};
+            const newItems = [...prevItems];
+            newItems.splice(itemIndex, 1);
+            newItems.push(item);
+            return newItems;
+          });
         }
       }
     }
@@ -295,7 +313,7 @@ export function UseTierList() {
           }>
             <div
               id={`draggable-element-${item.id}`}
-              className={`draggable-element p-2 rounded-0 m-1 overflow-x-auto bg-${Lib.getBSColor(index)} ${item.className}`}
+              className={`draggable-element p-2 rounded-0 m-1 overflow-x-auto bg-${item.color ?? Lib.getBSColor(parseInt(item.id))} ${item.className}`}
               style={{
                 border: "1px solid #00000025",
                 opacity: isDragging ? 0.5 : 1,
