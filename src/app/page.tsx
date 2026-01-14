@@ -1,8 +1,6 @@
 "use client";
 
 import React from 'react';
-import {Button} from "react-bootstrap";
-import Link from "next/link";
 import Footer from "@/components/footer";
 import LinkButton from "@/components/link-button";
 

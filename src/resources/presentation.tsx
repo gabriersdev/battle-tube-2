@@ -1,7 +1,7 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
-import {Alert, Badge, Button} from "react-bootstrap";
+import {Alert, Badge} from "react-bootstrap";
 
 import Lib from "@/utils/lib";
 import Iframe from "@/components/iframe";
@@ -595,7 +595,7 @@ export const presentationData: ScreenData[] = [
         content: 'E não foi roxo...',
         animation: 'slide-up',
         delay: 4.5,
-        className: `${defaultClassNames.text} text-black`,
+        className: `${defaultClassNames.text} text-black bg-primary p-1`,
       },
     ],
     backgroundClassName: 'gradient-area',

@@ -107,7 +107,9 @@ export const PresentationProvider: React.FC<PresentationProviderProps> = ({child
     
     // Sempre reseta o tempo restante ao mudar de slide
     remainingTimeRef.current = durationMs;
+    // TODO - Error: Calling setState synchronously within an effect can trigger cascading renders
     setRemainingTime(durationMs);
+    // Fim do error
     
     if (isPlaying) {
       startTimer(durationMs);

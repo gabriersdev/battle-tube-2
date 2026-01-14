@@ -4,6 +4,7 @@ import {Inter, Inter_Tight, Radio_Canada_Big, JetBrains_Mono} from "next/font/go
 
 import '@/style/bootstrap.min.css';
 import '@/style/style.css';
+import Base from "@/components/base";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -41,7 +42,9 @@ export default function RootLayout({
       className={`${inter.variable} ${mono.variable} ${interTight.variable} ${radioCanadaBig.variable}`}
       style={{userSelect: "text", background: "#F6F6F6"}}
     >
-    {children}
+    <Base>
+      {children}
+    </Base>
     </body>
     </html>
   );
