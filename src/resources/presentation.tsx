@@ -60,7 +60,7 @@ const defaultClassNames: {
 export const presentationData: ScreenData[] = [
   {
     id: 'screen-1',
-    duration: 20,
+    duration: 25,
     items: [
       {
         id: 'S1-I1',
@@ -126,7 +126,7 @@ export const presentationData: ScreenData[] = [
   },
   {
     id: 'screen-2',
-    duration: 12,
+    duration: 15,
     items: [
       {
         id: 'S2-I1',
@@ -266,7 +266,7 @@ export const presentationData: ScreenData[] = [
   },
   {
     id: 'screen-4',
-    duration: 15,
+    duration: 20,
     items: [
       {
         id: 'S4-I1',
@@ -343,7 +343,7 @@ export const presentationData: ScreenData[] = [
   },
   {
     id: 'screen-5',
-    duration: 15,
+    duration: 20,
     items: [
       {
         id: 'S5-I1',
@@ -446,7 +446,7 @@ export const presentationData: ScreenData[] = [
   },
   {
     id: 'screen-6',
-    duration: 20,
+    duration: 25,
     items: [
       {
         id: 'S6-I1',
@@ -579,7 +579,7 @@ export const presentationData: ScreenData[] = [
   },
   {
     id: 'screen-8',
-    duration: 10,
+    duration: 12.5,
     items: [
       {
         id: 'S8-I1',
@@ -612,7 +612,7 @@ export const presentationData: ScreenData[] = [
   },
   {
     id: 'screen-9',
-    duration: 10,
+    duration: 15,
     items: [
       {
         id: 'S9-I1',
@@ -644,7 +644,7 @@ export const presentationData: ScreenData[] = [
   },
   {
     id: 'screen-10',
-    duration: 15,
+    duration: 25,
     items: [
       {
         id: 'S10-I1',
@@ -693,7 +693,7 @@ export const presentationData: ScreenData[] = [
   },
   {
     id: 'screen-11',
-    duration: 15,
+    duration: 25,
     items: [
       {
         id: 'S11-I1',
