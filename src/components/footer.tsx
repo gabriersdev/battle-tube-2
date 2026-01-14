@@ -82,9 +82,10 @@ export default function Footer({variant}: { variant: "wrapped" | "tier-list" }) 
               <Link href={"/"} className={'text-decoration-none fw-normal'}>
                 <span className={"text-small text-body-secondary"}>Battle Tube 2025</span>
               </Link>
-              <p className={"fs-base mb-0 d-inline-flex gap-2"}>
-                <span>Feito com 💖 pelo</span>
-                <Link href={githubDev} target={relExternalLink} className={'text-decoration-none fw-normal'}>Gabriel</Link>
+              <p className={"fs-base mb-0 d-inline-flex"}>
+                <span className={"text-nowrap"}>
+                  Feito com 💖 pelo <Link href={githubDev} target={relExternalLink} className={'text-decoration-none fw-normal'}>Gabriel</Link> <svg xmlns="http://www.w3.org/2000/svg" height="16px" viewBox="0 -960 960 960" width="16px" className={"mb-1"} fill="currentColor"><path d="M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h280v80H200v560h560v-280h80v280q0 33-23.5 56.5T760-120H200Zm188-212-56-56 372-372H560v-80h280v280h-80v-144L388-332Z"></path></svg>
+                </span>
               </p>
               <span className={"text-small text-body-secondary"}>Versão de build: {moment(buildData.datetimeCreate ?? "2026-01-01T00:00:00").format("DD[.]MM[.]YYYY HH:mm")} GMT-03:00</span>
             </div>
