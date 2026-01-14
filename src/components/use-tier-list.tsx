@@ -1,5 +1,5 @@
 import React, {DragEvent, useRef, useState, useEffect, TouchEvent} from "react";
-import {OverlayTrigger, Tooltip} from "react-bootstrap";
+import {Badge, OverlayTrigger, Tooltip} from "react-bootstrap";
 import clipsData from "@/resources/data.json";
 import Lib from "@/utils/lib";
 import Image from "next/image";
@@ -22,6 +22,7 @@ export interface TierItem {
   url: string;
   className?: string;
   color?: string;
+  viewed?: boolean;
 }
 
 interface ClipData {
@@ -40,7 +41,8 @@ const initialItems: TierItem[] = (clipsData as ClipData[]).map((item, index) => 
   publishDatetime: item.date,
   url: item.url,
   className: '',
-  color: Lib.getBSColor(index)
+  color: Lib.getBSColor(index),
+  viewed: false
 }));
 
 const tiers: TierLevel[] = ['S', 'A', 'B', 'C', 'D', 'E', 'F'];
@@ -51,7 +53,8 @@ export function UseTierList() {
   // Estado que guarda onde cada item está
   const [items, setItems] = useState<TierItem[]>(initialItems);
   const [isLoaded, setIsLoaded] = useState(false);
-
+  const [lastViewedId, setLastViewedId] = useState<string | null>(null);
+  
   useEffect(() => {
     try {
       const saved = localStorage.getItem(STORAGE_KEY_TIER_ITEMS);
@@ -60,7 +63,8 @@ export function UseTierList() {
         // Ensure color exists for backward compatibility
         const itemsWithColor = parsedItems.map((item: TierItem) => ({
           ...item,
-          color: item.color ?? Lib.getBSColor(parseInt(item.id))
+          color: item.color ?? Lib.getBSColor(parseInt(item.id)),
+          viewed: item.viewed ?? false
         }));
         setItems(itemsWithColor);
       } else {
@@ -75,7 +79,7 @@ export function UseTierList() {
       setIsLoaded(true);
     }
   }, []);
-
+  
   const sectionRef = useRef<HTMLDivElement>(null);
   
   // Estado para controle visual de onde estamos arrastando (highlight)
@@ -90,23 +94,25 @@ export function UseTierList() {
   // Confirmation/Alert Modal State
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [confirmMessage, setConfirmMessage] = useState("");
-  const [confirmAction, setConfirmAction] = useState<() => void>(() => {});
+  const [confirmAction, setConfirmAction] = useState<() => void>(() => {
+  });
   const [dialogType, setDialogType] = useState<'confirm' | 'alert'>('confirm');
-
+  
   const requestConfirm = (message: string, action: () => void) => {
     setConfirmMessage(message);
     setConfirmAction(() => action);
     setDialogType('confirm');
     setShowConfirmModal(true);
   };
-
+  
   const requestAlert = (message: string) => {
     setConfirmMessage(message);
-    setConfirmAction(() => {});
+    setConfirmAction(() => {
+    });
     setDialogType('alert');
     setShowConfirmModal(true);
   };
-
+  
   const handleConfirm = () => {
     if (dialogType === 'confirm') {
       confirmAction();
@@ -187,8 +193,8 @@ export function UseTierList() {
   
   // Mobile Touch Handlers
   const [draggedItem, setDraggedItem] = useState<string | null>(null);
-  const [touchPosition, setTouchPosition] = useState<{x: number, y: number} | null>(null);
-
+  const [touchPosition, setTouchPosition] = useState<{ x: number, y: number } | null>(null);
+  
   const handleTouchStart = (e: TouchEvent<HTMLDivElement>, itemId: string) => {
     // Prevent scrolling while dragging
     // e.preventDefault(); // This might block scrolling entirely, be careful
@@ -196,7 +202,7 @@ export function UseTierList() {
     const touch = e.touches[0];
     setTouchPosition({x: touch.clientX, y: touch.clientY});
   };
-
+  
   const handleTouchMove = (e: TouchEvent<HTMLDivElement>) => {
     if (!draggedItem) return;
     
@@ -236,7 +242,7 @@ export function UseTierList() {
       setActiveDropZone(null);
     }
   };
-
+  
   const handleTouchEnd = (e: TouchEvent<HTMLDivElement>) => {
     if (!draggedItem) return;
     
@@ -293,6 +299,11 @@ export function UseTierList() {
     console.log(data);
     setShowClipData(data);
     setShowModal(true);
+    
+    setLastViewedId(data.id);
+    setItems(prevItems => prevItems.map(item => 
+      item.id === data.id ? { ...item, viewed: true } : item
+    ));
   }
   
   // Função auxiliar para renderizar os itens numa zona
@@ -333,9 +344,30 @@ export function UseTierList() {
               onClick={() => !isDragging && showClip(item)}
             >
               <div className={"pointer-events-none disabled d-flex flex-column justify-content-between h-100"}>
-                <h3 className={"fw-medium fs-base text-balance lh-sm mb-1 p-0 line-clamp-2"}>
-                  {item.title}
-                </h3>
+                <div>
+                  <h3 className={"fw-medium fs-base text-balance lh-sm mb-1 p-0 line-clamp-2"}>
+                    {item.title}
+                  </h3>
+                  
+                  {
+                    item.tier === "pool" && (
+                      <div className={"d-flex flex-wrap align-items-start gap-1"}>
+                        {lastViewedId === item.id && (
+                          <Badge className={"border-0"} pill={true} bg={"primary"}>
+                            <span className={"text-small fw-normal text-lowercase text-body-secondary"}>Visto por último</span>
+                          </Badge>
+                        )}
+                        
+                        {item.viewed && (
+                          <Badge className={"border-0"} pill={true} bg={"success"}>
+                            <span className={"text-small fw-normal text-lowercase text-body-secondary"}>Visualizado</span>
+                          </Badge>
+                        )}
+                      </div>
+                    )
+                  }
+                </div>
+                
                 <div>
                   <span
                     className={"text-small text-body-tertiary text-lowercase bg-transparent p-0 m-0 fw-normal w-auto d-block"}

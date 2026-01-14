@@ -9,6 +9,7 @@ import {Controls} from './controls';
 import Footer from "@/components/footer";
 import Player from "@/components/player";
 import Marquee from "@/components/marquee";
+import FeedbackPausePS from "@/components/feedback-pause-ps";
 
 const STORAGE_KEY_PREFIX = "battle-tube-tier-list-v2-wrapped";
 
@@ -53,7 +54,7 @@ export const PresentationStage: React.FC = () => {
         </AnimatePresence>
         
         <Controls/>
-        
+        <FeedbackPausePS/>
         <Player/>
       </div>
       

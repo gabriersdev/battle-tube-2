@@ -57,7 +57,18 @@ const defaultClassNames: {
   textSM: 'text-balance text-small text-body-tertiary'
 };
 
-export const presentationData: ScreenData[] = [
+const backgroundColors = [
+  "bg-danger-subtle",
+  "bg-primary-subtle",
+  "bg-warning-subtle",
+  "bg-info-subtle",
+  "bg-success-subtle",
+  "bg-body-secondary",
+  "bg-dark-subtle",
+  "bg-secondary-subtle"
+];
+
+const rawPresentationData: ScreenData[] = [
   {
     id: 'screen-1',
     duration: 25,
@@ -485,7 +496,7 @@ export const presentationData: ScreenData[] = [
           <div className={'mt-3 overflow-x-auto'}>
             <Iframe
               id={Lib.getClipID({url: "https://www.twitch.tv/eskimozin/clip/BravePunchySpiderRuleFive-vfrwOYGy1fsIqhCv"})}
-              style={{width: "750px", maxWidth: "900px", aspectRatio: "16/9"}}
+              style={{width: "750px", maxWidth: "900px", height: "450px"}}
               allowFullScreen={true}
             />
           </div>
@@ -528,7 +539,7 @@ export const presentationData: ScreenData[] = [
   },
   {
     id: 'screen-7',
-    duration: 20,
+    duration: 15,
     items: [
       {
         id: 'S7-I1',
@@ -579,7 +590,7 @@ export const presentationData: ScreenData[] = [
   },
   {
     id: 'screen-8',
-    duration: 12.5,
+    duration: 10,
     items: [
       {
         id: 'S8-I1',
@@ -747,7 +758,7 @@ export const presentationData: ScreenData[] = [
       {
         id: 'S12-I1',
         type: 'title',
-        content: 'Que 2026 seja foda para os eskimoviewers, eskimolovers, eskimofãs e eskimozettes',
+        content: 'Que 2026 seja foda para os eskimoviewers, eskimolovers, eskimofãs e eskimozettes!',
         animation: 'slide-up',
         delay: 0,
         className: `${defaultClassNames.title.replace(/(max-w-600)/g, "")}`,
@@ -776,8 +787,8 @@ export const presentationData: ScreenData[] = [
         id: 'S12-I4',
         type: 'component',
         content: (
-          <LinkButton href={"/tier-list"} className={`${!routes["/tier-list"] ? "d-none" : ""}`} btnVariant={"primary"} btnClassName={"fs-base"}>
-            Ir para a tier list
+          <LinkButton href={"/tier-list"} btnSize={"lg"} className={`mt-3 ${!routes["/tier-list"] ? "d-none" : "d-block"}`} btnVariant={"primary"} btnClassName={"fs-base"}>
+            <span className={"fs-2 fw-medium font-inter-tight opacity-75"}>Ir para a tier list</span>
           </LinkButton>
         ),
         animation: 'slide-up',
@@ -797,3 +808,28 @@ export const presentationData: ScreenData[] = [
     },
   },
 ];
+
+export const presentationData: ScreenData[] = (() => {
+  let lastBg: string | undefined = undefined;
+  return rawPresentationData.map((screen) => {
+    // Se a tela já tiver um background específico que não seja um dos padrões (ex: gradient-area), mantemos.
+    // Caso contrário, geramos um aleatório.
+    const isSpecialBg = screen.backgroundClassName && !backgroundColors.includes(screen.backgroundClassName) && !screen.backgroundClassName.startsWith("bg-");
+    
+    if (isSpecialBg) {
+      lastBg = screen.backgroundClassName;
+      return screen;
+    }
+
+    let available = backgroundColors.filter(c => c !== lastBg);
+    if (available.length === 0) available = backgroundColors;
+    
+    const randomBg = available[Math.floor(Math.random() * available.length)];
+    lastBg = randomBg;
+    
+    return {
+      ...screen,
+      backgroundClassName: randomBg
+    };
+  });
+})();

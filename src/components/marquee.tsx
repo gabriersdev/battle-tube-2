@@ -1,5 +1,6 @@
 import React from 'react';
 import Image from "next/image";
+import {presentationData} from "@/resources/presentation";
 
 export type MarqueeItemType = string | React.ReactNode;
 
@@ -30,6 +31,7 @@ const DEFAULT_ITEMS: MarqueeItemType[] = [
 const IMAGE_EXTENSIONS_REGEX = /\.(jpg|jpeg|png|gif|webp|svg)$/i;
 
 export default function Marquee({items = DEFAULT_ITEMS, paused = false}: MarqueeProps) {
+  const firstScreenBg = presentationData[0]?.backgroundClassName || "bg-danger-subtle";
   
   const renderContent = (item: MarqueeItemType) => {
     if (typeof item === 'string') {
@@ -68,7 +70,7 @@ export default function Marquee({items = DEFAULT_ITEMS, paused = false}: Marquee
   
   return (
     <div>
-      <article className="marquee-wrapper marquee-wrapper-vertical bg-danger-subtle">
+      <article className={`marquee-wrapper marquee-wrapper-vertical ${firstScreenBg}`}>
         {/* Coluna 1 - Scroll Normal */}
         <div className="marquee marquee-vertical">
           <div className="marquee-group" style={animationStyle}>

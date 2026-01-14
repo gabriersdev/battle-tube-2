@@ -128,8 +128,6 @@ export function ModalComponent() {
                         onClick={() => handleTierSelect(tier)}
                         className={`tier-list ${tier === "pool" ? "bg-primary text-body" : `${tier.toLowerCase()} text-white`} d-flex align-items-center gap-1 flex-wrap text-capitalize`}
                       >
-                        {tier === "pool" ? "Sem class." : tier}
-                        
                         {currentTier === tier && (
                           <OverlayTrigger overlay={
                             <Tooltip>
@@ -142,6 +140,8 @@ export function ModalComponent() {
                             </svg>
                           </OverlayTrigger>
                         )}
+                        
+                        {tier === "pool" ? "Sem class." : tier}
                       </DropdownItem>
                     ))
                   }

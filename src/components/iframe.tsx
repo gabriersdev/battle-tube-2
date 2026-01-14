@@ -26,11 +26,12 @@ const Iframe = (
     if (ignoreResponsiveWidth) return;
 
     const handleResize = () => {
-      if (window.innerWidth > 1400) {
-        setIframeStyle({...style, width: "100%", maxWidth: "1200px"});
-      } else {
-        setIframeStyle(style);
-      }
+      setIframeStyle(style);
+      // if (window.innerWidth > 1400) {
+      //   setIframeStyle({...style, width: "100%", maxWidth: "1200px"});
+      // } else {
+      //   setIframeStyle(style);
+      // }
     };
 
     window.addEventListener("resize", handleResize);
