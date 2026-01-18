@@ -33,7 +33,8 @@ interface PresentationProviderProps {
 export const PresentationProvider: React.FC<PresentationProviderProps> = ({children}) => {
   const [currentScreenIndex, setCurrentScreenIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
-  const [remainingTime, setRemainingTime] = useState(0);
+  // Initialize with first screen duration to avoid immediate re-render on mount
+  const [remainingTime, setRemainingTime] = useState(presentationData[0]?.duration * 1000 || 0);
   const router = useRouter();
   
   const currentScreen = presentationData[currentScreenIndex];
@@ -42,7 +43,16 @@ export const PresentationProvider: React.FC<PresentationProviderProps> = ({child
   // Refs para controle preciso do timer sem re-renders excessivos
   const timerRef = useRef<NodeJS.Timeout | null>(null);
   const startTimeRef = useRef<number>(0);
-  const remainingTimeRef = useRef<number>(0);
+  const remainingTimeRef = useRef<number>(presentationData[0]?.duration * 1000 || 0);
+  
+  // State to track screen changes for resetting timer/state during render
+  const [lastScreenIndex, setLastScreenIndex] = useState(0);
+  
+  if (currentScreenIndex !== lastScreenIndex) {
+    setLastScreenIndex(currentScreenIndex);
+    const durationMs = currentScreen.duration * 1000;
+    setRemainingTime(durationMs);
+  }
   
   const clearPresentationTimer = () => {
     if (timerRef.current) {
@@ -91,6 +101,7 @@ export const PresentationProvider: React.FC<PresentationProviderProps> = ({child
       pauseTimer();
       setIsPlaying(false);
     } else {
+      // Ao retomar, usamos o tempo restante armazenado na ref
       startTimer(remainingTimeRef.current);
       setIsPlaying(true);
     }
@@ -104,16 +115,16 @@ export const PresentationProvider: React.FC<PresentationProviderProps> = ({child
   useEffect(() => {
     const durationMs = currentScreen.duration * 1000;
     
-    // Sempre reseta o tempo restante ao mudar de slide
-    remainingTimeRef.current = durationMs;
-    setRemainingTime(durationMs);
-    
-    if (isPlaying) {
-      startTimer(durationMs);
+    if (isPlaying) startTimer(durationMs);
+    else {
+      // Se estiver pausado ao mudar de slide (ex: navegação manual),
+      // garantimos que o timer esteja limpo e o tempo restante seja o total do novo slide
+      clearPresentationTimer();
+      remainingTimeRef.current = durationMs;
     }
     
     return () => clearPresentationTimer();
-  }, [currentScreenIndex, currentScreen.duration]);
+  }, [currentScreenIndex, currentScreen.duration]); // Removido isPlaying das dependências para evitar reset do timer ao pausar/retirar pausar
   
   // Listener de teclado
   useEffect(() => {

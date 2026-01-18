@@ -1,10 +1,12 @@
 import React from 'react';
 import Image from "next/image";
+import {presentationData} from "@/resources/presentation";
 
 export type MarqueeItemType = string | React.ReactNode;
 
 interface MarqueeProps {
   items?: MarqueeItemType[];
+  paused?: boolean;
 }
 
 const DEFAULT_ITEMS: MarqueeItemType[] = [
@@ -28,7 +30,8 @@ const DEFAULT_ITEMS: MarqueeItemType[] = [
 
 const IMAGE_EXTENSIONS_REGEX = /\.(jpg|jpeg|png|gif|webp|svg)$/i;
 
-export default function Marquee({items = DEFAULT_ITEMS}: MarqueeProps) {
+export default function Marquee({items = DEFAULT_ITEMS, paused = false}: MarqueeProps) {
+  const firstScreenBg = presentationData[0]?.backgroundClassName || "bg-danger-subtle";
   
   const renderContent = (item: MarqueeItemType) => {
     if (typeof item === 'string') {
@@ -63,12 +66,14 @@ export default function Marquee({items = DEFAULT_ITEMS}: MarqueeProps) {
     return item;
   };
   
+  const animationStyle = { animationPlayState: paused ? 'paused' : 'running' };
+  
   return (
     <div>
-      <article className="marquee-wrapper marquee-wrapper-vertical bg-danger-subtle">
+      <article className={`marquee-wrapper marquee-wrapper-vertical ${firstScreenBg}`}>
         {/* Coluna 1 - Scroll Normal */}
         <div className="marquee marquee-vertical">
-          <div className="marquee-group">
+          <div className="marquee-group" style={animationStyle}>
             {items.map((item, index) => (
               <div key={`g1-${index}`} className="marquee-item position-relative">
                 {renderContent(item)}
@@ -76,7 +81,7 @@ export default function Marquee({items = DEFAULT_ITEMS}: MarqueeProps) {
             ))}
           </div>
           
-          <div aria-hidden="true" className="marquee-group">
+          <div aria-hidden="true" className="marquee-group" style={animationStyle}>
             {[...items].map((item, index) => (
               <div key={`g1-clone-${index}`} className="marquee-item position-relative">
                 {renderContent(item)}
@@ -87,7 +92,7 @@ export default function Marquee({items = DEFAULT_ITEMS}: MarqueeProps) {
         
         {/* Coluna 2 - Scroll Reverso */}
         <div className="marquee marquee-vertical marquee-reverse">
-          <div className="marquee-group">
+          <div className="marquee-group" style={animationStyle}>
             {[...items].map((item, index) => (
               <div key={`g2-${index}`} className="marquee-item rounded-end-0">
                 {renderContent(item)}
@@ -95,7 +100,7 @@ export default function Marquee({items = DEFAULT_ITEMS}: MarqueeProps) {
             ))}
           </div>
           
-          <div aria-hidden="true" className="marquee-group">
+          <div aria-hidden="true" className="marquee-group" style={animationStyle}>
             {[...items].map((item, index) => (
               <div key={`g2-clone-${index}`} className="marquee-item rounded-end-0">
                 {renderContent(item)}

@@ -13,6 +13,12 @@ const eslintConfig = defineConfig([
     "build/**",
     "next-env.d.ts",
   ]),
+  {
+    rules: {
+     "no-console": "off",
+     "@typescript-eslint/ban-ts-comment": "off"
+    }
+  }
 ]);
 
 export default eslintConfig;

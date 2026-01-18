@@ -1,17 +1,18 @@
 'use client';
 
-import React from 'react';
-import {motion, Variants} from 'framer-motion';
+import React, {useEffect, useRef, useState} from 'react';
+import {motion, useAnimation, Variants} from 'framer-motion';
 import {ScreenItemData} from '@/resources/presentation';
 import {Image} from 'react-bootstrap';
+import {usePresentation} from './presentation-provider';
 
 interface ScreenItemProps {
   item: ScreenItemData;
+  isPlaying?: boolean;
 }
 
 interface CustomProps {
   animation: string;
-  delay: number;
 }
 
 const itemVariants: Variants = {
@@ -31,22 +32,15 @@ const itemVariants: Variants = {
       default:
         return {opacity: 0};
     }
-  },
-  animate: ({delay}: CustomProps) => ({
-    opacity: 1,
-    y: 0,
-    x: 0,
-    scale: 1,
-    transition: {
-      duration: 0.8,
-      ease: 'easeOut',
-      delay: delay
-    }
-  })
+  }
 };
 
-export const ScreenItem: React.FC<ScreenItemProps> = ({item}) => {
+export const ScreenItem: React.FC<ScreenItemProps> = ({item, isPlaying = true}) => {
   const {type, content, animation, delay, style, className} = item;
+  const {currentScreen, remainingTime} = usePresentation();
+  const controls = useAnimation();
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const wasPaused = useRef(false);
   
   // Ajustes responsivos para estilos inline
   const responsiveStyle = {
@@ -54,6 +48,48 @@ export const ScreenItem: React.FC<ScreenItemProps> = ({item}) => {
     maxWidth: '100%',
     wordWrap: 'break-word' as const,
   };
+  
+  useEffect(() => {
+    if (isPlaying) {
+      let delayToUse = delay;
+      
+      // Se estava pausado, precisamos descontar o tempo que já passou
+      if (wasPaused.current) {
+        const totalDuration = currentScreen.duration * 1000;
+        // O remainingTime é atualizado quando pausa, então reflete o tempo restante naquele momento
+        const elapsedSec = (totalDuration - remainingTime) / 1000;
+        delayToUse = Math.max(0, delay - elapsedSec);
+      }
+      
+      if (!hasAnimated) {
+        controls.start({
+          opacity: 1,
+          y: 0,
+          x: 0,
+          scale: 1,
+          transition: {
+            duration: 0.8,
+            ease: 'easeOut',
+            delay: delayToUse
+          }
+        }).then(() => {
+          // Só marcamos como animado se a animação completou (não foi interrompida)
+          // O then() do controls.start pode disparar se for interrompido? 
+          // Geralmente dispara quando termina. Se for interrompido por stop(), pode lançar ou não resolver.
+          // Mas para garantir, setamos true. Se pausar antes de terminar, o stop() é chamado.
+          // Se o stop() for chamado, a animação para. Ao retomar, delayToUse será 0 (ou o restante) e animará o resto.
+          // Se já tiver terminado visualmente, animar de 1 pra 1 não tem problema.
+          setHasAnimated(true);
+        });
+      }
+      
+      wasPaused.current = false;
+      
+    } else {
+      controls.stop();
+      wasPaused.current = true;
+    }
+  }, [isPlaying, delay, currentScreen.duration, remainingTime, controls, hasAnimated]);
   
   const renderContent = () => {
     switch (type) {
@@ -79,7 +115,9 @@ export const ScreenItem: React.FC<ScreenItemProps> = ({item}) => {
   return (
     <motion.div
       variants={itemVariants}
-      custom={{animation, delay}}
+      initial="initial"
+      animate={controls}
+      custom={{animation}}
       className="w-100 d-flex"
     >
       {renderContent()}

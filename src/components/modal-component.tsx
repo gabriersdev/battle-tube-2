@@ -1,17 +1,18 @@
-import {Button, DropdownItem, DropdownMenu, DropdownToggle, Modal, ModalBody, ModalHeader, ModalTitle, OverlayTrigger, Tooltip} from "react-bootstrap";
+import Link from "next/link";
+import Lib from "@/utils/lib";
+import Image from "next/image";
 import React, {useContext, useEffect} from "react";
 import {Theme} from "@/components/tier-list-context";
-import Image from "next/image";
+import {Button, DropdownItem, DropdownMenu, DropdownToggle, Modal, ModalBody, ModalHeader, ModalTitle, OverlayTrigger, Tooltip} from "react-bootstrap";
+
+import {Dropdown} from "react-bootstrap";
+import Iframe from "@/components/iframe";
+import VoidUser from "@/components/void-user";
+import {targetExternalLink} from "@/resources/config";
+import {TierLevel, tiers} from "@/components/use-tier-list";
 
 import KickLogo from "../../public/kick.svg";
 import TwitchLogo from "../../public/twitch.jpg";
-import {Dropdown} from "react-bootstrap";
-import {tiers} from "@/components/use-tier-list";
-import Lib from "@/utils/lib";
-import Iframe from "@/components/iframe";
-import Link from "next/link";
-import VoidUser from "@/components/void-user";
-import {targetExternalLink} from "@/resources/config";
 
 export function ModalComponent() {
   const {
@@ -24,12 +25,6 @@ export function ModalComponent() {
   } = useContext(Theme);
   
   const handleClose = () => setShowModal(false);
-  // const handleShow = () => setShowModal(true);
-  
-  useEffect(() => {
-    console.log("handle!")
-    console.log(showClipData);
-  }, [showClipData]);
   
   const handleTierSelect = (tier: string) => {
     if (!showClipData) return;
@@ -46,10 +41,16 @@ export function ModalComponent() {
   };
   
   const currentItem = showClipData ? items.find(i => i.id === showClipData.id) : null;
-  const currentTier = currentItem?.tier;
+  const currentTier: TierLevel | "pool" = currentItem?.tier ?? "pool";
   
   const platform = showClipData ? Lib.getClipOrigin(showClipData) : "";
   const clipId = showClipData ? Lib.getClipID(showClipData) : "";
+  
+  useEffect(() => {
+    if (platform === "kick" && showClipData?.url) setTimeout(() => {
+      window.open(showClipData.url, "_blank", "noreferrer noopener");
+    }, 500);
+  }, [platform, showClipData]);
   
   const handlePrevious = () => {
     if (!showClipData) return;
@@ -93,15 +94,40 @@ export function ModalComponent() {
             
             <div className="d-flex gap-2 align-items-center">
               <Dropdown>
-                <DropdownToggle variant="success" id="dropdown-classified-clip" className={"text"} size={"sm"}>
-                  <span className={"text-small"}>Classificar como</span>
-                </DropdownToggle>
+                <div
+                  className={`tier-list ${currentTier !== "pool" ? currentTier.toLowerCase() : "bg-primary text-body"} rounded-1`}
+                  style={{width: "auto", maxWidth: "100vh", display: "inline-block", padding: 0}}
+                >
+                  <DropdownToggle
+                    variant="outline-success"
+                    style={{background: "transparent", paddingTop: "0.35rem", paddingBottom: "0.35rem"}}
+                    id="dropdown-classified-clip"
+                    className={"text d-inline-flex align-items-center gap-1 flex-wrap"}
+                    size={"sm"}
+                  >
+                    {
+                      currentTier === "pool" ? (
+                        <>
+                          <i className={"text-small text-body fst-normal"}>Classificar como</i>
+                        </>
+                      ) : (
+                        <>
+                          <i className={"text-small text-white fst-normal"}>Classificado como </i>
+                          <b className={"text-small text-white"}>{currentTier}</b>
+                        </>
+                      )
+                    }
+                  </DropdownToggle>
+                </div>
                 
                 <DropdownMenu className={"text"}>
                   {
-                    tiers?.map((tier, index) => (
-                      <DropdownItem onClick={() => handleTierSelect(tier)} key={index} className={`tier-list text-white ${tier.toLowerCase()} d-flex align-items-center gap-1 flex-wrap`}>
-                        {tier}
+                    [...tiers, "pool"]?.map((tier, index) => (
+                      <DropdownItem
+                        key={index}
+                        onClick={() => handleTierSelect(tier)}
+                        className={`tier-list ${tier === "pool" ? "bg-primary text-body" : `${tier.toLowerCase()} text-white`} d-flex align-items-center gap-1 flex-wrap text-capitalize`}
+                      >
                         {currentTier === tier && (
                           <OverlayTrigger overlay={
                             <Tooltip>
@@ -114,6 +140,8 @@ export function ModalComponent() {
                             </svg>
                           </OverlayTrigger>
                         )}
+                        
+                        {tier === "pool" ? "Sem class." : tier}
                       </DropdownItem>
                     ))
                   }

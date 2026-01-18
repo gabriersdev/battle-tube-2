@@ -1,27 +1,80 @@
-import {Button, DropdownItem, DropdownMenu, DropdownToggle} from "react-bootstrap";
-import {Dropdown} from "react-bootstrap";
-import React, {useEffect, useRef, useState} from "react";
-import {usePresentation} from "@/components/presentation-provider";
 import Link from "next/link";
 import Image from "next/image";
 import {motion} from "framer-motion";
+import {Dropdown} from "react-bootstrap";
+import React, {useEffect, useRef, useState} from "react";
+import {Button, DropdownItem, DropdownMenu, DropdownToggle} from "react-bootstrap";
+
+import {usePresentation} from "@/components/presentation-provider";
+
+const STORAGE_KEY_PREFIX = "battle-tube-tier-list-v2-wrapped";
 
 export default function Player() {
   const {currentScreen} = usePresentation();
+  const hasAudio: boolean = !!currentScreen.audio;
+  
   const audioRef = useRef<HTMLAudioElement | null>(null);
-  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [isPlaying, setIsPlaying] = useState<boolean>(hasAudio);
   const [volume, setVolume] = useState<0 | 10 | 25 | 50 | 75 | 100>(10);
   
+  // State to track the previous screen ID for resetting playing state
+  const [lastScreenId, setLastScreenId] = useState(currentScreen.id);
+
   const initTime: number | undefined = currentScreen.audio?.initTime;
-  const hasAudio: boolean = !!currentScreen.audio;
   const imgSrcMusic: string | undefined = currentScreen.audio?.img.src;
   
-  // Reset playing state when screen changes
+  // Load initial state from localStorage
   useEffect(() => {
-    if (hasAudio) setIsPlaying(true);
-    else setIsPlaying(false);
-  }, [currentScreen.id, hasAudio]);
+    const savedVolume = localStorage.getItem(`${STORAGE_KEY_PREFIX}:volume`);
+    if (savedVolume) {
+      setVolume(Number(savedVolume) as any);
+    }
+
+    const savedIsPlaying = localStorage.getItem(`${STORAGE_KEY_PREFIX}:audio-playing`);
+    if (savedIsPlaying !== null) {
+      setIsPlaying(savedIsPlaying === 'true');
+    }
+  }, []);
+
+  // Reset playing state when screen changes
+  if (currentScreen.id !== lastScreenId) {
+    setLastScreenId(currentScreen.id);
+    setIsPlaying(hasAudio);
+  }
   
+  // Save volume
+  useEffect(() => {
+    localStorage.setItem(`${STORAGE_KEY_PREFIX}:volume`, String(volume));
+  }, [volume]);
+
+  // Save isPlaying
+  useEffect(() => {
+    localStorage.setItem(`${STORAGE_KEY_PREFIX}:audio-playing`, String(isPlaying));
+  }, [isPlaying]);
+
+  // Save time periodically
+  useEffect(() => {
+    const audio = audioRef.current;
+    if (!audio) return;
+
+    const saveTime = () => {
+      if (currentScreen.audio?.src) {
+        localStorage.setItem(`${STORAGE_KEY_PREFIX}:audio-time`, JSON.stringify({
+          src: currentScreen.audio.src,
+          time: audio.currentTime
+        }));
+      }
+    };
+
+    const interval = setInterval(saveTime, 1000);
+    audio.addEventListener('pause', saveTime);
+    
+    return () => {
+      clearInterval(interval);
+      audio.removeEventListener('pause', saveTime);
+    };
+  }, [currentScreen.audio]);
+
   // Control audio element
   useEffect(() => {
     const audioElement = audioRef.current;
@@ -57,10 +110,31 @@ export default function Player() {
         audioElement.pause();
         console.info("[INFO] - Audio pausado...");
       }
-      
-      if (initTime) audioElement.currentTime = initTime;
     }
-  }, [isPlaying, volume, hasAudio, currentScreen.audio, initTime]);
+  }, [isPlaying, volume, hasAudio, currentScreen.audio]);
+  
+  // Initialize time (restore or initTime)
+  useEffect(() => {
+    const audioElement = audioRef.current;
+    if (audioElement) {
+       // Try to restore from storage
+       const savedTimeJson = localStorage.getItem(`${STORAGE_KEY_PREFIX}:audio-time`);
+       let restored = false;
+       if (savedTimeJson) {
+           try {
+               const { src, time } = JSON.parse(savedTimeJson);
+               if (src === currentScreen.audio?.src) {
+                   audioElement.currentTime = time;
+                   restored = true;
+               }
+           } catch (e) {}
+       }
+       
+       if (!restored && initTime !== undefined) {
+           audioElement.currentTime = initTime;
+       }
+    }
+  }, [currentScreen.audio, initTime]);
   
   useEffect(() => {
     if (isPlaying) {
@@ -89,7 +163,7 @@ export default function Player() {
         maxWidth: "calc(100vw - 2rem)",
         cursor: "grab"
       }}
-      whileDrag={{ cursor: "grabbing" }}
+      whileDrag={{cursor: "grabbing"}}
     >
       <div className={"m-0 p-0 d-flex flex-column gap-1"}>
         <span className={"text-small text-body-tertiary"}>Tocando agora</span>
@@ -107,11 +181,19 @@ export default function Player() {
               />
             )
           }
-          <Link href={currentScreen.audio?.link ?? ""} className={"d-flex gap-0 flex-column text-decoration-none"} draggable={false}>
-            <div className={"text-small scroll-wrapper"} style={{maxWidth: "200px"}}>
-              <span className={"scroll-text"}>{currentScreen.audio?.name ?? ""} - {currentScreen.audio?.author ?? ""}</span>
-            </div>
-            <span className={'opacity-50 border-0 fw-normal text-small text-body-tertiary'}>Explict</span>
+          <Link
+            href={currentScreen.audio?.link ?? ""}
+            className={"d-flex gap-0 flex-column text-decoration-none"}
+            draggable={false}
+            rel={"noreferrer noopener"}
+            target={"_blank"}
+          >
+            <>
+              <div className={"text-small scroll-wrapper"} style={{maxWidth: "200px"}}>
+                <span className={"scroll-text"}>{currentScreen.audio?.name ?? ""} - {currentScreen.audio?.author ?? ""}</span>
+              </div>
+              <span className={'opacity-50 border-0 fw-normal text-small text-body-tertiary'}>Explict</span>
+            </>
           </Link>
         </div>
         <div className={"d-flex flex-wrap gap-1 mt-2"}>
@@ -144,17 +226,17 @@ export default function Player() {
                   <DropdownItem key={index} onClick={() => {
                     setVolume(item[1] as 0 | 10);
                   }}>
-                    {item[0]}
-                    
                     {volume === item[1] && (
                       <>
-                        {" "}
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-check2-square" viewBox="0 0 16 16">
                           <path d="M3 14.5A1.5 1.5 0 0 1 1.5 13V3A1.5 1.5 0 0 1 3 1.5h8a.5.5 0 0 1 0 1H3a.5.5 0 0 0-.5.5v10a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V8a.5.5 0 0 1 1 0v5a1.5 1.5 0 0 1-1.5 1.5z"/>
                           <path d="m8.354 10.354 7-7a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0"/>
                         </svg>
+                        {" "}
                       </>
                     )}
+                    
+                    {item[0]}
                   </DropdownItem>
                 ))
               }
@@ -166,17 +248,17 @@ export default function Player() {
                     <DropdownItem key={i} onClick={() => {
                       setVolume(val);
                     }}>
-                      {val}
-                      
                       {val === volume && (
                         <>
-                          {" "}
                           <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-check2-square" viewBox="0 0 16 16">
                             <path d="M3 14.5A1.5 1.5 0 0 1 1.5 13V3A1.5 1.5 0 0 1 3 1.5h8a.5.5 0 0 1 0 1H3a.5.5 0 0 0-.5.5v10a.5.5 0 0 0 .5.5h10a.5.5 0 0 0 .5-.5V8a.5.5 0 0 1 1 0v5a1.5 1.5 0 0 1-1.5 1.5z"/>
                             <path d="m8.354 10.354 7-7a.5.5 0 0 0-.708-.708L8 9.293 5.354 6.646a.5.5 0 1 0-.708.708l3 3a.5.5 0 0 0 .708 0"/>
                           </svg>
+                          {" "}
                         </>
                       )}
+                      
+                      {val}
                     </DropdownItem>
                   )
                 })
